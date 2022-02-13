@@ -1,0 +1,54 @@
+env:
+    APPLICATION_ENV: devtest
+
+sections:
+    generate:
+        generate-transfers:
+            command: 'vendor/bin/console transfer:generate'
+
+        generate-transfer-databuilders:
+            command: 'vendor/bin/console transfer:databuilder:generate'
+
+        generate-zed-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:zed:generate'
+
+        generate-glue-backend-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:glue-backend:generate'
+
+    database-flush:
+        drop-database:
+            command: 'vendor/bin/console propel:database:drop'
+        delete-migration-files:
+            command: 'vendor/bin/console propel:migration:delete'
+
+    database-migrate:
+        propel-create:
+            command: 'vendor/bin/console propel:database:create'
+
+        propel-postgres-compatibility:
+            command: 'vendor/bin/console propel:pg-sql-compat'
+
+        propel-copy-schema:
+            command: 'vendor/bin/console propel:schema:copy'
+
+        propel-build:
+            command: 'vendor/bin/console propel:model:build'
+
+        propel-diff:
+            command: 'vendor/bin/console propel:diff'
+
+        propel-migrate:
+            command: 'vendor/bin/console propel:migrate'
+
+        generate-entity-transfer:
+            command: 'vendor/bin/console transfer:entity:generate'
+
+        init-database:
+            command: 'vendor/bin/console setup:init-db'
+
+    setup-test:
+        codeception-build:
+            command: 'vendor/bin/codecept build --ansi'
+
+        databuilder-generate:
+            command: 'vendor/bin/console transfer:databuilder:generate'

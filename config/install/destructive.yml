@@ -1,0 +1,40 @@
+env:
+    NEW_RELIC_ENABLED: 0
+
+command-timeout: 7200
+
+stores:
+    - DE
+    - AT
+
+sections:
+    init-storages-per-region:
+        propel-copy-schema:
+            command: 'vendor/bin/console propel:schema:copy -vvv --no-ansi'
+
+        propel-postgres-compatibility:
+            command: 'vendor/bin/console propel:pg-sql-compat -vvv --no-ansi'
+
+        propel-migration-delete:
+            command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
+
+        propel-tables-drop:
+            command: 'vendor/bin/console propel:tables:drop -vvv --no-ansi'
+            stores:
+                - DE
+
+        propel-diff:
+            command: 'vendor/bin/console propel:diff -vvv --no-ansi'
+
+        propel-migrate:
+            command: 'vendor/bin/console propel:migrate -vvv --no-ansi'
+            stores:
+                - DE
+
+        propel-migration-cleanup:
+            command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
+
+        init-database:
+            command: 'vendor/bin/console setup:init-db -vvv --no-ansi'
+            stores:
+                - DE
