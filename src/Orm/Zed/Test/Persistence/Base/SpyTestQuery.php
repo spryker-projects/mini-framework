@@ -36,7 +36,7 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyTestQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
  * @method     ChildSpyTest|null findOne(ConnectionInterface $con = null) Return the first ChildSpyTest matching the query
- * @method     ChildSpyTest findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyTest matching the query, or a new ChildSpyTest object populated from the query conditions when no matches is found
+ * @method     ChildSpyTest findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyTest matching the query, or a new ChildSpyTest object populated from the query conditions when no match is found
  *
  * @method     ChildSpyTest|null findOneByIdTest(int $id_test) Return the first ChildSpyTest filtered by the id_test column
  * @method     ChildSpyTest|null findOneByName(string $name) Return the first ChildSpyTest filtered by the name column *

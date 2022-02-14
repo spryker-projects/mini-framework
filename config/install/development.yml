@@ -3,19 +3,12 @@ env:
 
 stores:
     - DE
-    - AT
-    - US
 
 command-timeout: 3600
 
 sections:
     hidden:
         excluded: true
-        maintenance-all-on:
-            command: 'vendor/bin/console maintenance:enable'
-
-        maintenance-all-off:
-            command: 'vendor/bin/console maintenance:disable'
 
     composer:
         composer-autoloader:
@@ -60,10 +53,6 @@ sections:
     database-flush:
         drop-database:
             command: 'vendor/bin/console propel:database:drop'
-            pre: 'hidden/maintenance-zed-on'
-            stores:
-                - US
-                - DE
             groups:
                 - propel
 
@@ -75,17 +64,11 @@ sections:
     database-migrate:
         propel-create:
             command: 'vendor/bin/console propel:database:create'
-            stores:
-                - US
-                - DE
             groups:
                 - propel
 
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat'
-            stores:
-                - US
-                - DE
             groups:
                 - propel
 
@@ -107,28 +90,16 @@ sections:
         propel-migration-check:
             command: 'vendor/bin/console propel:migration:check'
             breakOnFailure: false
-            stores:
-                - US
-                - DE
             groups:
                 - propel
 
         propel-migrate:
             command: 'vendor/bin/console propel:migrate'
-            stores:
-                - US
-                - DE
             groups:
                 - propel
 
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
-
-        init-database:
-            command: 'vendor/bin/console setup:init-db'
-            stores:
-                - US
-                - DE
 
     performance:
         composer-autoloader:

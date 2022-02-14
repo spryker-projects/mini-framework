@@ -117,9 +117,7 @@ class TestResourceController extends AbstractBackendApiController
             return $glueResponseTransfer;
         }
 
-        return $this->returnSaveResponse(
-            $this->getFactory()->getTestFacade()->deleteTestCollection($testCollectionDeleteCriteriaTransfer)
-        );
+        return $this->returnSaveResponse($testCollectionResponseTransfer);
     }
 
     /**
@@ -130,7 +128,7 @@ class TestResourceController extends AbstractBackendApiController
     protected function returnSaveResponse(TestCollectionResponseTransfer $testCollectionResponseTransfer): GlueResponseTransfer
     {
         $glueResponseTransfer = new GlueResponseTransfer();
-        if (!(array)$testCollectionResponseTransfer->getTests()) {
+        if (!(array)$testCollectionResponseTransfer->getErrors()) {
             $resourceTransfer = new GlueResourceTransfer();
             $resourceTransfer->setAttributes($testCollectionResponseTransfer->getTests()->offsetGet(0));
             $resourceTransfer->setId($testCollectionResponseTransfer->getTests()->offsetGet(0)->getId());

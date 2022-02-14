@@ -24,16 +24,12 @@ use Spryker\Zed\Propel\Communication\Console\EntityTransferGeneratorConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelSchemaValidatorConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelSchemaXmlNameValidatorConsole;
 use Spryker\Zed\Propel\Communication\Console\RemoveEntityTransferConsole;
-use Spryker\Zed\Queue\Communication\Console\QueueDumpConsole;
-use Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendApiConsole;
-use Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackendGatewayConsole;
-use Spryker\Zed\Router\Communication\Plugin\Console\RouterDebugBackofficeConsole;
+use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 use Spryker\Zed\Transfer\Communication\Console\DataBuilderGeneratorConsole;
 use Spryker\Zed\Transfer\Communication\Console\RemoveDataBuilderConsole;
 use Spryker\Zed\Transfer\Communication\Console\RemoveTransferConsole;
 use Spryker\Zed\Transfer\Communication\Console\TransferGeneratorConsole;
 use Spryker\Zed\Transfer\Communication\Console\ValidatorConsole;
-use Spryker\Zed\Twig\Communication\Console\CacheWarmerConsole;
 
 /**
  * @method \Pyz\Zed\Console\ConsoleConfig getConfig()
@@ -97,6 +93,18 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     {
         return [
             new MonitoringConsolePlugin(),
+        ];
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return array
+     */
+    public function getApplicationPlugins(Container $container): array
+    {
+        return [
+            new PropelApplicationPlugin(),
         ];
     }
 }
