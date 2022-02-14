@@ -53,7 +53,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     protected function getConsoleCommands(Container $container): array
     {
         $commands = [
-            new CacheWarmerConsole(),
             new TransferGeneratorConsole(),
             new RemoveTransferConsole(),
             new EntityTransferGeneratorConsole(),
@@ -75,9 +74,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         $commands = array_merge($commands, $propelCommands);
 
         if ($this->getConfig()->isDevelopmentConsoleCommandsEnabled()) {
-            $commands[] = new RouterDebugBackofficeConsole();
-            $commands[] = new RouterDebugBackendGatewayConsole();
-            $commands[] = new RouterDebugBackendApiConsole();
             $commands[] = new ValidatorConsole();
             $commands[] = new DataBuilderGeneratorConsole();
             $commands[] = new RemoveDataBuilderConsole();
@@ -87,8 +83,6 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new RemoveZedIdeAutoCompletionConsole();
             $commands[] = new GenerateGlueBackendIdeAutoCompletionConsole();
             $commands[] = new RemoveGlueBackendIdeAutoCompletionConsole();
-            $commands[] = new QueueDumpConsole();
-
         }
 
         return $commands;
