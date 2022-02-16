@@ -28,10 +28,6 @@ assets:
 regions:
     EU:
         services:
-            mail:
-                sender:
-                    name: Spryker No-Reply
-                    email: no-reply@spryker.local
             database:
                 database: eu-docker
                 username: spryker
@@ -46,150 +42,16 @@ regions:
                         namespace: 1
                     search:
                         namespace: de_search
-            AT:
-                services:
-                    broker:
-                        namespace: at-docker
-                    key_value_store:
-                        namespace: 2
-                    search:
-                        namespace: at_search
-    US:
-        services:
-            mail:
-                sender:
-                    name: Spryker No-Reply
-                    email: no-reply@spryker.local
-            database:
-                database: us-docker
-                username: spryker
-                password: secret
-        stores:
-            US:
-                services:
-                    broker:
-                        namespace: us-docker
-                    key_value_store:
-                        namespace: 3
-                    search:
-                        namespace: us_search
 groups:
     EU:
         region: EU
         applications:
-            yves_eu:
-                application: yves
-                endpoints:
-                    date-time-configurator-example.spryker.local:
-                        entry-point: Configurator
-                    yves.de.spryker.local:
-                        store: DE
-                        services:
-                            session:
-                                namespace: 1
-                    yves.at.spryker.local:
-                        store: AT
-                        services:
-                            session:
-                                namespace: 2
-            glue_eu:
-                application: glue
-                endpoints:
-                    glue.de.spryker.local:
-                        store: DE
-                    glue.at.spryker.local:
-                        store: AT
-            glue_storefront_eu:
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.de.spryker.local:
-                        store: DE
-                    glue-storefront.at.spryker.local:
-                        store: AT
             glue_backend_eu:
                 application: glue-backend
                 endpoints:
                     glue-backend.de.spryker.local:
                         store: DE
-                    glue-backend.at.spryker.local:
-                        store: AT
-            backoffice_eu:
-                application: backoffice
-                endpoints:
-                    backoffice.de.spryker.local:
-                        store: DE
-                        primal: true
-                        services:
-                            session:
-                                namespace: 3
-                    backoffice.at.spryker.local:
-                        store: AT
-                        services:
-                            session:
-                                namespace: 4
-            backend_gateway_eu:
-                application: backend-gateway
-                endpoints:
-                    backend-gateway.de.spryker.local:
-                        store: DE
-                        primal: true
-                    backend-gateway.at.spryker.local:
-                        store: AT
-                        primal: true
-            backend_api_eu:
-                application: zed
-                endpoints:
-                    backend-api.de.spryker.local:
-                        store: DE
-                        entry-point: BackendApi
-                    backend-api.at.spryker.local:
-                        store: AT
-                        entry-point: BackendApi
-    US:
-        region: US
-        applications:
-            yves_us:
-                application: yves
-                endpoints:
-                    yves.us.spryker.local:
-                        store: US
-                        services:
-                            session:
-                                namespace: 5
-            glue_us:
-                application: glue
-                endpoints:
-                    glue.us.spryker.local:
-                        store: US
-            glue_storefront_us:
-                application: glue-storefront
-                endpoints:
-                    glue-storefront.us.spryker.local:
-                        store: US
-            glue_backend_us:
-                application: glue-backend
-                endpoints:
-                    glue-backend.us.spryker.local:
-                        store: US
-            backoffice_us:
-                application: backoffice
-                endpoints:
-                    backoffice.us.spryker.local:
-                        store: US
-                        services:
-                            session:
-                                namespace: 6
-            backend_gateway_us:
-                application: backend-gateway
-                endpoints:
-                    backend-gateway.us.spryker.local:
-                        store: US
-            backend_api_us:
-                application: zed
-                endpoints:
-                    backend-api.us.spryker.local:
-                        store: US
-                        entry-point: BackendApi
+
 services:
     database:
         engine: mysql
