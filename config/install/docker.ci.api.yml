@@ -46,6 +46,3 @@ sections:
 
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete'
-
-        init-database:
-            command: 'vendor/bin/console setup:init-db'
