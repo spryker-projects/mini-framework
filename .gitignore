@@ -29,7 +29,7 @@ GTAGS
 /config/cubes.*
 config/accumulated-config.json
 
-/src/Generated/
+src/Generated/
 /vendor/
 FOSS.md
 /public/Yves/maintenance/maintenance.marker

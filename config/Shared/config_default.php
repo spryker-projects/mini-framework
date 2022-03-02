@@ -28,7 +28,8 @@ $config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = true;
 $config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = true;
 
 $config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
-$config[KernelConstants::PROJECT_NAMESPACES] = [
+$config[KernelConstants::PROJECT_NAMESPACES] =
+    $config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = [
     'Pyz',
 ];
 $config[KernelConstants::CORE_NAMESPACES] = [
