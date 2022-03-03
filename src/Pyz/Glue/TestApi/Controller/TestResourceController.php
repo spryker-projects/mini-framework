@@ -75,7 +75,7 @@ class TestResourceController extends AbstractBackendApiController
             return $glueResponseTransfer;
         }
 
-        $glueResponseTransfer->setStatus(404)->addError((new GlueErrorTransfer())->setMessage('not found'));
+        $glueResponseTransfer->setHttpStatus(404)->addError((new GlueErrorTransfer())->setMessage('not found'));
 
         return $glueResponseTransfer;
     }
@@ -112,7 +112,7 @@ class TestResourceController extends AbstractBackendApiController
         if(!(array)$testCollectionResponseTransfer->getTests())
         {
             $glueResponseTransfer = new GlueResponseTransfer();
-            $glueResponseTransfer->setStatus(404)->addError((new GlueErrorTransfer())->setMessage('not found'));
+            $glueResponseTransfer->setHttpStatus(404)->addError((new GlueErrorTransfer())->setMessage('not found'));
 
             return $glueResponseTransfer;
         }
