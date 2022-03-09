@@ -51,6 +51,11 @@ groups:
                 endpoints:
                     glue-backend.de.mini-framework.demo-spryker.com:
                         store: DE
+            boffice:
+                application: zed
+                endpoints:
+                    boffice.de.mini-framework.demo-spryker.com:
+                        store: DE
 
 services:
     database:
