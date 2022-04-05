@@ -1,46 +1,46 @@
 {
-    "name": "spryker/mini-api-framework",
-    "minimum-stability": "dev",
-    "repositories": [
-      {
-        "type": "git",
-        "url": "git@github.com:spryker/glue-backend-api-application.git"
-      },
-      {
-        "type": "git",
-        "url": "git@github.com:spryker/glue-backend-api-application-extension.git"
-      }
-    ],
-    "require": {
-      "spryker/glue-backend-api-application": "dev-beta/spryker-mini-api-framework",
-      "spryker/glue-backend-api-application-extension": "dev-beta/spryker-mini-api-framework as 1.0.0",
-      "spryker/glue-storefront-api-application-extension": "dev-beta/spryker-mini-api-framework as 1.0.0",
-      "spryker/glue-application-extension": "dev-beta/spryker-mini-api-framework as 1.6.0",
-      "spryker/glue-application": "dev-beta/spryker-mini-api-framework as 1.38.0",
-      "spryker/glue-http": "dev-beta/spryker-mini-api-framework",
-      "spryker/glue-rest-api-convention": "dev-beta/spryker-mini-api-framework as 1.0.0",
-      "spryker/glue-rest-api-convention-extension": "dev-beta/spryker-mini-api-framework as 1.0.0",
-      "spryker/kernel": "dev-beta/spryker-mini-api-framework as 3.64.1",
-      "spryker/transfer": "dev-beta/spryker-mini-api-framework as 3.30.2",
-      "spryker/console": "^4.10.2",
-      "spryker/router": "^1.14.0",
-      "spryker/install": "^1.0.0",
-        "spryker/code-sniffer": "dev-master"
+  "name": "spryker/mini-api-framework",
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "git@github.com:spryker/glue-backend-api-application.git"
     },
-    "require-dev": {
-      "spryker/development": "^3.32.1"
-    },
-    "autoload": {
-      "psr-4": {
-        "Generated\\": "src/Generated/",
-        "Orm\\": "src/Orm/",
-        "Pyz\\": "src/Pyz/",
-        "SprykerConfig\\": "src/SprykerConfig/"
-      }
-    },
-    "config": {
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
+    {
+      "type": "git",
+      "url": "git@github.com:spryker/glue-backend-api-application-extension.git"
     }
+  ],
+  "require": {
+    "spryker/glue-backend-api-application": "dev-beta/spryker-mini-api-framework",
+    "spryker/glue-backend-api-application-extension": "dev-beta/spryker-mini-api-framework as 1.0.0",
+    "spryker/glue-storefront-api-application-extension": "dev-beta/spryker-mini-api-framework as 1.0.0",
+    "spryker/glue-application-extension": "dev-beta/spryker-mini-api-framework as 1.6.0",
+    "spryker/glue-application": "dev-beta/spryker-mini-api-framework as 1.38.0",
+    "spryker/glue-http": "dev-beta/spryker-mini-api-framework",
+    "spryker/glue-rest-api-convention": "dev-beta/spryker-mini-api-framework as 1.0.0",
+    "spryker/glue-rest-api-convention-extension": "dev-beta/spryker-mini-api-framework as 1.0.0",
+    "spryker/kernel": "dev-beta/spryker-mini-api-framework as 3.64.1",
+    "spryker/transfer": "dev-beta/spryker-mini-api-framework as 3.30.2",
+    "spryker/console": "^4.10.2",
+    "spryker/router": "^1.14.0",
+    "spryker/install": "^1.0.0",
+    "spryker/code-sniffer": "dev-master"
+  },
+  "require-dev": {
+    "spryker/development": "^3.32.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Generated\\": "src/Generated/",
+      "Orm\\": "src/Orm/",
+      "Pyz\\": "src/Pyz/",
+      "SprykerConfig\\": "src/SprykerConfig/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
 }
