@@ -24,7 +24,8 @@
       "spryker/transfer": "dev-beta/spryker-mini-api-framework as 3.30.2",
       "spryker/console": "^4.10.2",
       "spryker/router": "^1.14.0",
-      "spryker/install": "^1.0.0"
+      "spryker/install": "^1.0.0",
+        "spryker/code-sniffer": "dev-master"
     },
     "require-dev": {
       "spryker/development": "^3.32.1"
@@ -36,5 +37,10 @@
         "Pyz\\": "src/Pyz/",
         "SprykerConfig\\": "src/SprykerConfig/"
       }
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
     }
 }

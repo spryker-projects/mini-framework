@@ -28,7 +28,7 @@
     </transfer>
 
     <transfer name="TestConditions">
-        <property name="testIds" type="int[]" singular="testId"/>
+        <property name="testIds" type="int[]" singular="idTest"/>
         <property name="names" type="string[]" singular="name"/>
     </transfer>
 

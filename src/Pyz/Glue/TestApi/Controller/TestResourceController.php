@@ -2,147 +2,133 @@
 
 namespace Pyz\Glue\TestApi\Controller;
 
-use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
-use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
-use Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer;
-use Generated\Shared\Transfer\TestCollectionRequestTransfer;
-use Generated\Shared\Transfer\TestCollectionResponseTransfer;
-use Generated\Shared\Transfer\TestConditionsTransfer;
-use Generated\Shared\Transfer\TestCriteriaTransfer;
 use Generated\Shared\Transfer\TestTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractBackendApiController;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Pyz\Glue\TestApi\TestApiFactory getFactory()
  */
 class TestResourceController extends AbstractBackendApiController
 {
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
     public function getCollectionAction(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        $testCriteriaTransfer = new TestCriteriaTransfer();
+        $testCriteriaTransfer = $this->getFactory()
+            ->getGlueRequestToTestMapper()
+            ->mapGlueRequestToTestCriteriaTransfer($glueRequestTransfer);
 
-        $testCriteriaTransfer->setPagination($glueRequestTransfer->getPagination());
-        $testCriteriaTransfer->setSortCollection($glueRequestTransfer->getSortings());
+        $testCollectionTransfer = $this->getFactory()
+            ->getTestFacade()
+            ->getTestCollection($testCriteriaTransfer);
 
-        $conditionsTransfer = new TestConditionsTransfer();
-        if(isset($glueRequestTransfer->getQueryFields()['filter'])) {
-            foreach($glueRequestTransfer->getQueryFields()['filter'] as $name => $value) {
-                if($name === 'name') {
-                    $conditionsTransfer->setNames(explode(',', $value));
-                }
-
-                if($name === 'id') {
-                    $conditionsTransfer->addTestId($value);
-                }
-
-            }
-        }
-
-        $testCriteriaTransfer->setTestConditions($conditionsTransfer);
-        $testCollectionTransfer = $this->getFactory()->getTestFacade()->getTestCollection($testCriteriaTransfer);
-
-        $glueResponseTransfer = new GlueResponseTransfer();
-        foreach($testCollectionTransfer->getTests() as $test) {
-            $resourceTransfer = new GlueResourceTransfer();
-            $resourceTransfer->setAttributes($test);
-            $resourceTransfer->setId($test->getId());
-            $resourceTransfer->setType('test');
-
-            $glueResponseTransfer->addResource($resourceTransfer);
-        }
-
-        return $glueResponseTransfer;
-    }
-
-    public function getAction(string $id): GlueResponseTransfer
-    {
-        $testCriteriaTransfer = new TestCriteriaTransfer();
-        $testCriteriaTransfer->setTestConditions((new TestConditionsTransfer())->addTestId($id));
-
-        $testCollectionTransfer = $this->getFactory()->getTestFacade()->getTestCollection($testCriteriaTransfer);
-
-        $glueResponseTransfer = new GlueResponseTransfer();
-        if((array)$testCollectionTransfer->getTests()) {
-            $resourceTransfer = new GlueResourceTransfer();
-            $resourceTransfer->setAttributes($testCollectionTransfer->getTests()[0]);
-            $resourceTransfer->setId($testCollectionTransfer->getTests()[0]->getId());
-            $resourceTransfer->setType('test');
-
-            $glueResponseTransfer->addResource($resourceTransfer);
-            return $glueResponseTransfer;
-        }
-
-        $glueResponseTransfer->setStatus(404)->addError((new GlueErrorTransfer())->setMessage('not found'));
-
-        return $glueResponseTransfer;
-    }
-
-    public function postAction(TestTransfer $testTransfer): GlueResponseTransfer
-    {
-        $testCollectionRequestTransfer = new TestCollectionRequestTransfer();
-        $testCollectionRequestTransfer->addTest($testTransfer)->setIsTransactional(false);
-
-        return $this->returnSaveResponse(
-            $this->getFactory()->getTestFacade()->createTestCollection($testCollectionRequestTransfer)
-        );
-    }
-
-    public function patchAction(TestTransfer $testTransfer): GlueResponseTransfer
-    {
-        $testCollectionRequestTransfer = new TestCollectionRequestTransfer();
-        $testCollectionRequestTransfer->addTest($testTransfer)->setIsTransactional(false);
-
-
-        return $this->returnSaveResponse(
-            $this->getFactory()->getTestFacade()->updateTestCollection($testCollectionRequestTransfer)
-        );
-    }
-
-    public function deleteAction(string $id): GlueResponseTransfer
-    {
-        $testCollectionDeleteCriteriaTransfer = new TestCollectionDeleteCriteriaTransfer();
-        $testCollectionDeleteCriteriaTransfer->setIsTransactional(false)->addIdTest($id);
-
-        $testCollectionResponseTransfer =
-            $this->getFactory()->getTestFacade()->deleteTestCollection($testCollectionDeleteCriteriaTransfer);
-
-        if(!(array)$testCollectionResponseTransfer->getTests())
-        {
-            $glueResponseTransfer = new GlueResponseTransfer();
-            $glueResponseTransfer->setStatus(404)->addError((new GlueErrorTransfer())->setMessage('not found'));
-
-            return $glueResponseTransfer;
-        }
-
-        return $this->returnSaveResponse($testCollectionResponseTransfer);
+        return $this->getFactory()
+            ->getTestToGlueResponseMapper()
+            ->mapTestCollectionToGlueResponse($testCollectionTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\TestCollectionResponseTransfer $testCollectionResponseTransfer
+     * @param string $id
      *
-     * @return GlueResponseTransfer
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    protected function returnSaveResponse(TestCollectionResponseTransfer $testCollectionResponseTransfer): GlueResponseTransfer
+    public function getAction(string $id): GlueResponseTransfer
     {
-        $glueResponseTransfer = new GlueResponseTransfer();
-        if (!(array)$testCollectionResponseTransfer->getErrors()) {
-            $resourceTransfer = new GlueResourceTransfer();
-            $resourceTransfer->setAttributes($testCollectionResponseTransfer->getTests()->offsetGet(0));
-            $resourceTransfer->setId($testCollectionResponseTransfer->getTests()->offsetGet(0)->getId());
-            $resourceTransfer->setType('test');
+        $testCriteriaTransfer = $this->getFactory()
+            ->getGlueRequestToTestMapper()
+            ->mapIdentifierToTestCriteriaTransfer($id);
 
-            $glueResponseTransfer->addResource($resourceTransfer);
+        $testCollectionTransfer = $this->getFactory()
+            ->getTestFacade()
+            ->getTestCollection($testCriteriaTransfer);
 
-            return $glueResponseTransfer;
-        }
+        return $this->getFactory()
+            ->getTestToGlueResponseMapper()
+            ->mapTestCollectionToSingleResourceGlueResponse($testCollectionTransfer);
+    }
 
-        foreach ($testCollectionResponseTransfer->getErrors() as $error) {
-            $glueResponseTransfer->addError((new GlueErrorTransfer())->setMessage($error->getMessage()));
-        }
+    /**
+     * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function postAction(TestTransfer $testTransfer): GlueResponseTransfer
+    {
+        $testCollectionRequestTransfer = $this->getFactory()
+            ->getGlueRequestToTestMapper()
+            ->mapTestTransferToTestCollectionRequestTransfer($testTransfer);
 
-        return $glueResponseTransfer;
+        $testCollectionResponseTransfer = $this->getFactory()
+            ->getTestFacade()
+            ->createTestCollection($testCollectionRequestTransfer);
+
+        return $this->getFactory()
+            ->getTestToGlueResponseMapper()
+            ->mapTestCollectionResponseToGlueResponse($testCollectionResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function patchAction(TestTransfer $testTransfer): GlueResponseTransfer
+    {
+        $testCollectionRequestTransfer = $this->getFactory()
+            ->getGlueRequestToTestMapper()
+            ->mapTestTransferToTestCollectionRequestTransfer($testTransfer);
+
+        $testCollectionResponseTransfer = $this->getFactory()
+            ->getTestFacade()
+            ->updateTestCollection($testCollectionRequestTransfer);
+
+        return $this->getFactory()
+            ->getTestToGlueResponseMapper()
+            ->mapTestCollectionResponseToGlueResponse($testCollectionResponseTransfer);
+    }
+
+    /**
+     * @param string $id
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function deleteAction(string $id): GlueResponseTransfer
+    {
+        $testCollectionDeleteCriteriaTransfer = $this->getFactory()
+            ->getGlueRequestToTestMapper()
+            ->mapIdentifierToTestCollectionDeleteCriteriaTransfer($id);
+
+        $testCollectionResponseTransfer = $this->getFactory()
+            ->getTestFacade()
+            ->deleteTestCollection($testCollectionDeleteCriteriaTransfer);
+
+        return $this->getFactory()
+            ->getTestToGlueResponseMapper()
+            ->mapTestCollectionResponseToSingleResourceGlueResponse($testCollectionResponseTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function deleteCollectionAction(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
+    {
+        $testCollectionDeleteCriteriaTransfer = $this->getFactory()
+            ->getGlueRequestToTestMapper()
+            ->mapGlueRequestToTestCollectionDeleteCriteriaTransfer($glueRequestTransfer);
+
+        $testCollectionResponseTransfer = $this->getFactory()
+            ->getTestFacade()
+            ->deleteTestCollection($testCollectionDeleteCriteriaTransfer);
+
+        return $this->getFactory()
+            ->getTestToGlueResponseMapper()
+            ->mapTestCollectionResponseToGlueResponse($testCollectionResponseTransfer);
     }
 }
