@@ -74,7 +74,7 @@ class GlueRequestTestMapper implements GlueRequestTestMapperInterface
     public function mapIdentifierToTestCriteriaTransfer(int $identifier): TestCriteriaTransfer
     {
         $testCriteriaTransfer = new TestCriteriaTransfer();
-        $testCriteriaTransfer->setTestConditions((new TestConditionsTransfer())->addTestId($identifier));
+        $testCriteriaTransfer->setTestConditions((new TestConditionsTransfer())->addIdTest($identifier));
 
         return $testCriteriaTransfer;
     }

@@ -75,10 +75,6 @@
         <property name="action" type="string"/>
     </transfer>
 
-    <transfer name="GlueResource">
-        <property name="attributes" type="Abstract"/>
-    </transfer>
-
     <transfer name="GlueRequest">
         <property name="attributes" type="array" singular="attribute"/>
     </transfer>
