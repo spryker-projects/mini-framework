@@ -9,7 +9,7 @@ use Pyz\Glue\TestApi\Controller\TestResourceController;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
 use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RestResourceInterface;
 
-class TestResource extends AbstractResourcePlugin implements RestResourceInterface
+class TestResourcePlugin extends AbstractResourcePlugin implements RestResourceInterface
 {
     /**
      * @return string
