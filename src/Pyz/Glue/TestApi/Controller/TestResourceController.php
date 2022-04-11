@@ -34,14 +34,15 @@ class TestResourceController extends AbstractBackendApiController
 
     /**
      * @param string $id
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function getAction(string $id): GlueResponseTransfer
+    public function getAction(string $id, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         $testCriteriaTransfer = $this->getFactory()
             ->getGlueRequestToTestMapper()
-            ->mapIdentifierToTestCriteriaTransfer($id);
+            ->mapIdentifierToTestCriteriaTransfer($id, $glueRequestTransfer);
 
         $testCollectionTransfer = $this->getFactory()
             ->getTestFacade()
@@ -54,14 +55,15 @@ class TestResourceController extends AbstractBackendApiController
 
     /**
      * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function postAction(TestTransfer $testTransfer): GlueResponseTransfer
+    public function postAction(TestTransfer $testTransfer, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         $testCollectionRequestTransfer = $this->getFactory()
             ->getGlueRequestToTestMapper()
-            ->mapTestTransferToTestCollectionRequestTransfer($testTransfer);
+            ->mapTestTransferToTestCollectionRequestTransfer($testTransfer, $glueRequestTransfer);
 
         $testCollectionResponseTransfer = $this->getFactory()
             ->getTestFacade()
@@ -74,14 +76,15 @@ class TestResourceController extends AbstractBackendApiController
 
     /**
      * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function patchAction(TestTransfer $testTransfer): GlueResponseTransfer
+    public function patchAction(TestTransfer $testTransfer, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         $testCollectionRequestTransfer = $this->getFactory()
             ->getGlueRequestToTestMapper()
-            ->mapTestTransferToTestCollectionRequestTransfer($testTransfer);
+            ->mapTestTransferToTestCollectionRequestTransfer($testTransfer, $glueRequestTransfer);
 
         $testCollectionResponseTransfer = $this->getFactory()
             ->getTestFacade()
@@ -94,14 +97,15 @@ class TestResourceController extends AbstractBackendApiController
 
     /**
      * @param string $id
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
-    public function deleteAction(string $id): GlueResponseTransfer
+    public function deleteAction(string $id, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         $testCollectionDeleteCriteriaTransfer = $this->getFactory()
             ->getGlueRequestToTestMapper()
-            ->mapIdentifierToTestCollectionDeleteCriteriaTransfer($id);
+            ->mapIdentifierToTestCollectionDeleteCriteriaTransfer($id, $glueRequestTransfer);
 
         $testCollectionResponseTransfer = $this->getFactory()
             ->getTestFacade()

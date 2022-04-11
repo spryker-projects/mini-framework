@@ -25,23 +25,26 @@ interface GlueRequestTestMapperInterface
     public function mapGlueRequestToTestCollectionDeleteCriteriaTransfer(GlueRequestTransfer $glueRequestTransfer): TestCollectionDeleteCriteriaTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer|int $glueRequestTransfer
+     * @param int $identifier
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\TestCriteriaTransfer
      */
-    public function mapIdentifierToTestCriteriaTransfer(int $identifier): TestCriteriaTransfer;
+    public function mapIdentifierToTestCriteriaTransfer(int $identifier, GlueRequestTransfer $glueRequestTransfer): TestCriteriaTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer|int $glueRequestTransfer
+     * @param int $identifier
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\TestCriteriaTransfer
      */
-    public function mapIdentifierToTestCollectionDeleteCriteriaTransfer(int $identifier): TestCollectionDeleteCriteriaTransfer;
+    public function mapIdentifierToTestCollectionDeleteCriteriaTransfer(int $identifier, GlueRequestTransfer $glueRequestTransfer): TestCollectionDeleteCriteriaTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\TestCollectionRequestTransfer
      */
-    public function mapTestTransferToTestCollectionRequestTransfer(TestTransfer $testTransfer): TestCollectionRequestTransfer;
+    public function mapTestTransferToTestCollectionRequestTransfer(TestTransfer $testTransfer, GlueRequestTransfer $glueRequestTransfer): TestCollectionRequestTransfer;
 }

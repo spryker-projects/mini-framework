@@ -37,7 +37,7 @@ class TestResourcePlugin extends AbstractResourcePlugin implements RestResourceI
         return (new GlueResourceMethodCollectionTransfer())
             ->setGetCollection(new GlueResourceMethodConfigurationTransfer())
             ->setGet(new GlueResourceMethodConfigurationTransfer())
-            ->setPost((new GlueResourceMethodConfigurationTransfer())->setAttributes(TestTransfer::class))
+            ->setPost((new GlueResourceMethodConfigurationTransfer())->setAttributes(TestTransfer::class)) // AppRegistrationUpdateRequestAttributesTransfer
             ->setPatch((new GlueResourceMethodConfigurationTransfer())->setAttributes(TestTransfer::class))
             ->setDelete(new GlueResourceMethodConfigurationTransfer());
     }

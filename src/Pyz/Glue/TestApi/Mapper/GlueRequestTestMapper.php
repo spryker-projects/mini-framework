@@ -68,10 +68,11 @@ class GlueRequestTestMapper implements GlueRequestTestMapperInterface
 
     /**
      * @param int $identifier
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\TestCriteriaTransfer
      */
-    public function mapIdentifierToTestCriteriaTransfer(int $identifier): TestCriteriaTransfer
+    public function mapIdentifierToTestCriteriaTransfer(int $identifier, GlueRequestTransfer $glueRequestTransfer): TestCriteriaTransfer
     {
         $testCriteriaTransfer = new TestCriteriaTransfer();
         $testCriteriaTransfer->setTestConditions((new TestConditionsTransfer())->addIdTest($identifier));
@@ -81,10 +82,11 @@ class GlueRequestTestMapper implements GlueRequestTestMapperInterface
 
     /**
      * @param int $identifier
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer
      */
-    public function mapIdentifierToTestCollectionDeleteCriteriaTransfer(int $identifier): TestCollectionDeleteCriteriaTransfer
+    public function mapIdentifierToTestCollectionDeleteCriteriaTransfer(int $identifier, GlueRequestTransfer $glueRequestTransfer): TestCollectionDeleteCriteriaTransfer
     {
         $testCollectionDeleteCriteriaTransfer = new TestCollectionDeleteCriteriaTransfer();
         $testCollectionDeleteCriteriaTransfer->setIsTransactional(false)->addIdTest($identifier);
@@ -94,10 +96,11 @@ class GlueRequestTestMapper implements GlueRequestTestMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
      * @return \Generated\Shared\Transfer\TestCollectionRequestTransfer
      */
-    public function mapTestTransferToTestCollectionRequestTransfer(TestTransfer $testTransfer): TestCollectionRequestTransfer
+    public function mapTestTransferToTestCollectionRequestTransfer(TestTransfer $testTransfer, GlueRequestTransfer $glueRequestTransfer): TestCollectionRequestTransfer
     {
         $testCollectionRequestTransfer = new TestCollectionRequestTransfer();
         $testCollectionRequestTransfer->addTest($testTransfer)->setIsTransactional(false);
