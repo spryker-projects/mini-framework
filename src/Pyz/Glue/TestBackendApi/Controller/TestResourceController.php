@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyz\Glue\TestApi\Controller;
+namespace Pyz\Glue\TestBackendApi\Controller;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
@@ -8,7 +8,7 @@ use Generated\Shared\Transfer\TestTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractBackendApiController;
 
 /**
- * @method \Pyz\Glue\TestApi\TestApiFactory getFactory()
+ * @method \Pyz\Glue\TestBackendApi\TestBackendApiFactory getFactory()
  */
 class TestResourceController extends AbstractBackendApiController
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyz\Glue\TestApi\Mapper;
+namespace Pyz\Glue\TestBackendApi\Mapper;
 
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
@@ -78,6 +78,22 @@ class GlueResponseTestMapper implements GlueResponseTestMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\TestCollectionResponseTransfer $testCollectionResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function mapTestCollectionResponseToSingleResourceGlueResponse(TestCollectionResponseTransfer $testCollectionResponseTransfer): GlueResponseTransfer
+    {
+        $glueResponseTransfer = new GlueResponseTransfer();
+
+        if ($testCollectionResponseTransfer->getTests()->count() > 0) {
+            return $this->addResourceToGlueResponse($testCollectionResponseTransfer->getTests()->offsetGet(0), $glueResponseTransfer);
+        }
+
+        return $this->addNotFoundError($glueResponseTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
@@ -85,7 +101,7 @@ class GlueResponseTestMapper implements GlueResponseTestMapperInterface
     protected function addNotFoundError(GlueResponseTransfer $glueResponseTransfer): GlueResponseTransfer
     {
         $glueResponseTransfer
-            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setHttpStatus(Response::HTTP_NOT_FOUND)
             ->addError((new GlueErrorTransfer())->setMessage(Response::$statusTexts[Response::HTTP_NOT_FOUND]));
 
         return $glueResponseTransfer;

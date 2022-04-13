@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyz\Glue\TestApi\Mapper;
+namespace Pyz\Glue\TestBackendApi\Mapper;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer;

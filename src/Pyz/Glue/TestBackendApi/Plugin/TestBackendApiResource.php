@@ -1,15 +1,15 @@
 <?php
 
-namespace Pyz\Glue\TestApi\Plugin;
+namespace Pyz\Glue\TestBackendApi\Plugin;
 
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\TestTransfer;
-use Pyz\Glue\TestApi\Controller\TestResourceController;
+use Pyz\Glue\TestBackendApi\Controller\TestResourceController;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
 use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RestResourceInterface;
 
-class TestResourcePlugin extends AbstractResourcePlugin implements RestResourceInterface
+class TestBackendApiResource extends AbstractResourcePlugin implements RestResourceInterface
 {
     /**
      * @return string
@@ -20,9 +20,9 @@ class TestResourcePlugin extends AbstractResourcePlugin implements RestResourceI
     }
 
     /**
-     * @uses \Pyz\Glue\TestApi\Controller\TestResourceController
-     *
      * @return string
+     * @uses \Pyz\Glue\TestBackendApi\Controller\TestResourceController
+     *
      */
     public function getController(): string
     {

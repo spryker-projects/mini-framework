@@ -1,11 +1,11 @@
 <?php
 
-namespace Pyz\Glue\TestApi;
+namespace Pyz\Glue\TestBackendApi;
 
 use Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Backend\Container;
 
-class TestApiDependencyProvider extends AbstractBundleDependencyProvider
+class TestBackendApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
      * @var string

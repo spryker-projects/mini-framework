@@ -7,7 +7,7 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
-use Pyz\Glue\TestApi\Plugin\TestResourcePlugin;
+use Pyz\Glue\TestBackendApi\Plugin\TestBackendApiResource;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\RequestResourceFilterPlugin;
 use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
@@ -87,7 +87,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getResourcePlugins(): array
     {
         return [
-            new TestResourcePlugin(),
+            new TestBackendApiResource(),
         ];
     }
 
