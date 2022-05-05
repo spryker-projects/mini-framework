@@ -84,10 +84,11 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     /**
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface>
      */
-    protected function getResourcePlugins(): array
+    protected function getPresaveTransfersInTransactionsourcePlugins(): array
     {
         return [
-            new TestBackendApiResource(),
+            new FooBackendJsonApiResource(),
+            new FooBackendRestApiResource(),
         ];
     }
 

@@ -111,7 +111,7 @@ class TestResourceController extends AbstractBackendApiController
             ->getTestFacade()
             ->deleteTestCollection($testCollectionDeleteCriteriaTransfer);
 
-        return $this->getFactory()
+        return $this->getFactory(
             ->getTestToGlueResponseMapper()
             ->mapTestCollectionResponseToSingleResourceGlueResponse($testCollectionResponseTransfer);
     }

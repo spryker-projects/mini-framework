@@ -7,9 +7,10 @@ use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\TestTransfer;
 use Pyz\Glue\TestBackendApi\Controller\TestResourceController;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
+use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RestResourceInterface;
 
-class TestBackendApiResource extends AbstractResourcePlugin implements RestResourceInterface
+class TestBackendApiResource extends AbstractResourcePlugin implements RestResourceInterface, JsonApiResourceInterface
 {
     /**
      * @return string
@@ -20,9 +21,9 @@ class TestBackendApiResource extends AbstractResourcePlugin implements RestResou
     }
 
     /**
-     * @return string
      * @uses \Pyz\Glue\TestBackendApi\Controller\TestResourceController
      *
+     * @return string
      */
     public function getController(): string
     {
@@ -34,10 +35,12 @@ class TestBackendApiResource extends AbstractResourcePlugin implements RestResou
      */
     public function getDeclaredMethods(): GlueResourceMethodCollectionTransfer
     {
-        return (new GlueResourceMethodCollectionTransfer())
+        $glueResourceMethodCollectionTransfer = new GlueResourceMethodCollectionTransfer();
+
+        return $glueResourceMethodCollectionTransfer
             ->setGetCollection(new GlueResourceMethodConfigurationTransfer())
             ->setGet(new GlueResourceMethodConfigurationTransfer())
-            ->setPost((new GlueResourceMethodConfigurationTransfer())->setAttributes(TestTransfer::class)) // AppRegistrationUpdateRequestAttributesTransfer
+            ->setPost((new GlueResourceMethodConfigurationTransfer())->setAttributes(TestTransfer::class))
             ->setPatch((new GlueResourceMethodConfigurationTransfer())->setAttributes(TestTransfer::class))
             ->setDelete(new GlueResourceMethodConfigurationTransfer());
     }
