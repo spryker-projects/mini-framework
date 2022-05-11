@@ -8,7 +8,9 @@
       "spryker/glue-http": "^0.3.0",
       "spryker/glue-rest-api-convention": "^0.1.0",
       "spryker/console": "^4.10.2",
-      "spryker/install": "^1.0.0"
+      "spryker/install": "^1.0.0",
+        "spryker/scheduler-jenkins": "^1.2",
+        "spryker/scheduler": "^1.2"
     },
     "require-dev": {
       "spryker/development": "^3.32.1"

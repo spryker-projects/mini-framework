@@ -25,11 +25,16 @@ use Spryker\Zed\Propel\Communication\Console\PropelSchemaValidatorConsole;
 use Spryker\Zed\Propel\Communication\Console\PropelSchemaXmlNameValidatorConsole;
 use Spryker\Zed\Propel\Communication\Console\RemoveEntityTransferConsole;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
+use Spryker\Zed\Scheduler\Communication\Console\SchedulerCleanConsole;
+use Spryker\Zed\Scheduler\Communication\Console\SchedulerResumeConsole;
+use Spryker\Zed\Scheduler\Communication\Console\SchedulerSetupConsole;
+use Spryker\Zed\Scheduler\Communication\Console\SchedulerSuspendConsole;
 use Spryker\Zed\Transfer\Communication\Console\DataBuilderGeneratorConsole;
 use Spryker\Zed\Transfer\Communication\Console\RemoveDataBuilderConsole;
 use Spryker\Zed\Transfer\Communication\Console\RemoveTransferConsole;
 use Spryker\Zed\Transfer\Communication\Console\TransferGeneratorConsole;
 use Spryker\Zed\Transfer\Communication\Console\ValidatorConsole;
+use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 
 /**
  * @method \Pyz\Zed\Console\ConsoleConfig getConfig()
@@ -60,6 +65,11 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DatabaseDropConsole(),
             new DatabaseDropTablesConsole(),
             new DeleteMigrationFilesConsole(),
+
+            new SchedulerSetupConsole(),
+            new SchedulerCleanConsole(),
+            new SchedulerSuspendConsole(),
+            new SchedulerResumeConsole(),
 
             new DeleteLogFilesConsole(),
 
@@ -105,6 +115,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     {
         return [
             new PropelApplicationPlugin(),
+            new TwigApplicationPlugin(),
         ];
     }
 }

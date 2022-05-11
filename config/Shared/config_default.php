@@ -120,3 +120,19 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED]
 // ------------------------------ Glue Backend API -------------------------------
 // ----------------------------------------------------------------------------
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = getenv('SPRYKER_GLUE_BACKEND_HOST');
+
+$config[\Spryker\Shared\Scheduler\SchedulerConstants::ENABLED_SCHEDULERS] = [
+    \Pyz\Shared\Scheduler\SchedulerConfig::SCHEDULER_JENKINS,
+];
+$config[\Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
+    \Pyz\Shared\Scheduler\SchedulerConfig::SCHEDULER_JENKINS => [
+        \Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL => sprintf(
+            '%s://%s:%s/',
+            getenv('SPRYKER_SCHEDULER_PROTOCOL') ?: 'http',
+            getenv('SPRYKER_SCHEDULER_HOST'),
+            getenv('SPRYKER_SCHEDULER_PORT')
+        ),
+    ],
+];
+
+$config[\Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH] = getenv('SPRYKER_JENKINS_TEMPLATE_PATH') ?: null;
