@@ -7,11 +7,9 @@
 
 namespace Pyz\Glue\GlueRestApiConvention;
 
-use Pyz\Glue\GlueRestApiConvention\Plugin\AttributesRequestBuilderPlugin;
 use Spryker\Glue\GlueRestApiConvention\GlueRestApiConventionDependencyProvider as SprykerGlueRestApiConventionDependencyProvider;
 use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\AcceptFormatRequestValidatorPlugin;
-use Pyz\Glue\GlueRestApiConvention\Plugin\AttributeResponseExpanderPlugin;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\ErrorResponseExpanderPlugin;
+use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\AttributesRequestBuilderPlugin;
 use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\FormatRequestBuilderPlugin;
 use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\JsonResponseEncoderPlugin;
 use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\PaginationRequestBuilderPlugin;
@@ -27,17 +25,6 @@ class GlueRestApiConventionDependencyProvider extends SprykerGlueRestApiConventi
     {
         return [
             new JsonResponseEncoderPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\ResponseExpanderPluginInterface>
-     */
-    protected function getResponseExpanderPlugins(): array
-    {
-        return [
-            new AttributeResponseExpanderPlugin(),
-            new ErrorResponseExpanderPlugin(),
         ];
     }
 

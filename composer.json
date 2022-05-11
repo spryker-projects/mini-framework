@@ -1,10 +1,11 @@
 {
     "name": "spryker/mini-api-framework",
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
       "spryker/glue-backend-api-application": "^0.2.0",
       "spryker/glue-application": "^1.39.0",
-      "spryker/glue-http": "^0.2.0",
+      "spryker/glue-http": "^0.3.0",
       "spryker/glue-rest-api-convention": "^0.1.0",
       "spryker/console": "^4.10.2",
       "spryker/install": "^1.0.0"
