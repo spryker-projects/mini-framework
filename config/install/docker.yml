@@ -33,6 +33,12 @@ sections:
         generate-glue-backend-ide-auto-completion:
             command: 'vendor/bin/console dev:ide-auto-completion:glue-backend:generate'
 
+        generate-client-backend-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:client:generate'
+
+        generate-service-backend-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:service:generate'
+
     init-storages-per-region:
         propel-copy-schema:
             command: 'vendor/bin/console propel:schema:copy'
