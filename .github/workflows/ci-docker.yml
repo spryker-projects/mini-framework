@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  validation:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        platform-image: [
+            'spryker/php:7.4',
+            'spryker/php:8.1-RC'
+        ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Docker
+        env:
+            SPRYKER_PLATFORM_IMAGE: ${{ matrix.platform-image }}
+        run: |
+            git submodule update --init --force docker
+            docker/sdk boot deploy.ci.yml
+            docker/sdk up
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+            echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Composer Cache
+        uses: actions/cache@v2
+        with:
+            path: ${{ steps.composer-cache.outputs.dir }}
+            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+            restore-keys: ${{ runner.os }}-composer-
+
+      - name: Composer Install
+        run: composer install --no-interaction -o
+
+      - name: Check PHP for syntax errors
+        run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+
+      - name: Run Install
+        run: vendor/bin/install -r development.yml
+
+      - name: CodeStyle Checks
+        run: composer cs-check
+
+      - name: PHPStan Checks
+        run: composer stan
