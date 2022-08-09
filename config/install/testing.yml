@@ -1,7 +1,42 @@
 env:
     APPLICATION_ENV: devtest
 
+stores:
+    - DE
+
+command-timeout: 3600
+
 sections:
+    hidden:
+        excluded: true
+
+    composer:
+        composer-autoloader:
+            command: 'composer dumpautoload --apcu'
+
+    environment:
+        console-environment:
+            command: 'if [ ! -f ./config/Shared/console_env_local.php ]; then cp ./config/Shared/console_env_local.dist.php ./config/Shared/console_env_local.php ; fi'
+
+    clear:
+        remove-logs:
+            command: 'vendor/bin/console log:clear'
+
+        remove-cache:
+            command: 'vendor/bin/console cache:empty-all'
+
+        remove-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:remove'
+
+        remove-databuilder:
+            command: 'vendor/bin/console transfer:databuilder:remove'
+
+        remove-entity-transfer:
+            command: 'vendor/bin/console transfer:entity:remove'
+
+        remove-transfer:
+            command: 'vendor/bin/console transfer:remove'
+
     generate:
         generate-transfers:
             command: 'vendor/bin/console transfer:generate'
@@ -15,41 +50,70 @@ sections:
         generate-glue-backend-ide-auto-completion:
             command: 'vendor/bin/console dev:ide-auto-completion:glue-backend:generate'
 
+        generate-client-backend-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:client:generate'
+
+        generate-service-backend-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:service:generate'
+
     database-flush:
-        drop-database:
-            command: 'vendor/bin/console propel:database:drop'
+        #        drop-database:
+        #            command: 'vendor/bin/console propel:database:drop'
+        #            groups:
+        #                - propel
+
         delete-migration-files:
             command: 'vendor/bin/console propel:migration:delete'
+            groups:
+                - propel
 
     database-migrate:
-        propel-create:
-            command: 'vendor/bin/console propel:database:create'
+        #        propel-create:
+        #            command: 'vendor/bin/console propel:database:create'
+        #            groups:
+        #                - propel
 
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat'
+            groups:
+                - propel
 
         propel-copy-schema:
             command: 'vendor/bin/console propel:schema:copy'
+            groups:
+                - propel
 
         propel-build:
             command: 'vendor/bin/console propel:model:build'
+            groups:
+                - propel
 
-        propel-diff:
-            command: 'vendor/bin/console propel:diff'
-
-        propel-migrate:
-            command: 'vendor/bin/console propel:migrate'
+        #        propel-diff:
+        #            command: 'vendor/bin/console propel:diff'
+        #            groups:
+        #                - propel
+        #
+        #        propel-migration-check:
+        #            command: 'vendor/bin/console propel:migration:check'
+        #            breakOnFailure: false
+        #            groups:
+        #                - propel
+        #
+        #        propel-migrate:
+        #            command: 'vendor/bin/console propel:migrate'
+        #            groups:
+        #                - propel
 
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
-    setup-test:
-        codeception-build:
-            command: 'vendor/bin/codecept build --ansi'
+    performance:
+        composer-autoloader:
+            command: 'composer dumpautoload -a -o --classmap-authoritative'
 
-        databuilder-generate:
-            command: 'vendor/bin/console transfer:databuilder:generate'
+        class-resolver-build:
+            command: 'vendor/bin/console cache:class-resolver:build'
 
-    scheduler-start:
-        scheduler-setup:
-            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
+#    scheduler-start:
+#        scheduler-setup:
+#            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
