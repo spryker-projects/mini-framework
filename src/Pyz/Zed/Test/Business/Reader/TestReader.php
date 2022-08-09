@@ -53,6 +53,7 @@ class TestReader implements TestReaderInterface
             }
         }
 
+        /** @var array<\Orm\Zed\Test\Persistence\SpyTest> $testEntities */
         $testEntities = $query->find();
         $testCollectionTransfer = new TestCollectionTransfer();
         $testCollectionTransfer->setPagination($testCriteriaTransfer->getPagination());

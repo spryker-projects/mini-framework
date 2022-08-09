@@ -17,7 +17,7 @@ class TestCreator extends AbstractTestSaver
     protected function saveTestEntity(TestTransfer $test, TestCollectionResponseTransfer $testCollectionResponseTransfer): TestCollectionResponseTransfer
     {
         $testEntity = new SpyTest();
-        $testEntity->setName($test->getName());
+        $testEntity->setName($test->getNameOrFail());
         $testEntity->save();
 
         $testCollectionResponseTransfer->addTest(

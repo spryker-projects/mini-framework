@@ -19,10 +19,10 @@ class TestUpdater extends AbstractTestSaver
      */
     protected function saveTestEntity(TestTransfer $test, TestCollectionResponseTransfer $testCollectionResponseTransfer): TestCollectionResponseTransfer
     {
-        $existingTestEntity = SpyTestQuery::create()->findOneByIdTest($test->getId());
+        $existingTestEntity = SpyTestQuery::create()->findOneByIdTest($test->getIdOrFail());
 
         if ($existingTestEntity) {
-            $existingTestEntity->setName($test->getName());
+            $existingTestEntity->setName($test->getNameOrFail());
             $existingTestEntity->save();
 
             $testCollectionResponseTransfer->addTest(

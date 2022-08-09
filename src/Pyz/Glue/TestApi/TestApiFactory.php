@@ -12,6 +12,7 @@ class TestApiFactory extends AbstractBackendApiFactory
      */
     public function getTestFacade(): TestFacadeInterface
     {
+        /** @phpstan-var \Pyz\Zed\Test\Business\TestFacadeInterface */
         return $this->getProvidedDependency(TestApiDependencyProvider::FACADE_TEST);
     }
 }

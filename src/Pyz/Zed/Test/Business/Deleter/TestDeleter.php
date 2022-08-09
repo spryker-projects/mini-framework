@@ -32,6 +32,7 @@ class TestDeleter implements TestDeleterInterface
                         $query->filterByIdTest_In($testCollectionDeleteCriteriaTransfer->getTestIds());
                     }
 
+                    /** @var array<\Orm\Zed\Test\Persistence\SpyTest> $tests */
                     $tests = $query->find();
 
                     foreach ($tests as $test) {
@@ -61,7 +62,7 @@ class TestDeleter implements TestDeleterInterface
             if ($testCollectionDeleteCriteriaTransfer->getTestIds()) {
                 $query->filterByIdTest_In($testCollectionDeleteCriteriaTransfer->getTestIds());
             }
-
+            /** @var array<\Orm\Zed\Test\Persistence\SpyTest> $tests */
             $tests = $query->find();
 
             foreach ($tests as $test) {
