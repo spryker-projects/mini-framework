@@ -25,7 +25,7 @@ jobs:
         env:
             SPRYKER_PLATFORM_IMAGE: ${{ matrix.platform-image }}
         run: |
-            git submodule update --init --force docker
+            git clone https://github.com/spryker/docker-sdk docker
             docker/sdk boot deploy.ci.yml
             docker/sdk up
 
