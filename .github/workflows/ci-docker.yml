@@ -50,9 +50,6 @@ jobs:
       - name: Check PHP for syntax errors
         run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
 
-      - name: Run Install
-        run: vendor/bin/install -r development.yml
-
       - name: CodeStyle Checks
         run: composer cs-check
 
