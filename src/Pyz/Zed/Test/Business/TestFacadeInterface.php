@@ -10,11 +10,31 @@ use Generated\Shared\Transfer\TestCriteriaTransfer;
 
 interface TestFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\TestCollectionRequestTransfer $testCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\TestCollectionResponseTransfer
+     */
     public function createTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
 
+    /**
+     * @param \Generated\Shared\Transfer\TestCollectionRequestTransfer $testCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\TestCollectionResponseTransfer
+     */
     public function updateTestCollection(TestCollectionRequestTransfer $testCollectionRequestTransfer): TestCollectionResponseTransfer;
 
+    /**
+     * @param \Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer $testCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TestCollectionResponseTransfer
+     */
     public function deleteTestCollection(TestCollectionDeleteCriteriaTransfer $testCollectionDeleteCriteriaTransfer): TestCollectionResponseTransfer;
 
+    /**
+     * @param \Generated\Shared\Transfer\TestCriteriaTransfer $testCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TestCollectionTransfer
+     */
     public function getTestCollection(TestCriteriaTransfer $testCriteriaTransfer): TestCollectionTransfer;
 }

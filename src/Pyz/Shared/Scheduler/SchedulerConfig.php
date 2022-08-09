@@ -2,7 +2,12 @@
 
 namespace Pyz\Shared\Scheduler;
 
-class SchedulerConfig extends \Spryker\Shared\Kernel\AbstractBundleConfig
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class SchedulerConfig extends AbstractBundleConfig
 {
+    /**
+     * @var string
+     */
     public const SCHEDULER_JENKINS = 'jenkins';
 }

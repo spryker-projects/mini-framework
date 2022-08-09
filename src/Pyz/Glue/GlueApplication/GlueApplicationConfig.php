@@ -1,9 +1,5 @@
 <?php
 
-/**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
 
 namespace Pyz\Glue\GlueApplication;
 
@@ -15,15 +11,4 @@ class GlueApplicationConfig extends SprykerGlueApplicationConfig
      * @var bool
      */
     public const VALIDATE_REQUEST_HEADERS = false;
-
-    /**
-     * @return array<string>
-     */
-    public function getCorsAllowedHeaders(): array
-    {
-        return array_merge(
-            parent::getCorsAllowedHeaders(),
-            [CartsRestApiConfig::HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID],
-        );
-    }
 }

@@ -1,16 +1,18 @@
 <?php
 
-/**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
 
 namespace Pyz\Zed\Console;
 
+use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+use Spryker\Zed\Development\Communication\Console\GenerateClientIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateGlueBackendIdeAutoCompletionConsole;
+use Spryker\Zed\Development\Communication\Console\GenerateServiceIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateZedIdeAutoCompletionConsole;
+use Spryker\Zed\Development\Communication\Console\RemoveClientIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveGlueBackendIdeAutoCompletionConsole;
+use Spryker\Zed\Development\Communication\Console\RemoveIdeAutoCompletionConsole;
+use Spryker\Zed\Development\Communication\Console\RemoveServiceIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveZedIdeAutoCompletionConsole;
 use Spryker\Zed\Kernel\Communication\Console\ResolvableClassCacheConsole;
 use Spryker\Zed\Kernel\Container;
@@ -59,6 +61,8 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new EntityTransferGeneratorConsole(),
             new RemoveEntityTransferConsole(),
 
+            new EmptyAllCachesConsole(),
+
             // Setup commands
             new DeployPreparePropelConsole(),
 
@@ -85,10 +89,15 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new RemoveDataBuilderConsole();
             $commands[] = new PropelSchemaValidatorConsole();
             $commands[] = new PropelSchemaXmlNameValidatorConsole();
+            $commands[] = new RemoveIdeAutoCompletionConsole();
             $commands[] = new GenerateZedIdeAutoCompletionConsole();
             $commands[] = new RemoveZedIdeAutoCompletionConsole();
             $commands[] = new GenerateGlueBackendIdeAutoCompletionConsole();
             $commands[] = new RemoveGlueBackendIdeAutoCompletionConsole();
+            $commands[] = new GenerateClientIdeAutoCompletionConsole();
+            $commands[] = new RemoveClientIdeAutoCompletionConsole();
+            $commands[] = new GenerateServiceIdeAutoCompletionConsole();
+            $commands[] = new RemoveServiceIdeAutoCompletionConsole();
         }
 
         return $commands;
@@ -107,9 +116,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     }
 
     /**
-     * @param Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return array
+     * @return array<\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface>
      */
     public function getApplicationPlugins(Container $container): array
     {

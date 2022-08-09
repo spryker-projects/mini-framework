@@ -573,6 +573,14 @@ abstract class SpyStore implements ActiveRecordInterface
         });
     }
 
+     /**
+     * Code to be run after persisting the object
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     */
+     public function postSave(?ConnectionInterface $con = null)
+     {
+     }
+
     /**
      * Performs the work of inserting or updating the row in the database.
      *
@@ -1040,14 +1048,6 @@ abstract class SpyStore implements ActiveRecordInterface
     {
                 return true;
     }
-
-    /**
-     * Code to be run after persisting the object
-     * @param ConnectionInterface $con
-     */
-    public function postSave(ConnectionInterface $con = null)
-    {
-            }
 
     /**
      * Code to be run before inserting to database

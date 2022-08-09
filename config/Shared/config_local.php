@@ -1,6 +1,5 @@
 <?php
 
-use Spryker\Shared\Kernel\Store;
 
 /**
  * Here go your local configs which should not be version controlled (tokens, passwords, keys, ...)

@@ -13,24 +13,29 @@ class TestReader implements TestReaderInterface
 {
     use TransactionTrait;
 
+    /**
+     * @param \Generated\Shared\Transfer\TestCriteriaTransfer $testCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TestCollectionTransfer
+     */
     public function getTestCollection(TestCriteriaTransfer $testCriteriaTransfer): TestCollectionTransfer
     {
         $query = SpyTestQuery::create();
 
-        if($testCriteriaTransfer->getTestConditions() && $testCriteriaTransfer->getTestConditions()->getTestIds()) {
+        if ($testCriteriaTransfer->getTestConditions() && $testCriteriaTransfer->getTestConditions()->getTestIds()) {
             $query->filterByIdTest_In($testCriteriaTransfer->getTestConditions()->getTestIds());
         }
 
-        if($testCriteriaTransfer->getTestConditions() && $testCriteriaTransfer->getTestConditions()->getNames()) {
+        if ($testCriteriaTransfer->getTestConditions() && $testCriteriaTransfer->getTestConditions()->getNames()) {
             $query->filterByName_In($testCriteriaTransfer->getTestConditions()->getNames());
         }
 
-        if($testCriteriaTransfer->getPagination()) {
-            if($testCriteriaTransfer->getPagination()->getLimit()) {
+        if ($testCriteriaTransfer->getPagination()) {
+            if ($testCriteriaTransfer->getPagination()->getLimit()) {
                 $query->limit($testCriteriaTransfer->getPagination()->getLimit());
             }
 
-            if($testCriteriaTransfer->getPagination()->getOffset()) {
+            if ($testCriteriaTransfer->getPagination()->getOffset()) {
                 $query->offset($testCriteriaTransfer->getPagination()->getOffset());
             }
         }
@@ -38,10 +43,12 @@ class TestReader implements TestReaderInterface
         foreach ($testCriteriaTransfer->getSortCollection() as $sort) {
             switch ($sort->getField()) {
                 case 'name':
-                    $query->orderByName($sort->getIsAscending()? Criteria::ASC : Criteria::DESC);
+                    $query->orderByName($sort->getIsAscending() ? Criteria::ASC : Criteria::DESC);
+
                     break;
                 case 'id':
-                    $query->orderByIdTest($sort->getIsAscending()? Criteria::ASC : Criteria::DESC);
+                    $query->orderByIdTest($sort->getIsAscending() ? Criteria::ASC : Criteria::DESC);
+
                     break;
             }
         }
@@ -50,9 +57,9 @@ class TestReader implements TestReaderInterface
         $testCollectionTransfer = new TestCollectionTransfer();
         $testCollectionTransfer->setPagination($testCriteriaTransfer->getPagination());
 
-        foreach($testEntities as $testEntity) {
+        foreach ($testEntities as $testEntity) {
             $testCollectionTransfer->addTest(
-                (new TestTransfer())->setId($testEntity->getIdTest())->setName($testEntity->getName())
+                (new TestTransfer())->setId($testEntity->getIdTest())->setName($testEntity->getName()),
             );
         }
 

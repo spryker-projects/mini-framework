@@ -3,24 +3,54 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-      "spryker/glue-backend-api-application": "^0.2.0",
-      "spryker/glue-application": "^1.39.0",
-      "spryker/glue-http": "^0.3.0",
-      "spryker/glue-rest-api-convention": "^0.1.0",
-      "spryker/console": "^4.10.2",
-      "spryker/install": "^1.0.0",
-        "spryker/scheduler-jenkins": "^1.2",
-        "spryker/scheduler": "^1.2"
+        "spryker/cache": "^3.5",
+        "spryker/console": "^4.10.2",
+        "spryker/glue-application": "^1.39.0",
+        "spryker/glue-backend-api-application": "^0.2.0",
+        "spryker/glue-http": "^0.3.0",
+        "spryker/glue-rest-api-convention": "^0.1.0",
+        "spryker/install": "^1.0.0",
+        "spryker/scheduler": "^1.2",
+        "spryker/scheduler-jenkins": "^1.2"
     },
     "require-dev": {
-      "spryker/development": "^3.32.1"
+        "spryker-sdk/phpstan-spryker": "^0.4.0",
+        "spryker/code-sniffer": "^0.17.10",
+        "spryker/development": "^3.32.1"
     },
     "autoload": {
-      "psr-4": {
-        "Generated\\": "src/Generated/",
-        "Orm\\": "src/Orm/",
-        "Pyz\\": "src/Pyz/",
-        "SprykerConfig\\": "src/SprykerConfig/"
-      }
+        "psr-4": {
+            "Generated\\": "src/Generated/",
+            "Orm\\": "src/Orm/",
+            "Pyz\\": "src/Pyz/",
+            "SprykerConfig\\": "src/SprykerConfig/"
+        }
+    },
+    "scripts": {
+        "cs-check": "phpcs -p",
+        "cs-fix": "phpcbf -p",
+        "stan": "phpstan analyse",
+        "stan-baseline": "phpstan analyze --generate-baseline",
+        "psalm": "psalm.phar --show-info=false",
+        "psalm-update-baseline": "psalm.phar --update-baseline",
+        "psalm-set-baseline": "psalm.phar --set-baseline=psalm-baseline.xml",
+        "psalm-update-report": "psalm.phar --report=psalm-report.xml",
+        "test": "codecept build && codecept run",
+        "test-cover": "codecept build && codecept run --coverage-xml"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "use-include-path": true,
+        "process-timeout": 600,
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "symfony/runtime": true,
+            "composer/package-versions-deprecated": true
+        }
     }
 }

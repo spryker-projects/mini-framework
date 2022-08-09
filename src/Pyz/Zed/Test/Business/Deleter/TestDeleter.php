@@ -2,46 +2,51 @@
 
 namespace Pyz\Zed\Test\Business\Deleter;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer;
-use Generated\Shared\Transfer\TestCollectionRequestTransfer;
 use Generated\Shared\Transfer\TestCollectionResponseTransfer;
 use Generated\Shared\Transfer\TestTransfer;
-use Orm\Zed\Test\Persistence\SpyTest;
 use Orm\Zed\Test\Persistence\SpyTestQuery;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Throwable;
 
 class TestDeleter implements TestDeleterInterface
 {
     use TransactionTrait;
 
+    /**
+     * @param \Generated\Shared\Transfer\TestCollectionDeleteCriteriaTransfer $testCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TestCollectionResponseTransfer
+     */
     public function deleteTestCollection(TestCollectionDeleteCriteriaTransfer $testCollectionDeleteCriteriaTransfer): TestCollectionResponseTransfer
     {
-        if($testCollectionDeleteCriteriaTransfer->getIsTransactional()) {
+        if ($testCollectionDeleteCriteriaTransfer->getIsTransactional()) {
             $this->getTransactionHandler()->handleTransaction(function () use ($testCollectionDeleteCriteriaTransfer) {
                 $testCollectionResponseTransfer = new TestCollectionResponseTransfer();
 
                 try {
                     $query = SpyTestQuery::create();
-                    if($testCollectionDeleteCriteriaTransfer->getTestIds()) {
+                    if ($testCollectionDeleteCriteriaTransfer->getTestIds()) {
                         $query->filterByIdTest_In($testCollectionDeleteCriteriaTransfer->getTestIds());
                     }
 
                     $tests = $query->find();
 
-                    foreach($tests as $test) {
+                    foreach ($tests as $test) {
                         $test->delete();
                         $testCollectionResponseTransfer->addTest(
-                            (new TestTransfer())->setName($test->getName())->setId($test->getIdTest())
+                            (new TestTransfer())->setName($test->getName())->setId($test->getIdTest()),
                         );
                     }
 
                     return $testCollectionResponseTransfer;
-                } catch(\Throwable $exception) {
+                } catch (Throwable $exception) {
                     $error = new ErrorTransfer();
                     $error->setMessage($exception->getMessage());
 
-                    $testCollectionResponseTransfer->setTests([]);
+                    $testCollectionResponseTransfer->setTests(new ArrayObject());
                     $testCollectionResponseTransfer->addError($error);
 
                     return $testCollectionResponseTransfer;
@@ -53,21 +58,21 @@ class TestDeleter implements TestDeleterInterface
 
         try {
             $query = SpyTestQuery::create();
-            if($testCollectionDeleteCriteriaTransfer->getTestIds()) {
+            if ($testCollectionDeleteCriteriaTransfer->getTestIds()) {
                 $query->filterByIdTest_In($testCollectionDeleteCriteriaTransfer->getTestIds());
             }
 
             $tests = $query->find();
 
-            foreach($tests as $test) {
+            foreach ($tests as $test) {
                 $test->delete();
                 $testCollectionResponseTransfer->addTest(
-                    (new TestTransfer())->setName($test->getName())->setId($test->getIdTest())
+                    (new TestTransfer())->setName($test->getName())->setId($test->getIdTest()),
                 );
             }
 
             return $testCollectionResponseTransfer;
-        } catch(\Throwable $exception) {
+        } catch (Throwable $exception) {
             $error = new ErrorTransfer();
             $error->setMessage($exception->getMessage());
 

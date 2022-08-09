@@ -50,11 +50,17 @@ sections:
         generate-glue-backend-ide-auto-completion:
             command: 'vendor/bin/console dev:ide-auto-completion:glue-backend:generate'
 
+        generate-client-backend-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:client:generate'
+
+        generate-service-backend-ide-auto-completion:
+            command: 'vendor/bin/console dev:ide-auto-completion:service:generate'
+
     database-flush:
-        drop-database:
-            command: 'vendor/bin/console propel:database:drop'
-            groups:
-                - propel
+#        drop-database:
+#            command: 'vendor/bin/console propel:database:drop'
+#            groups:
+#                - propel
 
         delete-migration-files:
             command: 'vendor/bin/console propel:migration:delete'
@@ -62,10 +68,10 @@ sections:
                 - propel
 
     database-migrate:
-        propel-create:
-            command: 'vendor/bin/console propel:database:create'
-            groups:
-                - propel
+#        propel-create:
+#            command: 'vendor/bin/console propel:database:create'
+#            groups:
+#                - propel
 
         propel-postgres-compatibility:
             command: 'vendor/bin/console propel:pg-sql-compat'
@@ -82,21 +88,21 @@ sections:
             groups:
                 - propel
 
-        propel-diff:
-            command: 'vendor/bin/console propel:diff'
-            groups:
-                - propel
-
-        propel-migration-check:
-            command: 'vendor/bin/console propel:migration:check'
-            breakOnFailure: false
-            groups:
-                - propel
-
-        propel-migrate:
-            command: 'vendor/bin/console propel:migrate'
-            groups:
-                - propel
+#        propel-diff:
+#            command: 'vendor/bin/console propel:diff'
+#            groups:
+#                - propel
+#
+#        propel-migration-check:
+#            command: 'vendor/bin/console propel:migration:check'
+#            breakOnFailure: false
+#            groups:
+#                - propel
+#
+#        propel-migrate:
+#            command: 'vendor/bin/console propel:migrate'
+#            groups:
+#                - propel
 
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
@@ -108,6 +114,6 @@ sections:
         class-resolver-build:
             command: 'vendor/bin/console cache:class-resolver:build'
 
-    scheduler-start:
-        scheduler-setup:
-            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
+#    scheduler-start:
+#        scheduler-setup:
+#            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'

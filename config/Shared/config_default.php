@@ -130,7 +130,7 @@ $config[\Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants::JENKINS_CONF
             '%s://%s:%s/',
             getenv('SPRYKER_SCHEDULER_PROTOCOL') ?: 'http',
             getenv('SPRYKER_SCHEDULER_HOST'),
-            getenv('SPRYKER_SCHEDULER_PORT')
+            getenv('SPRYKER_SCHEDULER_PORT'),
         ),
     ],
 ];

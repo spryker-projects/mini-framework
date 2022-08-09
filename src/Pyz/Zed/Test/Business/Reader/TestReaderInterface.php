@@ -7,5 +7,10 @@ use Generated\Shared\Transfer\TestCriteriaTransfer;
 
 interface TestReaderInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\TestCriteriaTransfer $testCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TestCollectionTransfer
+     */
     public function getTestCollection(TestCriteriaTransfer $testCriteriaTransfer): TestCollectionTransfer;
 }

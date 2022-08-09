@@ -1,9 +1,5 @@
 <?php
 
-/**
- * This file is part of the Spryker Suite.
- * For full license information, please view the LICENSE file that was distributed with this source code.
- */
 
 namespace Pyz\Zed\Log\Communication\Plugin;
 
@@ -13,6 +9,8 @@ use Symfony\Component\Process\Process;
 
 /**
  * @method \Spryker\Zed\Log\Communication\LogCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Log\LogConfig getConfig()
+ * @method \Spryker\Zed\Log\Business\LogFacadeInterface getFacade()
  */
 class FilebeatLogListenerPlugin extends AbstractPlugin implements LogListenerInterface
 {

@@ -9,10 +9,10 @@ use Orm\Zed\Test\Persistence\SpyTest;
 class TestCreator extends AbstractTestSaver
 {
     /**
-     * @param TestTransfer $test
-     * @param TestCollectionResponseTransfer $testCollectionResponseTransfer
+     * @param \Generated\Shared\Transfer\TestTransfer $test
+     * @param \Generated\Shared\Transfer\TestCollectionResponseTransfer $testCollectionResponseTransfer
      *
-     * @return TestCollectionResponseTransfer
+     * @return \Generated\Shared\Transfer\TestCollectionResponseTransfer
      */
     protected function saveTestEntity(TestTransfer $test, TestCollectionResponseTransfer $testCollectionResponseTransfer): TestCollectionResponseTransfer
     {
@@ -21,7 +21,7 @@ class TestCreator extends AbstractTestSaver
         $testEntity->save();
 
         $testCollectionResponseTransfer->addTest(
-            (new TestTransfer())->setId($testEntity->getIdTest())->setName($testEntity->getName())
+            (new TestTransfer())->setId($testEntity->getIdTest())->setName($testEntity->getName()),
         );
 
         return $testCollectionResponseTransfer;

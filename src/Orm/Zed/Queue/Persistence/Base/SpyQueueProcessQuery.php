@@ -138,6 +138,48 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
         return $this;
     }
 
+
+    /**
+     * Issue a SELECT query based on the current ModelCriteria
+     * and format the list of results with the current formatter
+     * By default, returns an array of model objects
+     *
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con an optional connection object
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]|mixed the list of results, formatted by the current formatter
+     */
+    public function find(?ConnectionInterface $con = null)
+    {
+        return parent::find($con);
+    }
+
+    /**
+     * Issue a SELECT ... LIMIT 1 query based on the current ModelCriteria
+     * and format the result with the current formatter
+     * By default, returns a model object.
+     *
+     * Does not work with ->with()s containing one-to-many relations.
+     *
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con an optional connection object
+     *
+     * @return mixed the result, formatted by the current formatter
+     */
+    public function findOne(?ConnectionInterface $con = null)
+    {
+        return parent::findOne($con);
+    }
+
+    /**
+     * Issue an existence check on the current ModelCriteria
+     *
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con an optional connection object
+     *
+     * @return bool column existence
+     */
+    public function exists(?ConnectionInterface $con = null)
+    {
+        return parent::exists($con);
+    }
     protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
@@ -197,7 +239,7 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
         }
 
         if ($con === null) {
-            $con = Propel::getServiceContainer()->getReadConnection(SpyQueueProcessTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getReadConnection($this->getDbName());
         }
 
         $this->basePreSelect($con);
@@ -283,9 +325,11 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      */
     public function findPks($keys, ConnectionInterface $con = null)
     {
-        if (null === $con) {
+
+        if ($con === null) {
             $con = Propel::getServiceContainer()->getReadConnection($this->getDbName());
         }
+
         $this->basePreSelect($con);
         $criteria = $this->isKeepQuery() ? clone $this : $this;
         $dataFetcher = $criteria
