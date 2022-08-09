@@ -32,21 +32,6 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: |
-            echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Composer Cache
-        uses: actions/cache@v2
-        with:
-            path: ${{ steps.composer-cache.outputs.dir }}
-            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-            restore-keys: ${{ runner.os }}-composer-
-
-      - name: Composer Install
-        run: composer install --no-interaction -o
-
       - name: Check PHP for syntax errors
         run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
 
