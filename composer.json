@@ -1,5 +1,7 @@
 {
     "name": "spryker/mini-api-framework",
+    "description": "Spryker Mini-Framework",
+    "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
