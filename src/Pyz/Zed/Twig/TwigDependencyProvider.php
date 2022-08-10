@@ -13,7 +13,7 @@ use Spryker\Zed\Twig\TwigDependencyProvider as SprykerTwigDependencyProvider;
 class TwigDependencyProvider extends SprykerTwigDependencyProvider
 {
     /**
-     * @return array<\Spryker\Zed\Scheduler\Communication\Plugin\Twig\SchedulerTwigPlugin>
+     * @return array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface>
      */
     protected function getTwigPlugins(): array
     {
