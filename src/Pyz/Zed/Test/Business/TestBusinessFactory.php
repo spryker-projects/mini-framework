@@ -16,6 +16,9 @@ use Pyz\Zed\Test\Business\Saver\TestSaverInterface;
 use Pyz\Zed\Test\Business\Saver\TestUpdater;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Pyz\Zed\Test\TestConfig getConfig()
+ */
 class TestBusinessFactory extends AbstractBusinessFactory
 {
     /**
