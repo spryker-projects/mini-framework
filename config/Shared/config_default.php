@@ -2,6 +2,7 @@
 
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
+use Pyz\Shared\Scheduler\SchedulerConfig;
 use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
@@ -12,6 +13,9 @@ use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
+use Spryker\Shared\Scheduler\SchedulerConstants;
+use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig;
+use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -117,16 +121,20 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED]
     = getenv('SPRYKER_LOG_STDERR') ?: 'php://stderr';
 
 // ----------------------------------------------------------------------------
-// ------------------------------ Glue Backend API -------------------------------
+// ------------------------------ Glue Backend API ----------------------------
 // ----------------------------------------------------------------------------
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = getenv('SPRYKER_GLUE_BACKEND_HOST');
 
-$config[\Spryker\Shared\Scheduler\SchedulerConstants::ENABLED_SCHEDULERS] = [
-    \Pyz\Shared\Scheduler\SchedulerConfig::SCHEDULER_JENKINS,
+// ----------------------------------------------------------------------------
+// ------------------------------ Scheduler -----------------------------------
+// ----------------------------------------------------------------------------
+$config[SchedulerConstants::ENABLED_SCHEDULERS] = [
+    SchedulerConfig::SCHEDULER_JENKINS,
 ];
-$config[\Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
-    \Pyz\Shared\Scheduler\SchedulerConfig::SCHEDULER_JENKINS => [
-        \Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL => sprintf(
+$config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
+    SchedulerConfig::SCHEDULER_JENKINS => [
+        SchedulerJenkinsConfig::SCHEDULER_JENKINS_CSRF_ENABLED => (bool)getenv('SPRYKER_JENKINS_CSRF_PROTECTION_ENABLED'),
+        SchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL => sprintf(
             '%s://%s:%s/',
             getenv('SPRYKER_SCHEDULER_PROTOCOL') ?: 'http',
             getenv('SPRYKER_SCHEDULER_HOST'),
@@ -135,4 +143,4 @@ $config[\Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants::JENKINS_CONF
     ],
 ];
 
-$config[\Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH] = getenv('SPRYKER_JENKINS_TEMPLATE_PATH') ?: null;
+$config[SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH] = getenv('SPRYKER_JENKINS_TEMPLATE_PATH') ?: null;

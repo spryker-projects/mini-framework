@@ -40,3 +40,16 @@ jobs:
 
       - name: PHPStan Checks
         run: composer stan
+
+      - name: Run tests
+        run: |
+            vendor/bin/codecept build
+            vendor/bin/codecept run --coverage-xml
+
+      - name: Code Coverage Report
+        if: success() && matrix.platform-image == 'spryker/php:8.1-RC'
+        uses: codecov/codecov-action@v2
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            file: ./tests/_output/coverage.xml
+            version: "v0.1.15"

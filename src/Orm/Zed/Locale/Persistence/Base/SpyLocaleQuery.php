@@ -10,6 +10,7 @@ use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -37,30 +38,30 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyLocaleQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildSpyLocaleQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildSpyLocale|null findOne(ConnectionInterface $con = null) Return the first ChildSpyLocale matching the query
- * @method     ChildSpyLocale findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyLocale matching the query, or a new ChildSpyLocale object populated from the query conditions when no match is found
+ * @method     ChildSpyLocale|null findOne(?ConnectionInterface $con = null) Return the first ChildSpyLocale matching the query
+ * @method     ChildSpyLocale findOneOrCreate(?ConnectionInterface $con = null) Return the first ChildSpyLocale matching the query, or a new ChildSpyLocale object populated from the query conditions when no match is found
  *
  * @method     ChildSpyLocale|null findOneByIdLocale(int $id_locale) Return the first ChildSpyLocale filtered by the id_locale column
  * @method     ChildSpyLocale|null findOneByLocaleName(string $locale_name) Return the first ChildSpyLocale filtered by the locale_name column
  * @method     ChildSpyLocale|null findOneByIsActive(boolean $is_active) Return the first ChildSpyLocale filtered by the is_active column *
 
- * @method     ChildSpyLocale requirePk($key, ConnectionInterface $con = null) Return the ChildSpyLocale by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSpyLocale requireOne(ConnectionInterface $con = null) Return the first ChildSpyLocale matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyLocale requirePk($key, ?ConnectionInterface $con = null) Return the ChildSpyLocale by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyLocale requireOne(?ConnectionInterface $con = null) Return the first ChildSpyLocale matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyLocale requireOneByIdLocale(int $id_locale) Return the first ChildSpyLocale filtered by the id_locale column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyLocale requireOneByLocaleName(string $locale_name) Return the first ChildSpyLocale filtered by the locale_name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyLocale requireOneByIsActive(boolean $is_active) Return the first ChildSpyLocale filtered by the is_active column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildSpyLocale[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyLocale objects based on current ModelCriteria
- * @psalm-method ObjectCollection&\Traversable<ChildSpyLocale> find(ConnectionInterface $con = null) Return ChildSpyLocale objects based on current ModelCriteria
- * @method     ChildSpyLocale[]|ObjectCollection findByIdLocale(int $id_locale) Return ChildSpyLocale objects filtered by the id_locale column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyLocale> findByIdLocale(int $id_locale) Return ChildSpyLocale objects filtered by the id_locale column
- * @method     ChildSpyLocale[]|ObjectCollection findByLocaleName(string $locale_name) Return ChildSpyLocale objects filtered by the locale_name column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyLocale> findByLocaleName(string $locale_name) Return ChildSpyLocale objects filtered by the locale_name column
- * @method     ChildSpyLocale[]|ObjectCollection findByIsActive(boolean $is_active) Return ChildSpyLocale objects filtered by the is_active column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyLocale> findByIsActive(boolean $is_active) Return ChildSpyLocale objects filtered by the is_active column
- * @method     ChildSpyLocale[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
- * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyLocale> paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildSpyLocale[]|Collection find(?ConnectionInterface $con = null) Return ChildSpyLocale objects based on current ModelCriteria
+ * @psalm-method Collection&\Traversable<ChildSpyLocale> find(?ConnectionInterface $con = null) Return ChildSpyLocale objects based on current ModelCriteria
+ * @method     ChildSpyLocale[]|Collection findByIdLocale(int $id_locale) Return ChildSpyLocale objects filtered by the id_locale column
+ * @psalm-method Collection&\Traversable<ChildSpyLocale> findByIdLocale(int $id_locale) Return ChildSpyLocale objects filtered by the id_locale column
+ * @method     ChildSpyLocale[]|Collection findByLocaleName(string $locale_name) Return ChildSpyLocale objects filtered by the locale_name column
+ * @psalm-method Collection&\Traversable<ChildSpyLocale> findByLocaleName(string $locale_name) Return ChildSpyLocale objects filtered by the locale_name column
+ * @method     ChildSpyLocale[]|Collection findByIsActive(boolean $is_active) Return ChildSpyLocale objects filtered by the is_active column
+ * @psalm-method Collection&\Traversable<ChildSpyLocale> findByIsActive(boolean $is_active) Return ChildSpyLocale objects filtered by the is_active column
+ * @method     ChildSpyLocale[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyLocale> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class SpyLocaleQuery extends ModelCriteria
@@ -72,6 +73,8 @@ abstract class SpyLocaleQuery extends ModelCriteria
     protected $isForUpdateEnabled = false;
 
     /**
+     * @deprecated Use {@link \Propel\Runtime\ActiveQuery\Criteria::lockForUpdate()} instead.
+     *
      * @param bool $isForUpdateEnabled
      *
      * @return $this The primary criteria object
@@ -88,7 +91,7 @@ abstract class SpyLocaleQuery extends ModelCriteria
      *
      * @return string
      */
-    public function createSelectSql(&$params)
+    public function createSelectSql(&$params): string
     {
         $sql = parent::createSelectSql($params);
         if ($this->isForUpdateEnabled) {
@@ -114,6 +117,28 @@ abstract class SpyLocaleQuery extends ModelCriteria
         return $this;
     }
 
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postUpdate(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postDelete(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
 
     /**
      * Issue a SELECT query based on the current ModelCriteria
@@ -152,7 +177,7 @@ abstract class SpyLocaleQuery extends ModelCriteria
      *
      * @return bool column existence
      */
-    public function exists(?ConnectionInterface $con = null)
+    public function exists(?ConnectionInterface $con = null): bool
     {
         return parent::exists($con);
     }
@@ -161,9 +186,9 @@ abstract class SpyLocaleQuery extends ModelCriteria
     /**
      * Initializes internal state of \Orm\Zed\Locale\Persistence\Base\SpyLocaleQuery object.
      *
-     * @param     string $dbName The database name
-     * @param     string $modelName The phpName of a model, e.g. 'Book'
-     * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
+     * @param string $dbName The database name
+     * @param string $modelName The phpName of a model, e.g. 'Book'
+     * @param string $modelAlias The alias for the model in this query, e.g. 'b'
      */
     public function __construct($dbName = 'zed', $modelName = '\\Orm\\Zed\\Locale\\Persistence\\SpyLocale', $modelAlias = null)
     {
@@ -173,12 +198,12 @@ abstract class SpyLocaleQuery extends ModelCriteria
     /**
      * Returns a new ChildSpyLocaleQuery object.
      *
-     * @param     string $modelAlias The alias of a model in the query
-     * @param     Criteria $criteria Optional Criteria to build the query from
+     * @param string $modelAlias The alias of a model in the query
+     * @param Criteria $criteria Optional Criteria to build the query from
      *
      * @return ChildSpyLocaleQuery
      */
-    public static function create($modelAlias = null, Criteria $criteria = null)
+    public static function create(?string $modelAlias = null, ?Criteria $criteria = null): Criteria
     {
         if ($criteria instanceof ChildSpyLocaleQuery) {
             return $criteria;
@@ -208,7 +233,7 @@ abstract class SpyLocaleQuery extends ModelCriteria
      *
      * @return ChildSpyLocale|array|mixed the result, formatted by the current formatter
      */
-    public function findPk($key, ConnectionInterface $con = null)
+    public function findPk($key, ?ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
@@ -240,8 +265,8 @@ abstract class SpyLocaleQuery extends ModelCriteria
      * Find object by primary key using raw SQL to go fast.
      * Bypass doSelect() and the object formatter by using generated code.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -273,8 +298,8 @@ abstract class SpyLocaleQuery extends ModelCriteria
     /**
      * Find object by primary key.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @return ChildSpyLocale|array|mixed the result, formatted by the current formatter
      */
@@ -297,7 +322,7 @@ abstract class SpyLocaleQuery extends ModelCriteria
      * @param     array $keys Primary keys to use for the query
      * @param     ConnectionInterface $con an optional connection object
      *
-     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return    Collection|array|mixed the list of results, formatted by the current formatter
      */
     public function findPks($keys, ConnectionInterface $con = null)
     {
@@ -318,27 +343,31 @@ abstract class SpyLocaleQuery extends ModelCriteria
     /**
      * Filter the query by primary key
      *
-     * @param     mixed $key Primary key to use for the query
+     * @param mixed $key Primary key to use for the query
      *
-     * @return $this|ChildSpyLocaleQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(SpyLocaleTableMap::COL_ID_LOCALE, $key, Criteria::EQUAL);
+        $this->addUsingAlias(SpyLocaleTableMap::COL_ID_LOCALE, $key, Criteria::EQUAL);
+
+        return $this;
     }
 
     /**
      * Filter the query by a list of primary keys
      *
-     * @param     array $keys The list of primary key to use for the query
+     * @param array|int $keys The list of primary key to use for the query
      *
-     * @return $this|ChildSpyLocaleQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(SpyLocaleTableMap::COL_ID_LOCALE, $keys, Criteria::IN);
+        $this->addUsingAlias(SpyLocaleTableMap::COL_ID_LOCALE, $keys, Criteria::IN);
+
+        return $this;
     }
 
     /**
@@ -514,9 +543,9 @@ abstract class SpyLocaleQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildSpyLocale $spyLocale Object to remove from the list of results
+     * @param ChildSpyLocale $spyLocale Object to remove from the list of results
      *
-     * @return $this|ChildSpyLocaleQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function prune($spyLocale = null)
     {
@@ -533,7 +562,7 @@ abstract class SpyLocaleQuery extends ModelCriteria
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
-    public function doDeleteAll(ConnectionInterface $con = null)
+    public function doDeleteAll(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyLocaleTableMap::DATABASE_NAME);
@@ -558,12 +587,12 @@ abstract class SpyLocaleQuery extends ModelCriteria
      * Performs a DELETE on the database based on the current ModelCriteria
      *
      * @param ConnectionInterface $con the connection to use
-     * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
+     * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
-    public function delete(ConnectionInterface $con = null)
+    public function delete(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyLocaleTableMap::DATABASE_NAME);
@@ -588,4 +617,4 @@ abstract class SpyLocaleQuery extends ModelCriteria
         });
     }
 
-} // SpyLocaleQuery
+}

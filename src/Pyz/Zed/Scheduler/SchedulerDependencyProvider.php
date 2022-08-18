@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace Pyz\Zed\Scheduler;
 
 use Pyz\Shared\Scheduler\SchedulerConfig;
@@ -10,7 +15,7 @@ use Spryker\Zed\SchedulerJenkins\Communication\Plugin\Adapter\SchedulerJenkinsAd
 class SchedulerDependencyProvider extends SprykerSchedulerDependencyProvider
 {
     /**
-     * @return array<\Spryker\Zed\SchedulerJenkins\Communication\Plugin\Adapter\SchedulerJenkinsAdapterPlugin>
+     * @return array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\SchedulerAdapterPluginInterface>
      */
     protected function getSchedulerAdapterPlugins(): array
     {
@@ -20,7 +25,7 @@ class SchedulerDependencyProvider extends SprykerSchedulerDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Zed\Scheduler\Communication\Plugin\Scheduler\PhpScheduleReaderPlugin>
+     * @return array<\Spryker\Zed\SchedulerExtension\Dependency\Plugin\ScheduleReaderPluginInterface>
      */
     protected function getScheduleReaderPlugins(): array
     {

@@ -19,6 +19,9 @@ sections:
             command: 'if [ ! -f ./config/Shared/console_env_local.php ]; then cp ./config/Shared/console_env_local.dist.php ./config/Shared/console_env_local.php ; fi'
 
     clear:
+        generate-transfers:
+            command: 'vendor/bin/console transfer:generate'
+
         remove-logs:
             command: 'vendor/bin/console log:clear'
 
