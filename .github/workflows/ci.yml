@@ -63,7 +63,7 @@ jobs:
           vendor/bin/codecept run --coverage-xml
 
       - name: Code Coverage Report
-        if: success()
+        if: success() && matrix.php-version == '8.1'
         uses: codecov/codecov-action@v2
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
