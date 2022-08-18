@@ -46,13 +46,26 @@
         }
     },
     "config": {
+        "platform": {
+            "php": "8.0.0"
+        },
+        "preferred-install": {
+            "spryker/*": "source",
+            "spryker-shop/*": "source",
+            "spryker-eco/*": "source",
+            "spryker-middleware/*": "source",
+            "spryker-sdk/*": "source",
+            "*": "dist"
+        },
         "use-include-path": true,
-        "process-timeout": 600,
-        "sort-packages": true,
+        "process-timeout": 1800,
+        "chromium-revision": 814168,
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true,
-            "symfony/runtime": true,
-            "composer/package-versions-deprecated": true
+            "composer/package-versions-deprecated": true,
+            "codeception/c3": true,
+            "spryker/composer-merge-plugin": true,
+            "symfony/runtime": true
         }
     }
 }
