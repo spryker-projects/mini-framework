@@ -10,6 +10,7 @@ use Orm\Zed\Queue\Persistence\Map\SpyQueueProcessTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -45,8 +46,8 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyQueueProcessQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildSpyQueueProcessQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildSpyQueueProcess|null findOne(ConnectionInterface $con = null) Return the first ChildSpyQueueProcess matching the query
- * @method     ChildSpyQueueProcess findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyQueueProcess matching the query, or a new ChildSpyQueueProcess object populated from the query conditions when no match is found
+ * @method     ChildSpyQueueProcess|null findOne(?ConnectionInterface $con = null) Return the first ChildSpyQueueProcess matching the query
+ * @method     ChildSpyQueueProcess findOneOrCreate(?ConnectionInterface $con = null) Return the first ChildSpyQueueProcess matching the query, or a new ChildSpyQueueProcess object populated from the query conditions when no match is found
  *
  * @method     ChildSpyQueueProcess|null findOneByIdQueueProcess(int $id_queue_process) Return the first ChildSpyQueueProcess filtered by the id_queue_process column
  * @method     ChildSpyQueueProcess|null findOneByServerId(string $server_id) Return the first ChildSpyQueueProcess filtered by the server_id column
@@ -56,8 +57,8 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyQueueProcess|null findOneByCreatedAt(string $created_at) Return the first ChildSpyQueueProcess filtered by the created_at column
  * @method     ChildSpyQueueProcess|null findOneByUpdatedAt(string $updated_at) Return the first ChildSpyQueueProcess filtered by the updated_at column *
 
- * @method     ChildSpyQueueProcess requirePk($key, ConnectionInterface $con = null) Return the ChildSpyQueueProcess by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSpyQueueProcess requireOne(ConnectionInterface $con = null) Return the first ChildSpyQueueProcess matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyQueueProcess requirePk($key, ?ConnectionInterface $con = null) Return the ChildSpyQueueProcess by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyQueueProcess requireOne(?ConnectionInterface $con = null) Return the first ChildSpyQueueProcess matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyQueueProcess requireOneByIdQueueProcess(int $id_queue_process) Return the first ChildSpyQueueProcess filtered by the id_queue_process column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyQueueProcess requireOneByServerId(string $server_id) Return the first ChildSpyQueueProcess filtered by the server_id column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -67,24 +68,24 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyQueueProcess requireOneByCreatedAt(string $created_at) Return the first ChildSpyQueueProcess filtered by the created_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyQueueProcess requireOneByUpdatedAt(string $updated_at) Return the first ChildSpyQueueProcess filtered by the updated_at column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildSpyQueueProcess[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyQueueProcess objects based on current ModelCriteria
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> find(ConnectionInterface $con = null) Return ChildSpyQueueProcess objects based on current ModelCriteria
- * @method     ChildSpyQueueProcess[]|ObjectCollection findByIdQueueProcess(int $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> findByIdQueueProcess(int $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
- * @method     ChildSpyQueueProcess[]|ObjectCollection findByServerId(string $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> findByServerId(string $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
- * @method     ChildSpyQueueProcess[]|ObjectCollection findByProcessPid(int $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> findByProcessPid(int $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
- * @method     ChildSpyQueueProcess[]|ObjectCollection findByWorkerPid(int $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> findByWorkerPid(int $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
- * @method     ChildSpyQueueProcess[]|ObjectCollection findByQueueName(string $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> findByQueueName(string $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
- * @method     ChildSpyQueueProcess[]|ObjectCollection findByCreatedAt(string $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> findByCreatedAt(string $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
- * @method     ChildSpyQueueProcess[]|ObjectCollection findByUpdatedAt(string $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyQueueProcess> findByUpdatedAt(string $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
- * @method     ChildSpyQueueProcess[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
- * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyQueueProcess> paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildSpyQueueProcess[]|Collection find(?ConnectionInterface $con = null) Return ChildSpyQueueProcess objects based on current ModelCriteria
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> find(?ConnectionInterface $con = null) Return ChildSpyQueueProcess objects based on current ModelCriteria
+ * @method     ChildSpyQueueProcess[]|Collection findByIdQueueProcess(int $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByIdQueueProcess(int $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
+ * @method     ChildSpyQueueProcess[]|Collection findByServerId(string $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByServerId(string $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
+ * @method     ChildSpyQueueProcess[]|Collection findByProcessPid(int $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByProcessPid(int $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
+ * @method     ChildSpyQueueProcess[]|Collection findByWorkerPid(int $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByWorkerPid(int $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
+ * @method     ChildSpyQueueProcess[]|Collection findByQueueName(string $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByQueueName(string $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
+ * @method     ChildSpyQueueProcess[]|Collection findByCreatedAt(string $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByCreatedAt(string $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
+ * @method     ChildSpyQueueProcess[]|Collection findByUpdatedAt(string $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByUpdatedAt(string $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
+ * @method     ChildSpyQueueProcess[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyQueueProcess> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class SpyQueueProcessQuery extends ModelCriteria
@@ -96,6 +97,8 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     protected $isForUpdateEnabled = false;
 
     /**
+     * @deprecated Use {@link \Propel\Runtime\ActiveQuery\Criteria::lockForUpdate()} instead.
+     *
      * @param bool $isForUpdateEnabled
      *
      * @return $this The primary criteria object
@@ -112,7 +115,7 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      *
      * @return string
      */
-    public function createSelectSql(&$params)
+    public function createSelectSql(&$params): string
     {
         $sql = parent::createSelectSql($params);
         if ($this->isForUpdateEnabled) {
@@ -138,6 +141,28 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
         return $this;
     }
 
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postUpdate(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postDelete(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
 
     /**
      * Issue a SELECT query based on the current ModelCriteria
@@ -176,7 +201,7 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      *
      * @return bool column existence
      */
-    public function exists(?ConnectionInterface $con = null)
+    public function exists(?ConnectionInterface $con = null): bool
     {
         return parent::exists($con);
     }
@@ -185,9 +210,9 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     /**
      * Initializes internal state of \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery object.
      *
-     * @param     string $dbName The database name
-     * @param     string $modelName The phpName of a model, e.g. 'Book'
-     * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
+     * @param string $dbName The database name
+     * @param string $modelName The phpName of a model, e.g. 'Book'
+     * @param string $modelAlias The alias for the model in this query, e.g. 'b'
      */
     public function __construct($dbName = 'zed', $modelName = '\\Orm\\Zed\\Queue\\Persistence\\SpyQueueProcess', $modelAlias = null)
     {
@@ -197,12 +222,12 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     /**
      * Returns a new ChildSpyQueueProcessQuery object.
      *
-     * @param     string $modelAlias The alias of a model in the query
-     * @param     Criteria $criteria Optional Criteria to build the query from
+     * @param string $modelAlias The alias of a model in the query
+     * @param Criteria $criteria Optional Criteria to build the query from
      *
      * @return ChildSpyQueueProcessQuery
      */
-    public static function create($modelAlias = null, Criteria $criteria = null)
+    public static function create(?string $modelAlias = null, ?Criteria $criteria = null): Criteria
     {
         if ($criteria instanceof ChildSpyQueueProcessQuery) {
             return $criteria;
@@ -232,7 +257,7 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      *
      * @return ChildSpyQueueProcess|array|mixed the result, formatted by the current formatter
      */
-    public function findPk($key, ConnectionInterface $con = null)
+    public function findPk($key, ?ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
@@ -264,8 +289,8 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      * Find object by primary key using raw SQL to go fast.
      * Bypass doSelect() and the object formatter by using generated code.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -297,8 +322,8 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     /**
      * Find object by primary key.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @return ChildSpyQueueProcess|array|mixed the result, formatted by the current formatter
      */
@@ -321,7 +346,7 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      * @param     array $keys Primary keys to use for the query
      * @param     ConnectionInterface $con an optional connection object
      *
-     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return    Collection|array|mixed the list of results, formatted by the current formatter
      */
     public function findPks($keys, ConnectionInterface $con = null)
     {
@@ -342,27 +367,31 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     /**
      * Filter the query by primary key
      *
-     * @param     mixed $key Primary key to use for the query
+     * @param mixed $key Primary key to use for the query
      *
-     * @return $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(SpyQueueProcessTableMap::COL_ID_QUEUE_PROCESS, $key, Criteria::EQUAL);
+        $this->addUsingAlias(SpyQueueProcessTableMap::COL_ID_QUEUE_PROCESS, $key, Criteria::EQUAL);
+
+        return $this;
     }
 
     /**
      * Filter the query by a list of primary keys
      *
-     * @param     array $keys The list of primary key to use for the query
+     * @param array|int $keys The list of primary key to use for the query
      *
-     * @return $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(SpyQueueProcessTableMap::COL_ID_QUEUE_PROCESS, $keys, Criteria::IN);
+        $this->addUsingAlias(SpyQueueProcessTableMap::COL_ID_QUEUE_PROCESS, $keys, Criteria::IN);
+
+        return $this;
     }
 
     /**
@@ -920,9 +949,9 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildSpyQueueProcess $spyQueueProcess Object to remove from the list of results
+     * @param ChildSpyQueueProcess $spyQueueProcess Object to remove from the list of results
      *
-     * @return $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function prune($spyQueueProcess = null)
     {
@@ -939,7 +968,7 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
-    public function doDeleteAll(ConnectionInterface $con = null)
+    public function doDeleteAll(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyQueueProcessTableMap::DATABASE_NAME);
@@ -964,12 +993,12 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
      * Performs a DELETE on the database based on the current ModelCriteria
      *
      * @param ConnectionInterface $con the connection to use
-     * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
+     * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
-    public function delete(ConnectionInterface $con = null)
+    public function delete(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyQueueProcessTableMap::DATABASE_NAME);
@@ -999,65 +1028,77 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     /**
      * Filter by the latest updated
      *
-     * @param      int $nbDays Maximum age of the latest update in days
+     * @param int $nbDays Maximum age of the latest update in days
      *
-     * @return     $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function recentlyUpdated($nbDays = 7)
     {
-        return $this->addUsingAlias(SpyQueueProcessTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+        $this->addUsingAlias(SpyQueueProcessTableMap::COL_UPDATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+
+        return $this;
     }
 
     /**
      * Order by update date desc
      *
-     * @return     $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function lastUpdatedFirst()
     {
-        return $this->addDescendingOrderByColumn(SpyQueueProcessTableMap::COL_UPDATED_AT);
+        $this->addDescendingOrderByColumn(SpyQueueProcessTableMap::COL_UPDATED_AT);
+
+        return $this;
     }
 
     /**
      * Order by update date asc
      *
-     * @return     $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function firstUpdatedFirst()
     {
-        return $this->addAscendingOrderByColumn(SpyQueueProcessTableMap::COL_UPDATED_AT);
+        $this->addAscendingOrderByColumn(SpyQueueProcessTableMap::COL_UPDATED_AT);
+
+        return $this;
     }
 
     /**
      * Order by create date desc
      *
-     * @return     $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function lastCreatedFirst()
     {
-        return $this->addDescendingOrderByColumn(SpyQueueProcessTableMap::COL_CREATED_AT);
+        $this->addDescendingOrderByColumn(SpyQueueProcessTableMap::COL_CREATED_AT);
+
+        return $this;
     }
 
     /**
      * Filter by the latest created
      *
-     * @param      int $nbDays Maximum age of in days
+     * @param int $nbDays Maximum age of in days
      *
-     * @return     $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function recentlyCreated($nbDays = 7)
     {
-        return $this->addUsingAlias(SpyQueueProcessTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+        $this->addUsingAlias(SpyQueueProcessTableMap::COL_CREATED_AT, time() - $nbDays * 24 * 60 * 60, Criteria::GREATER_EQUAL);
+
+        return $this;
     }
 
     /**
      * Order by create date asc
      *
-     * @return     $this|ChildSpyQueueProcessQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function firstCreatedFirst()
     {
-        return $this->addAscendingOrderByColumn(SpyQueueProcessTableMap::COL_CREATED_AT);
+        $this->addAscendingOrderByColumn(SpyQueueProcessTableMap::COL_CREATED_AT);
+
+        return $this;
     }
 
-} // SpyQueueProcessQuery
+}

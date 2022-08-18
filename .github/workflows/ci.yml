@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  validation:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [
+            '8.0',
+            '8.1'
+        ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+            php-version: ${{ matrix.php-version }}
+            extensions: mbstring, intl, pdo_mysql
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+            echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Composer Cache
+        uses: actions/cache@v2
+        with:
+            path: ${{ steps.composer-cache.outputs.dir }}
+            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+            restore-keys: ${{ runner.os }}-composer-
+
+      - name: Composer Install
+        run: composer install --no-interaction -o
+
+      - name: Check PHP for syntax errors
+        run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+
+      - name: Run Install
+        run: vendor/bin/install -r development.yml
+
+      - name: CodeStyle Checks
+        run: composer cs-check
+
+      - name: PHPStan Checks
+        run: composer stan
+
+      - name: Run tests
+        run: |
+          vendor/bin/codecept build
+          vendor/bin/codecept run --coverage-xml
+
+      - name: Code Coverage Report
+        if: success() && matrix.php-version == '8.1'
+        uses: codecov/codecov-action@v2
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }}
+            file: ./tests/_output/coverage.xml
+            version: "v0.1.15"

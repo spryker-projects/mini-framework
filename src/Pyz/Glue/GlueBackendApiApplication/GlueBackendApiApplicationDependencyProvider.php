@@ -8,15 +8,11 @@
 namespace Pyz\Glue\GlueBackendApiApplication;
 
 use Pyz\Glue\TestApi\Plugin\TestResource;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\RequestResourceFilterPlugin;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\CustomRouteRouteMatcherPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\CustomRouteRouterPlugin;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\ResourceRouteMatcherPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\SecurityHeaderResponseFormatterPlugin;
 use Spryker\Glue\GlueHttp\Plugin\GlueBackendApiApplication\CorsHeaderExistenceRequestAfterRoutingValidatorPlugin;
-use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\LocaleRequestBuilderPlugin;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 
 class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiApplicationDependencyProvider
@@ -77,7 +73,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     {
         return [
             new CustomRouteRouteMatcherPlugin(),
-            new ResourceRouteMatcherPlugin(),
         ];
     }
 
@@ -89,13 +84,5 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
         return [
             new TestResource(),
         ];
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface
-     */
-    public function getRequestResourceFilterPlugin(): RequestResourceFilterPluginInterface
-    {
-        return new RequestResourceFilterPlugin();
     }
 }

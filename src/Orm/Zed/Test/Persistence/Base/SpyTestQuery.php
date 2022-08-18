@@ -10,6 +10,7 @@ use Orm\Zed\Test\Persistence\Map\SpyTestTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -35,26 +36,26 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyTestQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildSpyTestQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildSpyTest|null findOne(ConnectionInterface $con = null) Return the first ChildSpyTest matching the query
- * @method     ChildSpyTest findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyTest matching the query, or a new ChildSpyTest object populated from the query conditions when no match is found
+ * @method     ChildSpyTest|null findOne(?ConnectionInterface $con = null) Return the first ChildSpyTest matching the query
+ * @method     ChildSpyTest findOneOrCreate(?ConnectionInterface $con = null) Return the first ChildSpyTest matching the query, or a new ChildSpyTest object populated from the query conditions when no match is found
  *
  * @method     ChildSpyTest|null findOneByIdTest(int $id_test) Return the first ChildSpyTest filtered by the id_test column
  * @method     ChildSpyTest|null findOneByName(string $name) Return the first ChildSpyTest filtered by the name column *
 
- * @method     ChildSpyTest requirePk($key, ConnectionInterface $con = null) Return the ChildSpyTest by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSpyTest requireOne(ConnectionInterface $con = null) Return the first ChildSpyTest matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyTest requirePk($key, ?ConnectionInterface $con = null) Return the ChildSpyTest by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyTest requireOne(?ConnectionInterface $con = null) Return the first ChildSpyTest matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyTest requireOneByIdTest(int $id_test) Return the first ChildSpyTest filtered by the id_test column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyTest requireOneByName(string $name) Return the first ChildSpyTest filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildSpyTest[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyTest objects based on current ModelCriteria
- * @psalm-method ObjectCollection&\Traversable<ChildSpyTest> find(ConnectionInterface $con = null) Return ChildSpyTest objects based on current ModelCriteria
- * @method     ChildSpyTest[]|ObjectCollection findByIdTest(int $id_test) Return ChildSpyTest objects filtered by the id_test column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyTest> findByIdTest(int $id_test) Return ChildSpyTest objects filtered by the id_test column
- * @method     ChildSpyTest[]|ObjectCollection findByName(string $name) Return ChildSpyTest objects filtered by the name column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyTest> findByName(string $name) Return ChildSpyTest objects filtered by the name column
- * @method     ChildSpyTest[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
- * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyTest> paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildSpyTest[]|Collection find(?ConnectionInterface $con = null) Return ChildSpyTest objects based on current ModelCriteria
+ * @psalm-method Collection&\Traversable<ChildSpyTest> find(?ConnectionInterface $con = null) Return ChildSpyTest objects based on current ModelCriteria
+ * @method     ChildSpyTest[]|Collection findByIdTest(int $id_test) Return ChildSpyTest objects filtered by the id_test column
+ * @psalm-method Collection&\Traversable<ChildSpyTest> findByIdTest(int $id_test) Return ChildSpyTest objects filtered by the id_test column
+ * @method     ChildSpyTest[]|Collection findByName(string $name) Return ChildSpyTest objects filtered by the name column
+ * @psalm-method Collection&\Traversable<ChildSpyTest> findByName(string $name) Return ChildSpyTest objects filtered by the name column
+ * @method     ChildSpyTest[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyTest> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class SpyTestQuery extends ModelCriteria
@@ -66,6 +67,8 @@ abstract class SpyTestQuery extends ModelCriteria
     protected $isForUpdateEnabled = false;
 
     /**
+     * @deprecated Use {@link \Propel\Runtime\ActiveQuery\Criteria::lockForUpdate()} instead.
+     *
      * @param bool $isForUpdateEnabled
      *
      * @return $this The primary criteria object
@@ -82,7 +85,7 @@ abstract class SpyTestQuery extends ModelCriteria
      *
      * @return string
      */
-    public function createSelectSql(&$params)
+    public function createSelectSql(&$params): string
     {
         $sql = parent::createSelectSql($params);
         if ($this->isForUpdateEnabled) {
@@ -108,6 +111,28 @@ abstract class SpyTestQuery extends ModelCriteria
         return $this;
     }
 
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postUpdate(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postDelete(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
 
     /**
      * Issue a SELECT query based on the current ModelCriteria
@@ -146,7 +171,7 @@ abstract class SpyTestQuery extends ModelCriteria
      *
      * @return bool column existence
      */
-    public function exists(?ConnectionInterface $con = null)
+    public function exists(?ConnectionInterface $con = null): bool
     {
         return parent::exists($con);
     }
@@ -155,9 +180,9 @@ abstract class SpyTestQuery extends ModelCriteria
     /**
      * Initializes internal state of \Orm\Zed\Test\Persistence\Base\SpyTestQuery object.
      *
-     * @param     string $dbName The database name
-     * @param     string $modelName The phpName of a model, e.g. 'Book'
-     * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
+     * @param string $dbName The database name
+     * @param string $modelName The phpName of a model, e.g. 'Book'
+     * @param string $modelAlias The alias for the model in this query, e.g. 'b'
      */
     public function __construct($dbName = 'zed', $modelName = '\\Orm\\Zed\\Test\\Persistence\\SpyTest', $modelAlias = null)
     {
@@ -167,12 +192,12 @@ abstract class SpyTestQuery extends ModelCriteria
     /**
      * Returns a new ChildSpyTestQuery object.
      *
-     * @param     string $modelAlias The alias of a model in the query
-     * @param     Criteria $criteria Optional Criteria to build the query from
+     * @param string $modelAlias The alias of a model in the query
+     * @param Criteria $criteria Optional Criteria to build the query from
      *
      * @return ChildSpyTestQuery
      */
-    public static function create($modelAlias = null, Criteria $criteria = null)
+    public static function create(?string $modelAlias = null, ?Criteria $criteria = null): Criteria
     {
         if ($criteria instanceof ChildSpyTestQuery) {
             return $criteria;
@@ -202,7 +227,7 @@ abstract class SpyTestQuery extends ModelCriteria
      *
      * @return ChildSpyTest|array|mixed the result, formatted by the current formatter
      */
-    public function findPk($key, ConnectionInterface $con = null)
+    public function findPk($key, ?ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
@@ -234,8 +259,8 @@ abstract class SpyTestQuery extends ModelCriteria
      * Find object by primary key using raw SQL to go fast.
      * Bypass doSelect() and the object formatter by using generated code.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -267,8 +292,8 @@ abstract class SpyTestQuery extends ModelCriteria
     /**
      * Find object by primary key.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @return ChildSpyTest|array|mixed the result, formatted by the current formatter
      */
@@ -291,7 +316,7 @@ abstract class SpyTestQuery extends ModelCriteria
      * @param     array $keys Primary keys to use for the query
      * @param     ConnectionInterface $con an optional connection object
      *
-     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return    Collection|array|mixed the list of results, formatted by the current formatter
      */
     public function findPks($keys, ConnectionInterface $con = null)
     {
@@ -312,27 +337,31 @@ abstract class SpyTestQuery extends ModelCriteria
     /**
      * Filter the query by primary key
      *
-     * @param     mixed $key Primary key to use for the query
+     * @param mixed $key Primary key to use for the query
      *
-     * @return $this|ChildSpyTestQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(SpyTestTableMap::COL_ID_TEST, $key, Criteria::EQUAL);
+        $this->addUsingAlias(SpyTestTableMap::COL_ID_TEST, $key, Criteria::EQUAL);
+
+        return $this;
     }
 
     /**
      * Filter the query by a list of primary keys
      *
-     * @param     array $keys The list of primary key to use for the query
+     * @param array|int $keys The list of primary key to use for the query
      *
-     * @return $this|ChildSpyTestQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(SpyTestTableMap::COL_ID_TEST, $keys, Criteria::IN);
+        $this->addUsingAlias(SpyTestTableMap::COL_ID_TEST, $keys, Criteria::IN);
+
+        return $this;
     }
 
     /**
@@ -477,9 +506,9 @@ abstract class SpyTestQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildSpyTest $spyTest Object to remove from the list of results
+     * @param ChildSpyTest $spyTest Object to remove from the list of results
      *
-     * @return $this|ChildSpyTestQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function prune($spyTest = null)
     {
@@ -496,7 +525,7 @@ abstract class SpyTestQuery extends ModelCriteria
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
-    public function doDeleteAll(ConnectionInterface $con = null)
+    public function doDeleteAll(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyTestTableMap::DATABASE_NAME);
@@ -521,12 +550,12 @@ abstract class SpyTestQuery extends ModelCriteria
      * Performs a DELETE on the database based on the current ModelCriteria
      *
      * @param ConnectionInterface $con the connection to use
-     * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
+     * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
-    public function delete(ConnectionInterface $con = null)
+    public function delete(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyTestTableMap::DATABASE_NAME);
@@ -551,4 +580,4 @@ abstract class SpyTestQuery extends ModelCriteria
         });
     }
 
-} // SpyTestQuery
+}

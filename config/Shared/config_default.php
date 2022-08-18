@@ -125,7 +125,6 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED]
 // ----------------------------------------------------------------------------
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = getenv('SPRYKER_GLUE_BACKEND_HOST');
 
-
 // ----------------------------------------------------------------------------
 // ------------------------------ Scheduler -----------------------------------
 // ----------------------------------------------------------------------------
@@ -139,7 +138,7 @@ $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
             '%s://%s:%s/',
             getenv('SPRYKER_SCHEDULER_PROTOCOL') ?: 'http',
             getenv('SPRYKER_SCHEDULER_HOST'),
-            getenv('SPRYKER_SCHEDULER_PORT')
+            getenv('SPRYKER_SCHEDULER_PORT'),
         ),
     ],
 ];

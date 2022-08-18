@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace Pyz\Glue\TestApi\Controller;
 
 use Generated\Shared\Transfer\GlueErrorTransfer;
@@ -13,13 +18,17 @@ use Generated\Shared\Transfer\TestConditionsTransfer;
 use Generated\Shared\Transfer\TestCriteriaTransfer;
 use Generated\Shared\Transfer\TestTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractBackendApiController;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Pyz\Glue\TestApi\TestApiFactory getFactory()
  */
 class TestResourceController extends AbstractBackendApiController
 {
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
     public function getCollectionAction(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
         $testCriteriaTransfer = new TestCriteriaTransfer();
@@ -28,16 +37,15 @@ class TestResourceController extends AbstractBackendApiController
         $testCriteriaTransfer->setSortCollection($glueRequestTransfer->getSortings());
 
         $conditionsTransfer = new TestConditionsTransfer();
-        if(isset($glueRequestTransfer->getQueryFields()['filter'])) {
-            foreach($glueRequestTransfer->getQueryFields()['filter'] as $name => $value) {
-                if($name === 'name') {
+        if (isset($glueRequestTransfer->getQueryFields()['filter'])) {
+            foreach ($glueRequestTransfer->getQueryFields()['filter'] as $name => $value) {
+                if ($name === 'name') {
                     $conditionsTransfer->setNames(explode(',', $value));
                 }
 
-                if($name === 'id') {
+                if ($name === 'id') {
                     $conditionsTransfer->addTestId($value);
                 }
-
             }
         }
 
@@ -45,10 +53,10 @@ class TestResourceController extends AbstractBackendApiController
         $testCollectionTransfer = $this->getFactory()->getTestFacade()->getTestCollection($testCriteriaTransfer);
 
         $glueResponseTransfer = new GlueResponseTransfer();
-        foreach($testCollectionTransfer->getTests() as $test) {
+        foreach ($testCollectionTransfer->getTests() as $test) {
             $resourceTransfer = new GlueResourceTransfer();
             $resourceTransfer->setAttributes($test);
-            $resourceTransfer->setId($test->getId());
+            $resourceTransfer->setId((string)$test->getId());
             $resourceTransfer->setType('test');
 
             $glueResponseTransfer->addResource($resourceTransfer);
@@ -57,7 +65,12 @@ class TestResourceController extends AbstractBackendApiController
         return $glueResponseTransfer;
     }
 
-    public function getAction(string $id): GlueResponseTransfer
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function getAction(int $id): GlueResponseTransfer
     {
         $testCriteriaTransfer = new TestCriteriaTransfer();
         $testCriteriaTransfer->setTestConditions((new TestConditionsTransfer())->addTestId($id));
@@ -65,13 +78,16 @@ class TestResourceController extends AbstractBackendApiController
         $testCollectionTransfer = $this->getFactory()->getTestFacade()->getTestCollection($testCriteriaTransfer);
 
         $glueResponseTransfer = new GlueResponseTransfer();
-        if((array)$testCollectionTransfer->getTests()) {
+        if ((array)$testCollectionTransfer->getTests()) {
             $resourceTransfer = new GlueResourceTransfer();
-            $resourceTransfer->setAttributes($testCollectionTransfer->getTests()[0]);
-            $resourceTransfer->setId($testCollectionTransfer->getTests()[0]->getId());
+            /** @phpstan-var \Generated\Shared\Transfer\TestTransfer */
+            $testTransfer = $testCollectionTransfer->getTests()[0];
+            $resourceTransfer->setAttributes($testTransfer);
+            $resourceTransfer->setId((string)$testTransfer->getId());
             $resourceTransfer->setType('test');
 
             $glueResponseTransfer->addResource($resourceTransfer);
+
             return $glueResponseTransfer;
         }
 
@@ -80,28 +96,42 @@ class TestResourceController extends AbstractBackendApiController
         return $glueResponseTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
     public function postAction(TestTransfer $testTransfer): GlueResponseTransfer
     {
         $testCollectionRequestTransfer = new TestCollectionRequestTransfer();
         $testCollectionRequestTransfer->addTest($testTransfer)->setIsTransactional(false);
 
         return $this->returnSaveResponse(
-            $this->getFactory()->getTestFacade()->createTestCollection($testCollectionRequestTransfer)
+            $this->getFactory()->getTestFacade()->createTestCollection($testCollectionRequestTransfer),
         );
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\TestTransfer $testTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
     public function patchAction(TestTransfer $testTransfer): GlueResponseTransfer
     {
         $testCollectionRequestTransfer = new TestCollectionRequestTransfer();
         $testCollectionRequestTransfer->addTest($testTransfer)->setIsTransactional(false);
 
-
         return $this->returnSaveResponse(
-            $this->getFactory()->getTestFacade()->updateTestCollection($testCollectionRequestTransfer)
+            $this->getFactory()->getTestFacade()->updateTestCollection($testCollectionRequestTransfer),
         );
     }
 
-    public function deleteAction(string $id): GlueResponseTransfer
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    public function deleteAction(int $id): GlueResponseTransfer
     {
         $testCollectionDeleteCriteriaTransfer = new TestCollectionDeleteCriteriaTransfer();
         $testCollectionDeleteCriteriaTransfer->setIsTransactional(false)->addIdTest($id);
@@ -109,8 +139,7 @@ class TestResourceController extends AbstractBackendApiController
         $testCollectionResponseTransfer =
             $this->getFactory()->getTestFacade()->deleteTestCollection($testCollectionDeleteCriteriaTransfer);
 
-        if(!(array)$testCollectionResponseTransfer->getTests())
-        {
+        if (!(array)$testCollectionResponseTransfer->getTests()) {
             $glueResponseTransfer = new GlueResponseTransfer();
             $glueResponseTransfer->setHttpStatus(404)->addError((new GlueErrorTransfer())->setMessage('not found'));
 
@@ -123,15 +152,17 @@ class TestResourceController extends AbstractBackendApiController
     /**
      * @param \Generated\Shared\Transfer\TestCollectionResponseTransfer $testCollectionResponseTransfer
      *
-     * @return GlueResponseTransfer
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     protected function returnSaveResponse(TestCollectionResponseTransfer $testCollectionResponseTransfer): GlueResponseTransfer
     {
         $glueResponseTransfer = new GlueResponseTransfer();
         if (!(array)$testCollectionResponseTransfer->getErrors()) {
             $resourceTransfer = new GlueResourceTransfer();
-            $resourceTransfer->setAttributes($testCollectionResponseTransfer->getTests()->offsetGet(0));
-            $resourceTransfer->setId($testCollectionResponseTransfer->getTests()->offsetGet(0)->getId());
+            /** @phpstan-var \Generated\Shared\Transfer\TestTransfer */
+            $testTransfer = $testCollectionResponseTransfer->getTests()->offsetGet(0);
+            $resourceTransfer->setAttributes($testTransfer);
+            $resourceTransfer->setId((string)$testTransfer->getId());
             $resourceTransfer->setType('test');
 
             $glueResponseTransfer->addResource($resourceTransfer);

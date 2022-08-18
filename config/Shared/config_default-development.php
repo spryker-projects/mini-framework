@@ -41,7 +41,6 @@ $config[ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED] = true;
 // ----------------------------------------------------------------------------
 
 
-
 $config[KernelConstants::DOMAIN_WHITELIST] = array_merge($config[KernelConstants::DOMAIN_WHITELIST]);
 
 // ----------------------------------------------------------------------------

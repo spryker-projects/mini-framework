@@ -10,6 +10,7 @@ use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -35,26 +36,26 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyStoreQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildSpyStoreQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildSpyStore|null findOne(ConnectionInterface $con = null) Return the first ChildSpyStore matching the query
- * @method     ChildSpyStore findOneOrCreate(ConnectionInterface $con = null) Return the first ChildSpyStore matching the query, or a new ChildSpyStore object populated from the query conditions when no match is found
+ * @method     ChildSpyStore|null findOne(?ConnectionInterface $con = null) Return the first ChildSpyStore matching the query
+ * @method     ChildSpyStore findOneOrCreate(?ConnectionInterface $con = null) Return the first ChildSpyStore matching the query, or a new ChildSpyStore object populated from the query conditions when no match is found
  *
  * @method     ChildSpyStore|null findOneByIdStore(int $id_store) Return the first ChildSpyStore filtered by the id_store column
  * @method     ChildSpyStore|null findOneByName(string $name) Return the first ChildSpyStore filtered by the name column *
 
- * @method     ChildSpyStore requirePk($key, ConnectionInterface $con = null) Return the ChildSpyStore by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
- * @method     ChildSpyStore requireOne(ConnectionInterface $con = null) Return the first ChildSpyStore matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyStore requirePk($key, ?ConnectionInterface $con = null) Return the ChildSpyStore by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyStore requireOne(?ConnectionInterface $con = null) Return the first ChildSpyStore matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyStore requireOneByIdStore(int $id_store) Return the first ChildSpyStore filtered by the id_store column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyStore requireOneByName(string $name) Return the first ChildSpyStore filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
- * @method     ChildSpyStore[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildSpyStore objects based on current ModelCriteria
- * @psalm-method ObjectCollection&\Traversable<ChildSpyStore> find(ConnectionInterface $con = null) Return ChildSpyStore objects based on current ModelCriteria
- * @method     ChildSpyStore[]|ObjectCollection findByIdStore(int $id_store) Return ChildSpyStore objects filtered by the id_store column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyStore> findByIdStore(int $id_store) Return ChildSpyStore objects filtered by the id_store column
- * @method     ChildSpyStore[]|ObjectCollection findByName(string $name) Return ChildSpyStore objects filtered by the name column
- * @psalm-method ObjectCollection&\Traversable<ChildSpyStore> findByName(string $name) Return ChildSpyStore objects filtered by the name column
- * @method     ChildSpyStore[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
- * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyStore> paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @method     ChildSpyStore[]|Collection find(?ConnectionInterface $con = null) Return ChildSpyStore objects based on current ModelCriteria
+ * @psalm-method Collection&\Traversable<ChildSpyStore> find(?ConnectionInterface $con = null) Return ChildSpyStore objects based on current ModelCriteria
+ * @method     ChildSpyStore[]|Collection findByIdStore(int $id_store) Return ChildSpyStore objects filtered by the id_store column
+ * @psalm-method Collection&\Traversable<ChildSpyStore> findByIdStore(int $id_store) Return ChildSpyStore objects filtered by the id_store column
+ * @method     ChildSpyStore[]|Collection findByName(string $name) Return ChildSpyStore objects filtered by the name column
+ * @psalm-method Collection&\Traversable<ChildSpyStore> findByName(string $name) Return ChildSpyStore objects filtered by the name column
+ * @method     ChildSpyStore[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
+ * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyStore> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
 abstract class SpyStoreQuery extends ModelCriteria
@@ -66,6 +67,8 @@ abstract class SpyStoreQuery extends ModelCriteria
     protected $isForUpdateEnabled = false;
 
     /**
+     * @deprecated Use {@link \Propel\Runtime\ActiveQuery\Criteria::lockForUpdate()} instead.
+     *
      * @param bool $isForUpdateEnabled
      *
      * @return $this The primary criteria object
@@ -82,7 +85,7 @@ abstract class SpyStoreQuery extends ModelCriteria
      *
      * @return string
      */
-    public function createSelectSql(&$params)
+    public function createSelectSql(&$params): string
     {
         $sql = parent::createSelectSql($params);
         if ($this->isForUpdateEnabled) {
@@ -108,6 +111,28 @@ abstract class SpyStoreQuery extends ModelCriteria
         return $this;
     }
 
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postUpdate(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
+
+    /**
+     * @param int $affectedRows
+     * @param \Propel\Runtime\Connection\ConnectionInterface $con
+     *
+     * @return int|null
+     */
+    protected function postDelete(int $affectedRows, ConnectionInterface $con): ?int
+    {
+        return null;
+    }
 
     /**
      * Issue a SELECT query based on the current ModelCriteria
@@ -146,7 +171,7 @@ abstract class SpyStoreQuery extends ModelCriteria
      *
      * @return bool column existence
      */
-    public function exists(?ConnectionInterface $con = null)
+    public function exists(?ConnectionInterface $con = null): bool
     {
         return parent::exists($con);
     }
@@ -155,9 +180,9 @@ abstract class SpyStoreQuery extends ModelCriteria
     /**
      * Initializes internal state of \Orm\Zed\Store\Persistence\Base\SpyStoreQuery object.
      *
-     * @param     string $dbName The database name
-     * @param     string $modelName The phpName of a model, e.g. 'Book'
-     * @param     string $modelAlias The alias for the model in this query, e.g. 'b'
+     * @param string $dbName The database name
+     * @param string $modelName The phpName of a model, e.g. 'Book'
+     * @param string $modelAlias The alias for the model in this query, e.g. 'b'
      */
     public function __construct($dbName = 'zed', $modelName = '\\Orm\\Zed\\Store\\Persistence\\SpyStore', $modelAlias = null)
     {
@@ -167,12 +192,12 @@ abstract class SpyStoreQuery extends ModelCriteria
     /**
      * Returns a new ChildSpyStoreQuery object.
      *
-     * @param     string $modelAlias The alias of a model in the query
-     * @param     Criteria $criteria Optional Criteria to build the query from
+     * @param string $modelAlias The alias of a model in the query
+     * @param Criteria $criteria Optional Criteria to build the query from
      *
      * @return ChildSpyStoreQuery
      */
-    public static function create($modelAlias = null, Criteria $criteria = null)
+    public static function create(?string $modelAlias = null, ?Criteria $criteria = null): Criteria
     {
         if ($criteria instanceof ChildSpyStoreQuery) {
             return $criteria;
@@ -202,7 +227,7 @@ abstract class SpyStoreQuery extends ModelCriteria
      *
      * @return ChildSpyStore|array|mixed the result, formatted by the current formatter
      */
-    public function findPk($key, ConnectionInterface $con = null)
+    public function findPk($key, ?ConnectionInterface $con = null)
     {
         if ($key === null) {
             return null;
@@ -234,8 +259,8 @@ abstract class SpyStoreQuery extends ModelCriteria
      * Find object by primary key using raw SQL to go fast.
      * Bypass doSelect() and the object formatter by using generated code.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -267,8 +292,8 @@ abstract class SpyStoreQuery extends ModelCriteria
     /**
      * Find object by primary key.
      *
-     * @param     mixed $key Primary key to use for the query
-     * @param     ConnectionInterface $con A connection object
+     * @param mixed $key Primary key to use for the query
+     * @param ConnectionInterface $con A connection object
      *
      * @return ChildSpyStore|array|mixed the result, formatted by the current formatter
      */
@@ -291,7 +316,7 @@ abstract class SpyStoreQuery extends ModelCriteria
      * @param     array $keys Primary keys to use for the query
      * @param     ConnectionInterface $con an optional connection object
      *
-     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return    Collection|array|mixed the list of results, formatted by the current formatter
      */
     public function findPks($keys, ConnectionInterface $con = null)
     {
@@ -312,27 +337,31 @@ abstract class SpyStoreQuery extends ModelCriteria
     /**
      * Filter the query by primary key
      *
-     * @param     mixed $key Primary key to use for the query
+     * @param mixed $key Primary key to use for the query
      *
-     * @return $this|ChildSpyStoreQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKey($key)
     {
 
-        return $this->addUsingAlias(SpyStoreTableMap::COL_ID_STORE, $key, Criteria::EQUAL);
+        $this->addUsingAlias(SpyStoreTableMap::COL_ID_STORE, $key, Criteria::EQUAL);
+
+        return $this;
     }
 
     /**
      * Filter the query by a list of primary keys
      *
-     * @param     array $keys The list of primary key to use for the query
+     * @param array|int $keys The list of primary key to use for the query
      *
-     * @return $this|ChildSpyStoreQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function filterByPrimaryKeys($keys)
     {
 
-        return $this->addUsingAlias(SpyStoreTableMap::COL_ID_STORE, $keys, Criteria::IN);
+        $this->addUsingAlias(SpyStoreTableMap::COL_ID_STORE, $keys, Criteria::IN);
+
+        return $this;
     }
 
     /**
@@ -477,9 +506,9 @@ abstract class SpyStoreQuery extends ModelCriteria
     /**
      * Exclude object from result
      *
-     * @param   ChildSpyStore $spyStore Object to remove from the list of results
+     * @param ChildSpyStore $spyStore Object to remove from the list of results
      *
-     * @return $this|ChildSpyStoreQuery The current query, for fluid interface
+     * @return $this The current query, for fluid interface
      */
     public function prune($spyStore = null)
     {
@@ -496,7 +525,7 @@ abstract class SpyStoreQuery extends ModelCriteria
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
-    public function doDeleteAll(ConnectionInterface $con = null)
+    public function doDeleteAll(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyStoreTableMap::DATABASE_NAME);
@@ -521,12 +550,12 @@ abstract class SpyStoreQuery extends ModelCriteria
      * Performs a DELETE on the database based on the current ModelCriteria
      *
      * @param ConnectionInterface $con the connection to use
-     * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
+     * @return int The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
      *                         if supported by native driver or if emulated using Propel.
-     * @throws PropelException Any exceptions caught during processing will be
+     * @throws \Propel\Runtime\Exception\PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
      */
-    public function delete(ConnectionInterface $con = null)
+    public function delete(?ConnectionInterface $con = null): int
     {
         if (null === $con) {
             $con = Propel::getServiceContainer()->getWriteConnection(SpyStoreTableMap::DATABASE_NAME);
@@ -551,4 +580,4 @@ abstract class SpyStoreQuery extends ModelCriteria
         });
     }
 
-} // SpyStoreQuery
+}
