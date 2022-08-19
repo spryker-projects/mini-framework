@@ -1,6 +1,6 @@
 version: '0.1'
 
-namespace: spryker_mini_api_framework
+namespace: spryker_mini_framework
 tag: 'dev'
 
 environment: docker.dev
