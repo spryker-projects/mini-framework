@@ -4,8 +4,64 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6e6e1c1a5e0912331b55935e8a076654",
+    "content-hash": "cc3215238aa87f6a8ee6da57d319525c",
     "packages": [
+        {
+            "name": "brick/math",
+            "version": "0.10.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brick/math.git",
+                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brick/math/zipball/459f2781e1a08d52ee56b0b1444086e038561e3f",
+                "reference": "459f2781e1a08d52ee56b0b1444086e038561e3f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "php-coveralls/php-coveralls": "^2.2",
+                "phpunit/phpunit": "^9.0",
+                "vimeo/psalm": "4.25.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Brick\\Math\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Arbitrary-precision arithmetic library",
+            "keywords": [
+                "Arbitrary-precision",
+                "BigInteger",
+                "BigRational",
+                "arithmetic",
+                "bigdecimal",
+                "bignum",
+                "brick",
+                "math"
+            ],
+            "support": {
+                "issues": "https://github.com/brick/math/issues",
+                "source": "https://github.com/brick/math/tree/0.10.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/BenMorel",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-08-10T22:54:19+00:00"
+        },
         {
             "name": "doctrine/inflector",
             "version": "2.0.4",
@@ -1403,6 +1459,178 @@
             "time": "2019-03-08T08:55:37+00:00"
         },
         {
+            "name": "ramsey/collection",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/collection.git",
+                "reference": "cccc74ee5e328031b15640b51056ee8d3bb66c0a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/collection/zipball/cccc74ee5e328031b15640b51056ee8d3bb66c0a",
+                "reference": "cccc74ee5e328031b15640b51056ee8d3bb66c0a",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3 || ^8",
+                "symfony/polyfill-php81": "^1.23"
+            },
+            "require-dev": {
+                "captainhook/captainhook": "^5.3",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "ergebnis/composer-normalize": "^2.6",
+                "fakerphp/faker": "^1.5",
+                "hamcrest/hamcrest-php": "^2",
+                "jangregor/phpstan-prophecy": "^0.8",
+                "mockery/mockery": "^1.3",
+                "phpspec/prophecy-phpunit": "^2.0",
+                "phpstan/extension-installer": "^1",
+                "phpstan/phpstan": "^0.12.32",
+                "phpstan/phpstan-mockery": "^0.12.5",
+                "phpstan/phpstan-phpunit": "^0.12.11",
+                "phpunit/phpunit": "^8.5 || ^9",
+                "psy/psysh": "^0.10.4",
+                "slevomat/coding-standard": "^6.3",
+                "squizlabs/php_codesniffer": "^3.5",
+                "vimeo/psalm": "^4.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ramsey\\Collection\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ben Ramsey",
+                    "email": "ben@benramsey.com",
+                    "homepage": "https://benramsey.com"
+                }
+            ],
+            "description": "A PHP library for representing and manipulating collections.",
+            "keywords": [
+                "array",
+                "collection",
+                "hash",
+                "map",
+                "queue",
+                "set"
+            ],
+            "support": {
+                "issues": "https://github.com/ramsey/collection/issues",
+                "source": "https://github.com/ramsey/collection/tree/1.2.2"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ramsey",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/ramsey/collection",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-10-10T03:01:02+00:00"
+        },
+        {
+            "name": "ramsey/uuid",
+            "version": "4.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramsey/uuid.git",
+                "reference": "373f7bacfcf3de038778ff27dcce5672ddbf4c8a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramsey/uuid/zipball/373f7bacfcf3de038778ff27dcce5672ddbf4c8a",
+                "reference": "373f7bacfcf3de038778ff27dcce5672ddbf4c8a",
+                "shasum": ""
+            },
+            "require": {
+                "brick/math": "^0.8 || ^0.9 || ^0.10",
+                "ext-ctype": "*",
+                "ext-json": "*",
+                "php": "^8.0",
+                "ramsey/collection": "^1.0"
+            },
+            "replace": {
+                "rhumsaa/uuid": "self.version"
+            },
+            "require-dev": {
+                "captainhook/captainhook": "^5.10",
+                "captainhook/plugin-composer": "^5.3",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
+                "doctrine/annotations": "^1.8",
+                "ergebnis/composer-normalize": "^2.15",
+                "mockery/mockery": "^1.3",
+                "paragonie/random-lib": "^2",
+                "php-mock/php-mock": "^2.2",
+                "php-mock/php-mock-mockery": "^1.3",
+                "php-parallel-lint/php-parallel-lint": "^1.1",
+                "phpbench/phpbench": "^1.0",
+                "phpstan/extension-installer": "^1.0",
+                "phpstan/phpstan": "^0.12",
+                "phpstan/phpstan-mockery": "^0.12",
+                "phpstan/phpstan-phpunit": "^0.12",
+                "phpunit/phpunit": "^8.5 || ^9",
+                "slevomat/coding-standard": "^7.0",
+                "squizlabs/php_codesniffer": "^3.5",
+                "vimeo/psalm": "^4.9"
+            },
+            "suggest": {
+                "ext-bcmath": "Enables faster math with arbitrary-precision integers using BCMath.",
+                "ext-ctype": "Enables faster processing of character classification using ctype functions.",
+                "ext-gmp": "Enables faster math with arbitrary-precision integers using GMP.",
+                "ext-uuid": "Enables the use of PeclUuidTimeGenerator and PeclUuidRandomGenerator.",
+                "paragonie/random-lib": "Provides RandomLib for use with the RandomLibAdapter",
+                "ramsey/uuid-doctrine": "Allows the use of Ramsey\\Uuid\\Uuid as Doctrine field type."
+            },
+            "type": "library",
+            "extra": {
+                "captainhook": {
+                    "force-install": true
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Ramsey\\Uuid\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP library for generating and working with universally unique identifiers (UUIDs).",
+            "keywords": [
+                "guid",
+                "identifier",
+                "uuid"
+            ],
+            "support": {
+                "issues": "https://github.com/ramsey/uuid/issues",
+                "source": "https://github.com/ramsey/uuid/tree/4.4.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/ramsey",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/ramsey/uuid",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2022-08-05T17:58:37+00:00"
+        },
+        {
             "name": "seld/signal-handler",
             "version": "1.3.0",
             "source": {
@@ -2469,24 +2697,24 @@
         },
         {
             "name": "spryker/glue-rest-api-convention",
-            "version": "0.1.3",
+            "version": "0.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/glue-rest-api-convention.git",
-                "reference": "a4ffdf8f0d10f5152b86b60aa514f6d5a61a678c"
+                "reference": "ad8901c47cc9ec82352e8606f3ff1080892de1db"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/glue-rest-api-convention/zipball/a4ffdf8f0d10f5152b86b60aa514f6d5a61a678c",
-                "reference": "a4ffdf8f0d10f5152b86b60aa514f6d5a61a678c",
+                "url": "https://api.github.com/repos/spryker/glue-rest-api-convention/zipball/ad8901c47cc9ec82352e8606f3ff1080892de1db",
+                "reference": "ad8901c47cc9ec82352e8606f3ff1080892de1db",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.4",
                 "spryker/doctrine-inflector": "^1.0.0",
                 "spryker/documentation-generator-api-extension": "^0.1.0",
-                "spryker/glue-application-extension": "^1.7.0",
-                "spryker/glue-rest-api-convention-extension": "^0.1.0",
+                "spryker/glue-application-extension": "^1.10.0",
+                "spryker/glue-rest-api-convention-extension": "^0.2.0",
                 "spryker/kernel": "^3.30.0",
                 "spryker/symfony": "^3.7.0",
                 "spryker/transfer": "^3.25.0",
@@ -2517,22 +2745,22 @@
             ],
             "description": "GlueRestApiConvention module",
             "support": {
-                "source": "https://github.com/spryker/glue-rest-api-convention/tree/0.1.3"
+                "source": "https://github.com/spryker/glue-rest-api-convention/tree/0.2.1"
             },
-            "time": "2022-06-27T10:26:17+00:00"
+            "time": "2022-07-12T09:38:27+00:00"
         },
         {
             "name": "spryker/glue-rest-api-convention-extension",
-            "version": "0.1.0",
+            "version": "0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spryker/glue-rest-api-convention-extension.git",
-                "reference": "a0aa48d396665bcb92a73d0acc6061fb692e1a0b"
+                "reference": "7d59e375d19a22fd0a1dff99650e65520cf8fe7d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spryker/glue-rest-api-convention-extension/zipball/a0aa48d396665bcb92a73d0acc6061fb692e1a0b",
-                "reference": "a0aa48d396665bcb92a73d0acc6061fb692e1a0b",
+                "url": "https://api.github.com/repos/spryker/glue-rest-api-convention-extension/zipball/7d59e375d19a22fd0a1dff99650e65520cf8fe7d",
+                "reference": "7d59e375d19a22fd0a1dff99650e65520cf8fe7d",
                 "shasum": ""
             },
             "require": {
@@ -2559,9 +2787,9 @@
             ],
             "description": "GlueRestApiConventionExtension module",
             "support": {
-                "source": "https://github.com/spryker/glue-rest-api-convention-extension/tree/0.1.0"
+                "source": "https://github.com/spryker/glue-rest-api-convention-extension/tree/0.2.0"
             },
-            "time": "2022-03-01T14:38:47+00:00"
+            "time": "2022-06-29T16:33:52+00:00"
         },
         {
             "name": "spryker/glue-storefront-api-application-extension",
@@ -3534,6 +3762,40 @@
             "time": "2021-03-30T13:18:02+00:00"
         },
         {
+            "name": "spryker/ramsey-uuid",
+            "version": "2.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/ramsey-uuid.git",
+                "reference": "10026acec8c3a13411bbc2a77efe6f9946a3d497"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/ramsey-uuid/zipball/10026acec8c3a13411bbc2a77efe6f9946a3d497",
+                "reference": "10026acec8c3a13411bbc2a77efe6f9946a3d497",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "ramsey/uuid": "^4.0.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "RamseyUuid module",
+            "support": {
+                "source": "https://github.com/spryker/ramsey-uuid/tree/master"
+            },
+            "time": "2020-05-25T14:48:08+00:00"
+        },
+        {
             "name": "spryker/redis",
             "version": "2.6.1",
             "source": {
@@ -4423,6 +4685,101 @@
                 "source": "https://github.com/spryker/util-text/tree/1.5.0"
             },
             "time": "2021-06-29T12:43:36+00:00"
+        },
+        {
+            "name": "spryker/util-uuid-generator",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/util-uuid-generator.git",
+                "reference": "3082fdddb1e42653d59454863612e6ec3dc85e1a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/util-uuid-generator/zipball/3082fdddb1e42653d59454863612e6ec3dc85e1a",
+                "reference": "3082fdddb1e42653d59454863612e6ec3dc85e1a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.2",
+                "spryker/kernel": "^3.30.0",
+                "spryker/ramsey-uuid": "^1.0.0 || ^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "UtilUuidGenerator module",
+            "support": {
+                "source": "https://github.com/spryker/util-uuid-generator/tree/1.0.2"
+            },
+            "time": "2020-06-02T09:42:31+00:00"
+        },
+        {
+            "name": "spryker/uuid-behavior",
+            "version": "1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/uuid-behavior.git",
+                "reference": "857a5ec9ef031f5b9f41c3a3703d04a4db87c58d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/uuid-behavior/zipball/857a5ec9ef031f5b9f41c3a3703d04a4db87c58d",
+                "reference": "857a5ec9ef031f5b9f41c3a3703d04a4db87c58d",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "spryker/kernel": "^3.30.0",
+                "spryker/laminas": "^1.0.0",
+                "spryker/propel-orm": "^1.16.0",
+                "spryker/util-uuid-generator": "^1.0.0"
+            },
+            "require-dev": {
+                "codeception/module-asserts": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "propel-behavior",
+            "extra": {
+                "name": "uuid",
+                "class": "\\Spryker\\Zed\\UuidBehavior\\Persistence\\Propel\\Behavior\\UuidBehavior",
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "UuidBehavior module",
+            "support": {
+                "source": "https://github.com/spryker/uuid-behavior"
+            },
+            "time": "2022-07-01T12:54:14+00:00"
         },
         {
             "name": "spryker/web-profiler-extension",

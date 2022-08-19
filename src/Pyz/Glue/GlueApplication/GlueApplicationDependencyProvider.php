@@ -8,11 +8,9 @@
 namespace Pyz\Glue\GlueApplication;
 
 use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\ConventionResourceFilterPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\BackendApiGlueApplicationBootstrapPlugin;
 use Spryker\Glue\GlueHttp\Plugin\GlueApplication\HttpCommunicationProtocolPlugin;
 use Spryker\Glue\GlueHttp\Plugin\GlueContext\HttpGlueContextExpanderPlugin;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\RestApiConventionPlugin;
 
 class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
 {
@@ -43,26 +41,6 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
     {
         return [
             new HttpCommunicationProtocolPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface>
-     */
-    protected function getApiConventionPlugins(): array
-    {
-        return [
-            new RestApiConventionPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceFilterPluginInterface>
-     */
-    public function getResourceFilterPlugins(): array
-    {
-        return [
-            new ConventionResourceFilterPlugin(),
         ];
     }
 }
