@@ -10,10 +10,11 @@
         "spryker/glue-application": "^1.39.0",
         "spryker/glue-backend-api-application": "^0.2.0",
         "spryker/glue-http": "^0.3.0",
-        "spryker/glue-rest-api-convention": "^0.1.0",
+        "spryker/glue-rest-api-convention": "^0.2.0",
         "spryker/install": "^1.0.0",
         "spryker/scheduler": "^1.2",
-        "spryker/scheduler-jenkins": "^1.2"
+        "spryker/scheduler-jenkins": "^1.2",
+        "spryker/uuid-behavior": "^1.3"
     },
     "require-dev": {
         "spryker/code-sniffer": "^0.17.10",
