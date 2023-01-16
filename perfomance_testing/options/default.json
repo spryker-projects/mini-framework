@@ -1,14 +1,8 @@
 {
     "scenarios": {
-        "homepage": {
+        "example": {
             "executor": "per-vu-iterations",
             "exec": "homepage",
-            "iterations": 1,
-            "vus": 5
-        },
-        "catalog_search": {
-            "executor": "per-vu-iterations",
-            "exec": "catalog_search",
             "iterations": 1,
             "vus": 5
         }

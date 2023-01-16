@@ -6,8 +6,7 @@ export let serviceConfig = loadServiceConfig('b2c');
 
 export function setup() { return serviceConfig; }
 
-export { default as homepage } from './tests/homepage.js';
-export { default as catalog_search } from './tests/catalog_search.js';
+export { default as example } from './tests/example.js';
 
 export default function (data) {
  
