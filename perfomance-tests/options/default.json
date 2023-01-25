@@ -2,7 +2,7 @@
     "scenarios": {
         "example": {
             "executor": "per-vu-iterations",
-            "exec": "homepage",
+            "exec": "example",
             "iterations": 1,
             "vus": 5
         }
