@@ -1,6 +1,6 @@
 {
     "scenarios": {
-        "example": {
+        "exampleScenarioTest": {
             "executor": "per-vu-iterations",
             "exec": "example",
             "iterations": 1,

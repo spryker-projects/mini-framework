@@ -6,7 +6,7 @@ export let serviceConfig = loadEnvironmentConfig('b2c');
 
 export function setup() { return serviceConfig; }
 
-export { default as exampleAsScenarioTest } from './example-as-scenario-test.js';
+export { default as exampleScenarioTest } from './example-scenario-test.js';
 
 export default function (data) {
 
