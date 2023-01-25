@@ -10,7 +10,7 @@ export function setup() { return serviceConfig; }
 export default function(data) {
 
     group("Check Homepage", function() {
-        let response = sendGetRequestWithHttpAuth(data.baseUrl);
+        let response = sendGetRequestWithHttpAuth(data.baseUrl, {"username": data.username, "password": data.password});
         check(response, { "is success status code": 200}) || logError(response);
     });
 
