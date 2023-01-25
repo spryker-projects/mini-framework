@@ -1,9 +1,9 @@
 import { group, check } from "k6";
-import { logError, loadOptions, loadServiceConfig } from "../lib/utils.js";
+import { logError, loadOptions, loadEnvironmentConfig } from "../lib/utils.js";
 import {sendGetRequestWithHttpAuth, sendPostRequestWithHttpAuth} from "../lib/http.js";
 
 export let options = loadOptions('default-standalone');
-export let serviceConfig = loadServiceConfig('b2c');
+export let serviceConfig = loadEnvironmentConfig('b2c');
 
 export function setup() { return serviceConfig; }
 

@@ -7,12 +7,12 @@ export function loadOptions(optionsFile) {
     return JSON.parse(open(__ENV.PROJECT_DIR + "/options/" + optionsFile + ".json"))
 }
 
-export function loadServiceConfig(serviceFile) {
+export function loadEnvironmentConfig(serviceFile) {
     if (!__ENV.K6_HOSTENV) {
         fail('K6_HOSTENV has not be set. Exiting...');
     }
 
-    var config = JSON.parse(open(__ENV.PROJECT_DIR + "/services/" + serviceFile + ".json"))[__ENV.K6_HOSTENV];
+    var config = JSON.parse(open(__ENV.PROJECT_DIR + "/environments/" + serviceFile + ".json"))[__ENV.K6_HOSTENV];
     return Object.assign(config, { "environment": __ENV.K6_HOSTENV });
 }
 
