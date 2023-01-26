@@ -52,9 +52,9 @@ services:
     network_mode: host
     pid: host 
     privileged: true
-    # volumes:
-    #   - "/:/host:ro"
-    #   - "/var/run/docker.sock:/var/run/docker.sock"
+    volumes:
+      - "/:/host:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
       - NRIA_LICENSE_KEY=${NRIA_LICENSE_KEY}
     restart: unless-stopped
