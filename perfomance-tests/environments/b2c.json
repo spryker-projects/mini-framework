@@ -3,8 +3,6 @@
         "baseUrl": "http://host.docker.internal:9191"
     },
     "testing": {
-        "baseUrl": "https://www.de.mp-b2b.internal-testing.demo-spryker.com",
-        "httpauth_username": "cloud",
-        "httpauth_password": "cloud"
+        "baseUrl": "https://www.de.mp-b2b.internal-testing.demo-spryker.com"
     }
 }
