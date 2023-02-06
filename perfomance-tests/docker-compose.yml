@@ -34,7 +34,8 @@ services:
     image: newrelic/nri-statsd:latest
     environment: 
       - NR_ACCOUNT_ID=${NR_ACCOUNT_ID}
-      - NR_API_KEY=${NR_API_KEY}
+      # It appears to be a bug in the statsd image. Despite calling the API key, it only works with a New Relic license key.
+      - NR_API_KEY=${NRIA_LICENSE_KEY}
       - NR_EU_REGION=${NR_EU_REGION}
       - NR_LOG_METRICS=true
     hostname: "localpocmachine"
