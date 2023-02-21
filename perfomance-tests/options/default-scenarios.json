@@ -1,0 +1,16 @@
+{
+    "scenarios": {
+        "exampleScenarioTest": {
+            "executor": "per-vu-iterations",
+            "exec": "exampleScenarioTest",
+            "iterations": 1,
+            "vus": 5
+        }
+    },
+    "thresholds": {
+        "http_req_failed": ["rate<0.01"],
+        "http_req_duration": ["p(95)<200"]
+      },
+    "rps": 10,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
+}
