@@ -5,16 +5,16 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace Pyz\Glue\TestApi\Plugin;
+namespace Pyz\Glue\TestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\TestTransfer;
 use Pyz\Glue\TestApi\Controller\TestResourceController;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
-use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RestResourceInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
-class TestResource extends AbstractResourcePlugin implements RestResourceInterface
+class TestResource extends AbstractResourcePlugin implements ResourceInterface
 {
     /**
      * @return string
