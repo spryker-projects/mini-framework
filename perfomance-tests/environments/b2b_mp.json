@@ -1,0 +1,10 @@
+{
+  "local": {
+    "storefrontUrl": "http://yves.de.spryker.local",
+    "glueAPIUrl": "http://glue.de.spryker.local"
+  },
+  "testing": {
+    "storefrontUrl": "https://www.de.mp-b2b.internal-testing.demo-spryker.com",
+    "glueAPIUrl": "https://glue.de.mp-b2b.internal-testing.demo-spryker.com"
+  }
+}

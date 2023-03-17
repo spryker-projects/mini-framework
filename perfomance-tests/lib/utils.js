@@ -7,6 +7,10 @@ export function loadOptions(optionsFile) {
     return JSON.parse(open(__ENV.PROJECT_DIR + "/options/" + optionsFile + ".json"))
 }
 
+export function loadDefaultOptions() {
+    return loadOptions('default-options');
+}
+
 export function loadEnvironmentConfig(serviceFile) {
     if (!__ENV.K6_HOSTENV) {
         fail('K6_HOSTENV has not be set. Exiting...');
