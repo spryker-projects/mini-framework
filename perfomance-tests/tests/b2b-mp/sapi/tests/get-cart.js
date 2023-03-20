@@ -1,4 +1,4 @@
-import { GetCartScenario } from "../scenarios/GetCartScenario.js";
+import { GetCartScenario } from "../scenarios/get-cart-scenario.js";
 import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();

@@ -1,4 +1,4 @@
-import { AbstractScenario } from '../AbstractScenario.js';
+import { AbstractScenario } from '../abstract-scenario.js';
 
 export class AbstractB2bMpScenario extends AbstractScenario {
     ENVIRONMENT() {

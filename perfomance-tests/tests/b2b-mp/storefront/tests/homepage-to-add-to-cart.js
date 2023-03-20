@@ -1,4 +1,4 @@
-import { HomepageToAddToCartScenario } from "../scenarios/HomepageToAddToCartScenario.js";
+import { HomepageToAddToCartScenario } from "../scenarios/homepage-to-add-to-cart-scenario.js";
 import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();

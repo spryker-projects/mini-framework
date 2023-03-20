@@ -1,4 +1,4 @@
-import { AbstractB2bMpScenario } from '../../AbstractB2bMpScenario.js';
+import { AbstractB2bMpScenario } from '../../abstract-b2b-mp-scenario.js';
 
 export class HomepageToAddToCartScenario extends AbstractB2bMpScenario {
     constructor() {

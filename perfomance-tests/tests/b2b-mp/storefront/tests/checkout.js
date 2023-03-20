@@ -1,4 +1,4 @@
-import { CheckoutScenario } from "../scenarios/CheckoutScenario.js";
+import { CheckoutScenario } from "../scenarios/checkout-scenario.js";
 import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();

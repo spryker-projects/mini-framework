@@ -1,7 +1,7 @@
-import { Http } from '../lib/Http.js';
+import { Http } from '../lib/http.js';
 import { loadEnvironmentConfig } from '../lib/utils.js';
-import { CartHelper } from '../helpers/CartHelper.js';
-import { StorefrontHelper } from '../helpers/StorefrontHelper.js';
+import { CartHelper } from '../helpers/cart-helper.js';
+import { StorefrontHelper } from '../helpers/storefront-helper.js';
 import { Trend } from 'k6/metrics';
 import { fail, check } from "k6";
 
