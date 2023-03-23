@@ -25,6 +25,16 @@ export class AbstractScenario {
         return new Trend(`${this.ENVIRONMENT()}_${name}`);
     }
 
+    addResponseDurationToTrend(trend, response) {
+        trend.add(response.timings.duration,
+            {
+                gitHash: this._getRequiredEnvVariable('GIT_HASH'),
+                gitBranch: this._getRequiredEnvVariable('GIT_BRANCH'),
+                gitRepo: this._getRequiredEnvVariable('GIT_REPO')
+            }
+        );
+    }
+
     assertResponseBodyIncludes(response, text) {
         if (
             !check(response, {
@@ -39,5 +49,13 @@ export class AbstractScenario {
         check(response, {
             [`Response status is ${expectedStatus}`]: r => r.status === expectedStatus
         });
+    }
+
+    _getRequiredEnvVariable(variableName) {
+        if (!eval(`__ENV.${variableName}`)) {
+            throw new Error(`${variableName} env variable must be specified.`);
+        }
+
+        return eval(`__ENV.${variableName}`);
     }
 }

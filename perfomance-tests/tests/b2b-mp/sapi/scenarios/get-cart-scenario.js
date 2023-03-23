@@ -17,6 +17,6 @@ export class GetCartScenario extends AbstractB2bMpScenario {
 
         this.assertResponseStatus(cartResponse);
 
-        this.glueApiGetCart1ItemTrend.add(cartResponse.timings.duration);
+        this.addResponseDurationToTrend(this.glueApiGetCart1ItemTrend, cartResponse);
     }
 }

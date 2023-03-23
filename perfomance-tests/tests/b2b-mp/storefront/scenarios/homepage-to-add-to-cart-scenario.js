@@ -20,28 +20,28 @@ export class HomepageToAddToCartScenario extends AbstractB2bMpScenario {
         //home page
         const homePageResponse = this.http.sendGetRequestWithHttpAuth(this.environmentConfig.storefrontUrl);
         this.assertResponseBodyIncludes(homePageResponse, 'Your Experience is Our Priority');
-        this.homePageTrend.add(homePageResponse.timings.duration);
+        this.addResponseDurationToTrend(this.homePageTrend, homePageResponse);
 
         //search page
         const searchPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/search?q=100429`);
         this.assertResponseBodyIncludes(searchPageResponse, '1 Items found');
-        this.searchPageTrend.add(searchPageResponse.timings.duration);
+        this.addResponseDurationToTrend(this.searchPageTrend, searchPageResponse);
 
         //PDP page
         const pdpPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/flip-chart-hoehenverstellbar-mit-teleskopbeinen-M39654`);
         this.assertResponseBodyIncludes(pdpPageResponse, 'Add to Cart');
-        this.pdpPageTrend.add(pdpPageResponse.timings.duration);
+        this.addResponseDurationToTrend(this.pdpPageTrend, pdpPageResponse);
 
         //add to cart form submit
         const addToCartFormSubmitResponse = this.http.submitFormWithHttpAuth(pdpPageResponse, {
             formSelector: 'form[name="addToCartForm_100429-"]'
         });
         this.assertResponseStatus(addToCartFormSubmitResponse, 302);
-        this.addToCartFormSubmitTrend.add(addToCartFormSubmitResponse.timings.duration);
+        this.addResponseDurationToTrend(this.addToCartFormSubmitTrend, addToCartFormSubmitResponse);
 
         //cart page
         const cartPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/cart`);
         this.assertResponseBodyIncludes(cartPageResponse, '1 Items');
-        this.cartPageTrend.add(cartPageResponse.timings.duration);
+        this.addResponseDurationToTrend(this.cartPageTrend, cartPageResponse);
     }
 }

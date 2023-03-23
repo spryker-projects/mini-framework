@@ -33,14 +33,14 @@ export class Http {
 
     _getAuthorizationHeaders(environment) {
         if (!environment) {
-            fail('Environment must be specified to send GET requests with HTTP authentication.');
+            fail('Environment must be specified to send requests with HTTP authentication.');
         }
 
         const username = eval(`__ENV.${environment}_AUTH_USERNAME`);
         const password = eval(`__ENV.${environment}_AUTH_PASSWORD`);
 
         if (!username || !password) {
-            fail('Username and password must to be specified to send GET requests with HTTP authentication');
+            fail('Username and password must to be specified to send requests with HTTP authentication.');
         }
 
         return {

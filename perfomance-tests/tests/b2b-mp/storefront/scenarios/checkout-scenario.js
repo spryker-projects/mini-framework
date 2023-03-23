@@ -23,7 +23,7 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
         const addressStepResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/address`);
         this.assertResponseBodyIncludes(addressStepResponse, 'Delivery Address');
 
-        this.addressPageTrend.add(addressStepResponse.timings.duration);
+        this.addResponseDurationToTrend(this.addressPageTrend, addressStepResponse);
 
         //address form submit
         const addressStepFormSubmitResponse = this.http.submitFormWithHttpAuth(addressStepResponse, {
@@ -35,13 +35,13 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
             },
         });
 
-        this.addressPageFormSubmitTrend.add(addressStepFormSubmitResponse.timings.duration);
+        this.addResponseDurationToTrend(this.addressPageFormSubmitTrend, addressStepFormSubmitResponse);
 
         //shipment
         const shipmentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/shipment`);
         this.assertResponseBodyIncludes(shipmentStepResponse, 'Shipment 1 of 1');
 
-        this.shipmentPageTrend.add(shipmentStepResponse.timings.duration);
+        this.addResponseDurationToTrend(this.shipmentPageTrend, shipmentStepResponse);
 
         //shipment submit form
         const shipmentStepFormSubmitResponse = this.http.submitFormWithHttpAuth(shipmentStepResponse, {
@@ -51,13 +51,13 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
             },
         });
 
-        this.shipmentPageFormSubmitTrend.add(shipmentStepFormSubmitResponse.timings.duration);
+        this.addResponseDurationToTrend(this.shipmentPageFormSubmitTrend, shipmentStepFormSubmitResponse);
 
         //payment
         const paymentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/payment`);
         this.assertResponseBodyIncludes(paymentStepResponse, 'Payment method');
 
-        this.paymentPageTrend.add(paymentStepResponse.timings.duration);
+        this.addResponseDurationToTrend(this.paymentPageTrend, paymentStepResponse);
 
         //payment submit form
         const paymentStepFormSubmitResponse = this.http.submitFormWithHttpAuth(paymentStepResponse, {
@@ -67,13 +67,14 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
                 'paymentForm[dummyMarketplacePaymentInvoice][dateOfBirth]': '12.12.2000'
             },
         });
-        this.paymentPageFormSubmitTrend.add(paymentStepFormSubmitResponse.timings.duration);
+
+        this.addResponseDurationToTrend(this.paymentPageFormSubmitTrend, paymentStepFormSubmitResponse);
 
         //summary
         const summaryStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/summary`);
         this.assertResponseBodyIncludes(summaryStepResponse, 'Complete checkout');
 
-        this.summaryPageTrend.add(summaryStepResponse.timings.duration);
+        this.addResponseDurationToTrend(this.summaryPageTrend, summaryStepResponse);
 
         //summary submit form and place order
         const summaryStepResponseFormSubmitResponse = this.http.submitFormWithHttpAuth(summaryStepResponse, {
@@ -88,7 +89,7 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
 
         this.assertResponseBodyIncludes(successPageResponse, 'Your order has been placed successfully.');
 
-        this.summaryPageFormSubmitTrend.add(summaryStepResponseFormSubmitResponse.timings.duration);
-        this.placeOrderPageTrend.add(placeOrderResponse.timings.duration);
+        this.addResponseDurationToTrend(this.summaryPageFormSubmitTrend, summaryStepResponseFormSubmitResponse);
+        this.addResponseDurationToTrend(this.placeOrderPageTrend, placeOrderResponse);
     }
 }
