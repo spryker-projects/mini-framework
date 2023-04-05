@@ -1,3 +1,4 @@
-# Spryker perforance testing framework
+# Spryker Performance Testing Framework
 
-For documentation visit: [https://spryker.atlassian.net/wiki/spaces/CORE/pages/3633776322/Developers+guide](https://spryker.atlassian.net/wiki/spaces/CORE/pages/3633776322/Developers+guide)
+* [Spryker Setup Instructions & Manual for this Repository](https://spryker.atlassian.net/wiki/spaces/CORE/pages/3633776322/Developers+guide)
+* [Official K6 documentation](https://k6.io/docs/)

@@ -19,6 +19,13 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
         this.cartHelper.haveCartWithProducts(__ENV.numberOfItems);
         this.storefrontHelper.loginUser();
 
+        this.addressPage();
+        this.shipmentPage();
+        this.paymentPage();
+        this.summaryPage();
+    }
+
+    addressPage() {
         //address
         const addressStepResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/address`);
         this.assertResponseBodyIncludes(addressStepResponse, 'Delivery Address');
@@ -36,8 +43,9 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
         });
 
         this.addResponseDurationToTrend(this.addressPageFormSubmitTrend, addressStepFormSubmitResponse);
+    }
 
-        //shipment
+    shipmentPage() {
         const shipmentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/shipment`);
         this.assertResponseBodyIncludes(shipmentStepResponse, 'Shipment 1 of 1');
 
@@ -52,8 +60,9 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
         });
 
         this.addResponseDurationToTrend(this.shipmentPageFormSubmitTrend, shipmentStepFormSubmitResponse);
+    }
 
-        //payment
+    paymentPage() {
         const paymentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/payment`);
         this.assertResponseBodyIncludes(paymentStepResponse, 'Payment method');
 
@@ -69,8 +78,9 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
         });
 
         this.addResponseDurationToTrend(this.paymentPageFormSubmitTrend, paymentStepFormSubmitResponse);
+    }
 
-        //summary
+    summaryPage() {
         const summaryStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/summary`);
         this.assertResponseBodyIncludes(summaryStepResponse, 'Complete checkout');
 

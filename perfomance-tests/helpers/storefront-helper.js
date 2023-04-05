@@ -17,7 +17,6 @@ export class StorefrontHelper {
             fail();
         }
 
-
         this.http.submitFormWithHttpAuth(loginResponse, {
             formSelector: 'form[name="loginForm"]',
             fields: { 'loginForm[email]': 'sonia@spryker.com', 'loginForm[password]': 'change123' }
