@@ -16,6 +16,9 @@ services:
         - K6_STATSD_ADDR=${K6_STATSD_ADDR}
         - K6_STATSD_NAMESPACE=${K6_STATSD_NAMESPACE}
         - K6_HTTP_DEBUG=${K6_HTTP_DEBUG}
+        - GIT_HASH=${GIT_HASH}
+        - GIT_BRANCH=${GIT_BRANCH}
+        - GIT_REPO=${GIT_REPO}
     volumes:  
       - .:/home/k6
     ports:

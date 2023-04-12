@@ -4,7 +4,7 @@
     "glueAPIUrl": "http://glue.de.spryker.local"
   },
   "testing": {
-    "storefrontUrl": "https://www.de.mp-b2b.internal-testing.demo-spryker.com",
-    "glueAPIUrl": "https://glue.de.mp-b2b.internal-testing.demo-spryker.com"
+    "storefrontUrl": "https://www.de.b2b-marketplace.demo-spryker.com",
+    "glueAPIUrl": "https://glue.de.b2b-marketplace.demo-spryker.com"
   }
 }
