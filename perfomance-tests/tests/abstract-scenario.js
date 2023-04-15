@@ -22,12 +22,13 @@ export class AbstractScenario {
     }
 
     createTrendMetric(name) {
-        return new Trend(`${this.ENVIRONMENT()}_${name}`);
+        return new Trend(`${this.ENVIRONMENT()}.${name}`);
     }
 
     addResponseDurationToTrend(trend, response) {
         trend.add(response.timings.duration,
             {
+                endpointUrl: response.url.toString(),
                 gitHash: this._getRequiredEnvVariable('GIT_HASH'),
                 gitBranch: this._getRequiredEnvVariable('GIT_BRANCH'),
                 gitRepo: this._getRequiredEnvVariable('GIT_REPO')

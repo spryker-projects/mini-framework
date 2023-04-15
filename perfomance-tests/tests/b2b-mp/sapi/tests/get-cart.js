@@ -8,14 +8,18 @@ options.scenarios = {
             executor: 'shared-iterations',
             env: {
                 numberOfItems: __ENV.numberOfItems || '1'
-            }
+            },
+            vus: 1,
+            iterations: 2,
         },
         GetCart_70_items: {
             exec: 'executeGetCartScenario',
             executor: 'shared-iterations',
             env: {
                 numberOfItems: '70'
-            }
+            },
+            vus: 1,
+            iterations: 2,
         },
     };
 
