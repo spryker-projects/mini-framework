@@ -1,23 +1,24 @@
-import { CartScenario } from "../scenarios/cart-scenario.js";
+import { CartsScenario } from "../scenarios/carts-scenario.js";
 import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
+
 options.scenarios = {
-    CmsPage1VUS: {
+    CartPage1VUS: {
         exec: 'executeCartScenario',
         executor: 'shared-iterations',
         vus: 1,
-        iterations: 2,
+        iterations: 10
     },
-    CmsPage10Vus: {
+    CartPage10Vus: {
         exec: 'executeCartScenario',
         executor: 'shared-iterations',
         vus: 10,
-        iterations: 10,
-    },
+        iterations: 10
+    }
 };
 
-const scenario = new CartScenario();
+const scenario = new CartsScenario();
 export function executeCartScenario() {
     scenario.execute();
 }

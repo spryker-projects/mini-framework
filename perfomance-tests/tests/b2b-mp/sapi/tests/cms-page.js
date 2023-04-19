@@ -7,13 +7,13 @@ options.scenarios = {
         exec: 'executeCmsPageScenario',
         executor: 'shared-iterations',
         vus: 1,
-        iterations: 2,
+        iterations: 2
     },
     CmsPage10Vus: {
         exec: 'executeCmsPageScenario',
         executor: 'shared-iterations',
         vus: 10,
-        iterations: 10,
+        iterations: 10
     },
 };
 

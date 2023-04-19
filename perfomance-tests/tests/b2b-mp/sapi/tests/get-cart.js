@@ -10,7 +10,7 @@ options.scenarios = {
                 numberOfItems: __ENV.numberOfItems || '1'
             },
             vus: 1,
-            iterations: 2,
+            iterations: 2
         },
         GetCart_70_items: {
             exec: 'executeGetCartScenario',
@@ -19,7 +19,7 @@ options.scenarios = {
                 numberOfItems: '70'
             },
             vus: 1,
-            iterations: 2,
+            iterations: 2
         },
     };
 

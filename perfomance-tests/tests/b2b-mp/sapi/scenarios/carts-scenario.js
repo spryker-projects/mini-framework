@@ -1,6 +1,6 @@
 import { AbstractB2bMpScenario } from '../../abstract-b2b-mp-scenario.js';
 
-export class CartScenario extends AbstractB2bMpScenario {
+export class CartsScenario extends AbstractB2bMpScenario {
     constructor() {
         super();
     }

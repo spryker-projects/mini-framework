@@ -11,7 +11,7 @@ export class AbstractScenario {
     }
 
     constructor() {
-        if (this.constructor == AbstractScenario) {
+        if (this.constructor === AbstractScenario) {
             throw new Error("Abstract classes can't be instantiated.");
         }
 

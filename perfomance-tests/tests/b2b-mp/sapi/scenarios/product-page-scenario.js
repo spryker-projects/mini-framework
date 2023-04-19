@@ -13,16 +13,11 @@ export class ProductPageScenario extends AbstractB2bMpScenario {
     execute() {
         const requestParams = this.cartHelper.getParamsWithAuthorization();
 
-        const productSearchRequest = this.http.sendGetRequest(
-            this.getBaseUrl() + `/catalog-search?q=100429`, requestParams
-        );
-        this.assertResponseStatus(productSearchRequest, 200);
-/*
         const productPage = this.http.sendGetRequest(
             this.getBaseUrl() + `/concrete-products/100429`, requestParams
         );
         this.assertResponseStatus(productPage, 200);
-
+/*
         const cartsPage = this.http.sendGetRequest(
             this.getBaseUrl() + `/carts`, requestParams
         );
