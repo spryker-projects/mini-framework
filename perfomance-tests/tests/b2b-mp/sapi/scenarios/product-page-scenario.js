@@ -17,11 +17,5 @@ export class ProductPageScenario extends AbstractB2bMpScenario {
             this.getBaseUrl() + `/concrete-products/100429`, requestParams
         );
         this.assertResponseStatus(productPage, 200);
-/*
-        const cartsPage = this.http.sendGetRequest(
-            this.getBaseUrl() + `/carts`, requestParams
-        );
-        this.assertResponseStatus(cartsPage, 200);
-        */
     }
 }
