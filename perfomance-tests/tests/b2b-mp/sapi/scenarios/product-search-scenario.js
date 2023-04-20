@@ -1,10 +1,6 @@
 import { AbstractB2bMpScenario } from '../../abstract-b2b-mp-scenario.js';
 
 export class ProductSearchScenario extends AbstractB2bMpScenario {
-    constructor() {
-        super();
-    }
-
     getBaseUrl() {
         return `${this.environmentConfig.glueAPIUrl}`;
     }

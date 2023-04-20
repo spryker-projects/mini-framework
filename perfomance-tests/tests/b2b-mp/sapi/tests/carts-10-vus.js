@@ -4,12 +4,12 @@ import { loadDefaultOptions } from "../../../../lib/utils.js";
 export const options = loadDefaultOptions();
 
 options.scenarios = {
-    CartPage1VUS: {
+    CartPage10Vus: {
         exec: 'executeCartScenario',
         executor: 'shared-iterations',
-        vus: 1,
+        vus: 10,
         iterations: 10
-    },
+    }
 };
 
 const scenario = new CartsScenario();

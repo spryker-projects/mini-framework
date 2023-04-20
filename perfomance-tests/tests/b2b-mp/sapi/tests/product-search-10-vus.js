@@ -3,11 +3,11 @@ import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
 options.scenarios = {
-    CmsPage1VUS: {
+    CmsPage10Vus: {
         exec: 'executeProductSearchScenario',
         executor: 'shared-iterations',
-        vus: 1,
-        iterations: 2,
+        vus: 10,
+        iterations: 10,
     },
 };
 

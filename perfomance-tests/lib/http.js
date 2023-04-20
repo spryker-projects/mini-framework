@@ -7,7 +7,7 @@ export class Http {
         this.authorizationHeaders = this._getAuthorizationHeaders(environment);
     }
 
-    sendGetRequestWithHttpAuth(url) {
+    static sendGetRequestWithHttpAuth(url) {
         return http.get(url, this.authorizationHeaders);
     }
 
@@ -19,15 +19,15 @@ export class Http {
         return response.submitForm(formData);
     }
 
-    sendPostRequest(url, body, params) {
+    static sendPostRequest(url, body, params) {
         return http.post(url, body, params);
     }
 
-    sendGetRequest(url, params) {
+    static sendGetRequest(url, params) {
         return http.get(url, params);
     }
 
-    sendDeleteRequest(url, body, params) {
+    static sendDeleteRequest(url, body, params) {
         return http.del(url, body, params);
     }
 
