@@ -3,33 +3,35 @@ import { group } from 'k6';
 
 export class HomepageToAddToCartScenario extends AbstractB2bMpScenario {
     execute() {
+        let self = this;
+
         group('Homepage to add to cart', function () {
-            const params = this.cartHelper.getParamsWithAuthorization();
-            const carts = this.cartHelper.getCarts(params);
-            this.cartHelper.deleteCarts(carts, params);
-            this.storefrontHelper.loginUser();
+            const params = self.cartHelper.getParamsWithAuthorization();
+            const carts = self.cartHelper.getCarts(params);
+            self.cartHelper.deleteCarts(carts, params);
+            self.storefrontHelper.loginUser();
 
             //home page
-            const homePageResponse = this.http.sendGetRequestWithHttpAuth(this.environmentConfig.storefrontUrl);
-            this.assertResponseBodyIncludes(homePageResponse, 'Your Experience is Our Priority');
+            const homePageResponse = self.http.sendGetRequestWithHttpAuth(self.environmentConfig.storefrontUrl);
+            self.assertResponseBodyIncludes(homePageResponse, 'Your Experience is Our Priority');
 
             //search page
-            const searchPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/search?q=100429`);
-            this.assertResponseBodyIncludes(searchPageResponse, '1 Items found');
+            const searchPageResponse = self.http.sendGetRequestWithHttpAuth(`${self.environmentConfig.storefrontUrl}/en/search?q=100429`);
+            self.assertResponseBodyIncludes(searchPageResponse, '1 Items found');
 
             //PDP page
-            const pdpPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/flip-chart-hoehenverstellbar-mit-teleskopbeinen-M39654`);
-            this.assertResponseBodyIncludes(pdpPageResponse, 'Add to Cart');
+            const pdpPageResponse = self.http.sendGetRequestWithHttpAuth(`${self.environmentConfig.storefrontUrl}/en/flip-chart-hoehenverstellbar-mit-teleskopbeinen-M39654`);
+            self.assertResponseBodyIncludes(pdpPageResponse, 'Add to Cart');
 
             //add to cart form submit
-            const addToCartFormSubmitResponse = this.http.submitFormWithHttpAuth(pdpPageResponse, {
+            const addToCartFormSubmitResponse = self.http.submitFormWithHttpAuth(pdpPageResponse, {
                 formSelector: 'form[name="addToCartForm_100429-"]'
             });
-            this.assertResponseStatus(addToCartFormSubmitResponse, 302);
+            self.assertResponseStatus(addToCartFormSubmitResponse, 302);
 
             //cart page
-            const cartPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/cart`);
-            this.assertResponseBodyIncludes(cartPageResponse, '1 Items');
+            const cartPageResponse = self.http.sendGetRequestWithHttpAuth(`${self.environmentConfig.storefrontUrl}/en/cart`);
+            self.assertResponseBodyIncludes(cartPageResponse, '1 Items');
         });
     }
 }

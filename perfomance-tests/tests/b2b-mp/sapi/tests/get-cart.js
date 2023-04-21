@@ -1,4 +1,4 @@
-import { GetCartScenario } from "../scenarios/get-cart-scenario.js";
+import { GetCartScenario } from "../../../shared/scenarios/get-cart-scenario.js";
 import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
@@ -14,7 +14,7 @@ options.scenarios = {
     },
 };
 
-const getCartScenario = new GetCartScenario();
+const getCartScenario = new GetCartScenario('B2B_MP');
 
 export function executeGetCartScenario() {
     getCartScenario.execute();

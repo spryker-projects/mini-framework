@@ -6,23 +6,25 @@ import { Trend } from 'k6/metrics';
 import { fail, check } from "k6";
 
 export class AbstractScenario {
-    ENVIRONMENT() {
-        throw new Error('Abstract constant must be implemented.');
-    }
-
-    constructor() {
+    constructor(environment) {
         if (this.constructor === AbstractScenario) {
             throw new Error("Abstract classes can't be instantiated.");
         }
 
-        this.http = new Http(this.ENVIRONMENT());
-        this.environmentConfig = loadEnvironmentConfig(this.ENVIRONMENT());
+        if (!environment) {
+            throw new Error("Environment must be specified.");
+        }
+
+        this.environment = environment;
+
+        this.http = new Http(this.environment);
+        this.environmentConfig = loadEnvironmentConfig(this.environment);
         this.cartHelper = new CartHelper(this.environmentConfig, this.http);
         this.storefrontHelper = new StorefrontHelper(this.environmentConfig, this.http);
     }
 
     createTrendMetric(name) {
-        return new Trend(`${this.ENVIRONMENT()}.${name}`);
+        return new Trend(`${this.environment}.${name}`);
     }
 
     addResponseDurationToTrend(trend, response) {
