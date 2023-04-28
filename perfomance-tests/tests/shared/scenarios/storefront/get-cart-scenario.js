@@ -1,4 +1,4 @@
-import { AbstractScenario } from '../../abstract-scenario.js';
+import { AbstractScenario } from '../../../abstract-scenario.js';
 
 export class GetCartScenario extends AbstractScenario {
     execute() {

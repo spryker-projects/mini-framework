@@ -2,16 +2,19 @@ import { HomepageToAddToCartScenario } from "../scenarios/homepage-to-add-to-car
 import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
+
 options.scenarios = {
-        HomepageToAddToCart: {
+        S1_HomepageToAddToCart: {
             exec: 'executeHomepageToAddToCartScenario',
             executor: 'shared-iterations',
+            tags: {
+                testCase: 'S1'
+            },
         },
     };
 
-const homepageToAddToCartScenario = new HomepageToAddToCartScenario();
+const homepageToAddToCartScenario= new HomepageToAddToCartScenario();
 
 export function executeHomepageToAddToCartScenario() {
     homepageToAddToCartScenario.execute();
 }
-

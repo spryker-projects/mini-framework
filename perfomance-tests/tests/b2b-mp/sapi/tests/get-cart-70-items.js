@@ -1,4 +1,4 @@
-import { GetCartScenario } from "../../../shared/scenarios/get-cart-scenario.js";
+import { GetCartScenario } from "../../../shared/scenarios/storefront/get-cart-scenario.js";
 import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
@@ -10,7 +10,7 @@ options.scenarios = {
             numberOfItems: __ENV.numberOfItems || '70'
         },
         vus: 1,
-        iterations: 2
+        iterations: 10
     },
 };
 

@@ -33,8 +33,6 @@ export function loadOptions(optionsFile) {
         Object.entries(tags).filter(([key, value]) => !(key in options.tags))
     ));
 
-    console.log(options);
-
     return options;
 }
 

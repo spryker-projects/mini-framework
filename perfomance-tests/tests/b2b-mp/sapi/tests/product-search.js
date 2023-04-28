@@ -7,7 +7,7 @@ options.scenarios = {
         exec: 'executeProductSearchScenario',
         executor: 'shared-iterations',
         vus: 1,
-        iterations: 2,
+        iterations: 10,
     },
 };
 

@@ -3,17 +3,22 @@ import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
 options.scenarios = {
-    Checkout: {
+    S3_Checkout_70_items: {
         exec: 'executeCheckoutScenario',
         executor: 'shared-iterations',
         env: {
-            numberOfItems: __ENV.numberOfItems || '1'
+            numberOfItems: __ENV.numberOfItems || '70'
+        }
+    },
+    S3_Checkout_700_items: {
+        exec: 'executeCheckoutScenario',
+        executor: 'shared-iterations',
+        env: {
+            numberOfItems: '700'
         }
     },
 };
 
-//scenario objects must be created outside any function used in execute phase since some initialization actions are done on
-//K6 "init" stage (in the current implementation such init action are done in class constructor).
 const checkoutScenario = new CheckoutScenario();
 
 export function executeCheckoutScenario() {
