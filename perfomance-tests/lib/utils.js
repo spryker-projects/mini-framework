@@ -15,7 +15,7 @@ export function getRequiredEnvVariable(variableName) {
  * See https://k6.io/docs/using-k6/tags-and-groups/#test-wide-tags
  */
 export function loadOptions(optionsFile) {
-    let options = JSON.parse(open(__ENV.PROJECT_DIR + "/options/" + optionsFile + ".json"))
+    let options = JSON.parse(open(__ENV.PROJECT_DIR + "/options/" + optionsFile + ".json"));
 
     if (options.tags === undefined) {
         options.tags = {};
@@ -26,11 +26,11 @@ export function loadOptions(optionsFile) {
         gitBranch: getRequiredEnvVariable('GIT_BRANCH'),
         gitCommit: getRequiredEnvVariable('GIT_HASH'),
         gitTag: __ENV.GIT_TAG
-    }
+    };
 
     // Adds the git* tags if they are NOT already present.
     Object.assign(options.tags, Object.fromEntries(
-        Object.entries(tags).filter(([key, value]) => !(key in options.tags))
+        Object.entries(tags).filter(([key]) => !(key in options.tags))
     ));
 
     return options;

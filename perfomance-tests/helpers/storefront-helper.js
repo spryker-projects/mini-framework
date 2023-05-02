@@ -1,4 +1,4 @@
-import { fail, check, sleep } from "k6";
+import { fail, check } from "k6";
 
 export class StorefrontHelper {
     constructor(environmentConfig, http) {
