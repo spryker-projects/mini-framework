@@ -2,6 +2,7 @@ import { Http } from '../lib/http.js';
 import { loadEnvironmentConfig } from '../lib/utils.js';
 import { CartHelper } from '../helpers/cart-helper.js';
 import { StorefrontHelper } from '../helpers/storefront-helper.js';
+import { UrlHelper } from '../helpers/url-helper.js';
 import { Trend } from 'k6/metrics';
 import { fail, check } from "k6";
 
@@ -19,8 +20,9 @@ export class AbstractScenario {
 
         this.http = new Http(this.environment);
         this.environmentConfig = loadEnvironmentConfig(this.environment);
-        this.cartHelper = new CartHelper(this.environmentConfig, this.http);
-        this.storefrontHelper = new StorefrontHelper(this.environmentConfig, this.http);
+        this.urlHelper = new UrlHelper(this.environmentConfig);
+        this.cartHelper = new CartHelper(this.urlHelper, this.http);
+        this.storefrontHelper = new StorefrontHelper(this.urlHelper, this.http);
     }
 
     createTrendMetric(name) {
@@ -52,6 +54,22 @@ export class AbstractScenario {
         check(response, {
             [`Response status is ${expectedStatus}`]: r => r.status === expectedStatus
         });
+    }
+
+    getStorefrontBaseUrl() {
+        return this.urlHelper.getStorefrontBaseUrl();
+    }
+
+    getStorefrontApiBaseUrl() {
+        return this.urlHelper.getStorefrontApiBaseUrl();
+    }
+
+    getBackofficeBaseUrl() {
+        return this.urlHelper.getBackofficeBaseUrl();
+    }
+
+    getBackofficeApiBaseUrl() {
+        return this.urlHelper.getBackofficeApiBaseUrl();
     }
 
     _getRequiredEnvVariable(variableName) {

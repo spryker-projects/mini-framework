@@ -3,11 +3,13 @@ import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
 options.scenarios = {
-    CmsPage1VUS: {
+    SAPI2_Product_Search: {
         exec: 'executeProductSearchScenario',
         executor: 'shared-iterations',
-        vus: 1,
-        iterations: 10,
+        tags: {
+            testId: 'SAPI2'
+        },
+        iterations: 10
     },
 };
 

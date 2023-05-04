@@ -1,6 +1,6 @@
 export class CartHelper {
-    constructor(environmentConfig, http) {
-        this.environmentConfig = environmentConfig;
+    constructor(urlHelper, http) {
+        this.urlHelper = urlHelper;
         this.http = http;
     }
 
@@ -10,7 +10,7 @@ export class CartHelper {
         const carts = this.getCarts(params);
 
         const cartsResponse = JSON.parse(this.http.sendPostRequest(
-            `${this.environmentConfig.glueAPIUrl}/carts`,
+            `${this.urlHelper.getStorefrontApiBaseUrl()}/carts`,
             JSON.stringify({
                 data: {
                     type: 'carts',
@@ -52,7 +52,7 @@ export class CartHelper {
                 'Accept': 'application/json'
             },
         };
-        const urlAccessTokens = `${this.environmentConfig.glueAPIUrl}/access-tokens`;
+        const urlAccessTokens = `${this.urlHelper.getStorefrontApiBaseUrl()}/access-tokens`;
         const accessTokensResponse = JSON.parse(this.http.sendPostRequest(
             `${urlAccessTokens}`,
             JSON.stringify({
@@ -72,7 +72,7 @@ export class CartHelper {
     }
 
     getCartsUrl() {
-        return `${this.environmentConfig.glueAPIUrl}/carts`;
+        return `${this.urlHelper.getStorefrontApiBaseUrl()}/carts`;
     }
 
     getCarts(params) {

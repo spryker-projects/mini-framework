@@ -8,14 +8,11 @@ options.scenarios = {
         executor: 'shared-iterations',
         env: {
             numberOfItems: __ENV.numberOfItems || '70'
-        }
-    },
-    S3_Checkout_700_items: {
-        exec: 'executeCheckoutScenario',
-        executor: 'shared-iterations',
-        env: {
-            numberOfItems: '700'
-        }
+        },
+        tags: {
+            testId: 'S4'
+        },
+        iterations: 10,
     },
 };
 

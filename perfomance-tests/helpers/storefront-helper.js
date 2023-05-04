@@ -1,13 +1,13 @@
 import { fail, check } from "k6";
 
 export class StorefrontHelper {
-    constructor(environmentConfig, http) {
-        this.environmentConfig = environmentConfig;
+    constructor(urlHelper, http) {
+        this.urlHelper = urlHelper;
         this.http = http;
     }
 
     loginUser() {
-        const loginResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/login`);
+        const loginResponse = this.http.sendGetRequestWithHttpAuth(`${this.urlHelper.getStorefrontBaseUrl()}/en/login`);
 
         if (
             !check(loginResponse, {
@@ -22,7 +22,7 @@ export class StorefrontHelper {
             fields: { 'loginForm[email]': 'sonia@spryker.com', 'loginForm[password]': 'change123' }
         });
 
-        const overviewResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/customer/overview`);
+        const overviewResponse = this.http.sendGetRequestWithHttpAuth(`${this.urlHelper.getStorefrontBaseUrl()}/en/customer/overview`);
 
         if (
             !check(overviewResponse, {

@@ -3,12 +3,16 @@ import { loadDefaultOptions } from "../../../../lib/utils.js";
 
 export const options = loadDefaultOptions();
 options.scenarios = {
-    S2_Checkout: {
+    S2_Checkout_1_item: {
         exec: 'executeCheckoutScenario',
         executor: 'shared-iterations',
         env: {
             numberOfItems: __ENV.numberOfItems || '1'
-        }
+        },
+        tags: {
+            testId: 'S3'
+        },
+        iterations: 10,
     },
 };
 

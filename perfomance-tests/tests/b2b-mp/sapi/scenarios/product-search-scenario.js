@@ -1,16 +1,17 @@
 import { AbstractB2bMpScenario } from '../../abstract-b2b-mp-scenario.js';
+import { group } from 'k6';
 
 export class ProductSearchScenario extends AbstractB2bMpScenario {
-    getBaseUrl() {
-        return `${this.environmentConfig.glueAPIUrl}`;
-    }
-
     execute() {
-        const requestParams = this.cartHelper.getParamsWithAuthorization();
+        let self = this;
 
-        const productSearchRequest = this.http.sendGetRequest(
-            this.getBaseUrl() + `/catalog-search?q=100429`, requestParams
-        );
-        this.assertResponseStatus(productSearchRequest, 200);
+        group('Product Search', function () {
+            const requestParams = self.cartHelper.getParamsWithAuthorization();
+
+            const productSearchResponse = self.http.sendGetRequest(
+                self.getStorefrontApiBaseUrl() + `/catalog-search?q=657712`, requestParams
+            );
+            self.assertResponseStatus(productSearchResponse, 200);
+        });
     }
 }

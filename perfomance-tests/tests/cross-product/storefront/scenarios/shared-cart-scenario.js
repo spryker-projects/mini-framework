@@ -1,6 +1,6 @@
 import { AbstractScenario } from '../../../abstract-scenario.js';
 
-export class GetCartScenario extends AbstractScenario {
+export class SharedCartScenario extends AbstractScenario {
     execute() {
         const cartId = this.cartHelper.haveCartWithProducts(__ENV.numberOfItems);
         const requestParams = this.cartHelper.getParamsWithAuthorization();

@@ -1,19 +1,24 @@
 import { AbstractB2bMpScenario } from '../../abstract-b2b-mp-scenario.js';
+import { group } from 'k6';
 
 export class CheckoutScenario extends AbstractB2bMpScenario {
     execute() {
         this.cartHelper.haveCartWithProducts(__ENV.numberOfItems);
         this.storefrontHelper.loginUser();
 
-        this.addressPage();
-        this.shipmentPage();
-        this.paymentPage();
-        this.summaryPage();
+        let self = this;
+
+        group('Checkout', function () {
+            self.addressPage();
+            self.shipmentPage();
+            self.paymentPage();
+            self.summaryPage();
+        });
     }
 
     addressPage() {
         //address
-        const addressStepResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/address`);
+        const addressStepResponse = this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/address`);
         this.assertResponseBodyIncludes(addressStepResponse, 'Delivery Address');
 
         //address form submit
@@ -28,7 +33,7 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
     }
 
     shipmentPage() {
-        const shipmentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/shipment`);
+        const shipmentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/shipment`);
         this.assertResponseBodyIncludes(shipmentStepResponse, 'Shipment 1 of 1');
 
         //shipment submit form
@@ -41,7 +46,7 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
     }
 
     paymentPage() {
-        const paymentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/payment`);
+        const paymentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/payment`);
         this.assertResponseBodyIncludes(paymentStepResponse, 'Payment method');
 
         //payment submit form
@@ -55,7 +60,7 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
     }
 
     summaryPage() {
-        const summaryStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/summary`);
+        const summaryStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/summary`);
         this.assertResponseBodyIncludes(summaryStepResponse, 'Complete checkout');
 
         //summary submit form and place order
@@ -66,8 +71,8 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
             },
         });
 
-        this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/place-order`);
-        const successPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.environmentConfig.storefrontUrl}/en/checkout/success`);
+        this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/place-order`);
+        const successPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/success`);
 
         this.assertResponseBodyIncludes(successPageResponse, 'Your order has been placed successfully.');
     }
