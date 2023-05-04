@@ -6,7 +6,7 @@ export class SharedCartScenario extends AbstractScenario {
         const requestParams = this.cartHelper.getParamsWithAuthorization();
 
         const cartResponse = this.http.sendGetRequest(
-            `${this.cartHelper.getCartsUrl()}/${cartId}/?include=items`, requestParams
+            `${this.cartHelper.getCartsUrl()}/${cartId}/?include=items`, requestParams, false
         );
 
         this.assertResponseStatus(cartResponse);

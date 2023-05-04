@@ -4,49 +4,63 @@ import { fail } from "k6";
 
 export class Http {
     constructor(environment) {
-        this.authorizationHeaders = this._getAuthorizationHeaders(environment);
+        this.authorizationHeader = this._getAuthorizationHeader(environment);
     }
 
-    sendGetRequestWithHttpAuth(url) {
-        return http.get(url, this.authorizationHeaders);
+    sendGetRequest(url, params = {}, withBasicAuthorization = true) {
+        params = this._addAuthorizationHeader(params, withBasicAuthorization);
+
+        return http.get(url, params);
     }
 
-    submitFormWithHttpAuth(response, formData)
+    submitForm(response, formData)
     {
-        formData.params = this.authorizationHeaders;
+        if (!formData.params) {
+            formData.params = {};
+        }
+
+        formData.params = this._addAuthorizationHeader(formData.params);
         formData.params.redirects = 0;
 
         return response.submitForm(formData);
     }
 
-    sendPostRequest(url, body, params) {
+    sendPostRequest(url, body, params = {}, withBasicAuthorization = true) {
+        params = this._addAuthorizationHeader(params, withBasicAuthorization);
+
         return http.post(url, body, params);
     }
 
-    sendGetRequest(url, params) {
-        return http.get(url, params);
-    }
+    sendDeleteRequest(url, body, params = {}, withBasicAuthorization = true) {
+        params = this._addAuthorizationHeader(params, withBasicAuthorization);
 
-    sendDeleteRequest(url, body, params) {
         return http.del(url, body, params);
     }
 
-    _getAuthorizationHeaders(environment) {
+    _getAuthorizationHeader(environment) {
         if (!environment) {
-            fail('Environment must be specified to send requests with HTTP authentication.');
+            fail('Environment must be specified.');
         }
 
         const username = eval(`__ENV.${environment}_AUTH_USERNAME`);
         const password = eval(`__ENV.${environment}_AUTH_PASSWORD`);
 
         if (!username || !password) {
-            fail('Username and password must to be specified to send requests with HTTP authentication.');
+            return null;
         }
 
-        return {
-            headers: {
-                'Authorization': `Basic ${encoding.b64encode(`${username}:${password}`)}`,
+        return `Basic ${encoding.b64encode(`${username}:${password}`)}`;
+    }
+
+    _addAuthorizationHeader(params, withBasicAuthorization = true) {
+        if (this.authorizationHeader && withBasicAuthorization) {
+            if (!params.headers) {
+                params.headers = {};
             }
-        };
+
+            params.headers.Authorization = this.authorizationHeader;
+        }
+
+        return params;
     }
 }

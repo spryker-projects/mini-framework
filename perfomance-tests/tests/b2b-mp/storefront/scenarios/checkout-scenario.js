@@ -18,11 +18,11 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
 
     addressPage() {
         //address
-        const addressStepResponse = this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/address`);
+        const addressStepResponse = this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/address`);
         this.assertResponseBodyIncludes(addressStepResponse, 'Delivery Address');
 
         //address form submit
-        this.http.submitFormWithHttpAuth(addressStepResponse, {
+        this.http.submitForm(addressStepResponse, {
             formSelector: 'form[name="addressesForm"]',
             fields: {
                 'addressesForm[billingSameAsShipping]': '1' ,
@@ -33,11 +33,11 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
     }
 
     shipmentPage() {
-        const shipmentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/shipment`);
+        const shipmentStepResponse =  this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/shipment`);
         this.assertResponseBodyIncludes(shipmentStepResponse, 'Shipment 1 of 1');
 
         //shipment submit form
-        this.http.submitFormWithHttpAuth(shipmentStepResponse, {
+        this.http.submitForm(shipmentStepResponse, {
             formSelector: 'form[name="shipmentCollectionForm"]',
             fields: {
                 'shipmentCollectionForm[shipmentGroups][0][shipment][shipmentSelection]': 1
@@ -46,11 +46,11 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
     }
 
     paymentPage() {
-        const paymentStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/payment`);
+        const paymentStepResponse =  this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/payment`);
         this.assertResponseBodyIncludes(paymentStepResponse, 'Payment method');
 
         //payment submit form
-        this.http.submitFormWithHttpAuth(paymentStepResponse, {
+        this.http.submitForm(paymentStepResponse, {
             formSelector: 'form[name="paymentForm"]',
             fields: {
                 'paymentForm[paymentSelection]': 'dummyMarketplacePaymentInvoice',
@@ -60,19 +60,19 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
     }
 
     summaryPage() {
-        const summaryStepResponse =  this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/summary`);
+        const summaryStepResponse =  this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/summary`);
         this.assertResponseBodyIncludes(summaryStepResponse, 'Complete checkout');
 
         //summary submit form and place order
-        this.http.submitFormWithHttpAuth(summaryStepResponse, {
+        this.http.submitForm(summaryStepResponse, {
             formSelector: 'form[name="summaryForm"]',
             fields: {
                 'acceptTermsAndConditions': 1
             },
         });
 
-        this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/place-order`);
-        const successPageResponse = this.http.sendGetRequestWithHttpAuth(`${this.getStorefrontBaseUrl()}/en/checkout/success`);
+        this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/place-order`);
+        const successPageResponse = this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/success`);
 
         this.assertResponseBodyIncludes(successPageResponse, 'Your order has been placed successfully.');
     }

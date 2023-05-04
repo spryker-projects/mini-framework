@@ -9,7 +9,7 @@ export class CartsScenario extends AbstractB2bMpScenario {
             const requestParams = self.cartHelper.getParamsWithAuthorization();
 
             const cartsResponse = self.http.sendGetRequest(
-                self.getStorefrontApiBaseUrl() + `/carts`, requestParams
+                self.getStorefrontApiBaseUrl() + `/carts`, requestParams, false
             );
             self.assertResponseStatus(cartsResponse, 200);
         });

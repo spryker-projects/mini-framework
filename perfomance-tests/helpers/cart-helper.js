@@ -23,7 +23,8 @@ export class CartHelper {
                     }
                 }
             }),
-            params
+            params,
+            false
         ).body);
 
         this.http.sendPostRequest(
@@ -38,7 +39,8 @@ export class CartHelper {
                     }
                 }
             }),
-            params
+            params,
+            false
         );
 
         this.deleteCarts(carts, params);
@@ -64,7 +66,8 @@ export class CartHelper {
                     }
                 }
             }),
-            defaultParams
+            defaultParams,
+            false
         ).body);
         defaultParams.headers.Authorization = `${accessTokensResponse.data.attributes.tokenType} ${accessTokensResponse.data.attributes.accessToken}`;
 
@@ -76,14 +79,14 @@ export class CartHelper {
     }
 
     getCarts(params) {
-        return JSON.parse(this.http.sendGetRequest(`${this.getCartsUrl()}`, params).body);
+        return JSON.parse(this.http.sendGetRequest(`${this.getCartsUrl()}`, params, false).body);
     }
 
     deleteCarts(carts, params) {
         if (carts.data) {
             const self = this;
             carts.data.forEach(function (cart) {
-                self.http.sendDeleteRequest(`${self.getCartsUrl()}/${cart.id}`, null, params);
+                self.http.sendDeleteRequest(`${self.getCartsUrl()}/${cart.id}`, null, params, false);
             });
         }
     }
