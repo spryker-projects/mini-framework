@@ -3,17 +3,46 @@ import { group } from 'k6';
 
 export class CheckoutScenario extends AbstractB2bMpScenario {
     execute() {
-        this.cartHelper.haveCartWithProducts(__ENV.numberOfItems);
+        this.cartHelper.haveCartWithProducts(0);
         this.storefrontHelper.loginUser();
 
         let self = this;
 
         group('Checkout', function () {
+            self.productPage();
+            self.cartPage();
+            self.checkoutPage();
             self.addressPage();
             self.shipmentPage();
             self.paymentPage();
             self.summaryPage();
         });
+    }
+
+     productPage() {
+        //product page
+        const productPageResponse = this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/stapelstuhl-mit-geschlossenem-ruecken-M83`);
+        this.assertResponseBodyIncludes(productPageResponse, '<span itemprop="sku">657712</span>');
+
+        // add to cart form submit
+        const addToCartFormSubmitResponse = this.http.submitForm(productPageResponse, {
+            formSelector: 'form[name="addToCartForm_657712-"]',
+            fields: {
+                'quantity': __ENV.numberOfItems,
+            },
+        });
+        this.assertResponseStatus(addToCartFormSubmitResponse, 302);
+    }
+
+     cartPage() {
+        const cartPageResponse = this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/cart`);
+        this.assertResponseBodyIncludes(cartPageResponse, '1 Items');
+        this.assertResponseBodyIncludes(cartPageResponse, 'FRIWA stackable chair - with closed back');
+    }
+
+    checkoutPage() {
+        const checkoutResponse = this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout`, { redirects: 0});
+        this.assertResponseStatus(checkoutResponse, 302);
     }
 
     addressPage() {
@@ -71,7 +100,7 @@ export class CheckoutScenario extends AbstractB2bMpScenario {
             },
         });
 
-        this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/place-order`);
+        this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/place-order`, { redirects: 0});
         const successPageResponse = this.http.sendGetRequest(`${this.getStorefrontBaseUrl()}/en/checkout/success`);
 
         this.assertResponseBodyIncludes(successPageResponse, 'Your order has been placed successfully.');

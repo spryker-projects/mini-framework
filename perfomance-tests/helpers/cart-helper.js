@@ -27,21 +27,23 @@ export class CartHelper {
             false
         ).body);
 
-        this.http.sendPostRequest(
-            `${this.getCartsUrl()}/${cartsResponse.data.id}/items`,
-            JSON.stringify({
-                data: {
-                    type: 'items',
-                    attributes: {
-                        sku: '100429',
-                        quantity: quantity,
-                        merchantReference: 'MER000008'
+        if (quantity > 0) {
+            this.http.sendPostRequest(
+                `${this.getCartsUrl()}/${cartsResponse.data.id}/items`,
+                JSON.stringify({
+                    data: {
+                        type: 'items',
+                        attributes: {
+                            sku: '100429',
+                            quantity: quantity,
+                            merchantReference: 'MER000008'
+                        }
                     }
-                }
-            }),
-            params,
-            false
-        );
+                }),
+                params,
+                false
+            );
+        }
 
         this.deleteCarts(carts, params);
 
