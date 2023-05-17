@@ -55,6 +55,6 @@ sections:
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete'
 
-    scheduler-start:
+    scheduler-setup:
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'

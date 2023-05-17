@@ -41,7 +41,7 @@ sections:
         databuilder-generate:
             command: 'vendor/bin/console transfer:databuilder:generate'
 
-    scheduler-start:
+    scheduler-setup:
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
 
