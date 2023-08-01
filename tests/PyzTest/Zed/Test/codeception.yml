@@ -9,7 +9,7 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*.php'] }
+    whitelist: { include: ['../../../../src/Pyz/*.php'] }
 
 suites:
     Business:
