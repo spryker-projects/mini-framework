@@ -46,6 +46,11 @@ class SpyTestTableMap extends TableMap
     public const TABLE_NAME = 'spy_test';
 
     /**
+     * The PHP name of this class (PascalCase)
+     */
+    public const TABLE_PHP_NAME = 'SpyTest';
+
+    /**
      * The related Propel class for this table
      */
     public const OM_CLASS = '\\Orm\\Zed\\Test\\Persistence\\SpyTest';
@@ -260,7 +265,7 @@ class SpyTestTableMap extends TableMap
             SpyTestTableMap::addInstanceToPool($obj, $key);
         }
 
-        return array($obj, $col);
+        return [$obj, $col];
     }
 
     /**

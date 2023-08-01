@@ -46,6 +46,11 @@ class SpyLocaleTableMap extends TableMap
     public const TABLE_NAME = 'spy_locale';
 
     /**
+     * The PHP name of this class (PascalCase)
+     */
+    public const TABLE_PHP_NAME = 'SpyLocale';
+
+    /**
      * The related Propel class for this table
      */
     public const OM_CLASS = '\\Orm\\Zed\\Locale\\Persistence\\SpyLocale';
@@ -184,6 +189,20 @@ class SpyLocaleTableMap extends TableMap
      */
     public function buildRelations(): void
     {
+        $this->addRelation('LocaleStore', '\\Orm\\Zed\\Locale\\Persistence\\SpyLocaleStore', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_locale',
+    1 => ':id_locale',
+  ),
+), null, null, 'LocaleStores', false);
+        $this->addRelation('StoreDefault', '\\Orm\\Zed\\Store\\Persistence\\SpyStore', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_locale',
+    1 => ':id_locale',
+  ),
+), null, null, 'StoreDefaults', false);
     }
 
     /**
@@ -275,7 +294,7 @@ class SpyLocaleTableMap extends TableMap
             SpyLocaleTableMap::addInstanceToPool($obj, $key);
         }
 
-        return array($obj, $col);
+        return [$obj, $col];
     }
 
     /**

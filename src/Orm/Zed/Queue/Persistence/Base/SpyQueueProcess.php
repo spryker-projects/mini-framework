@@ -672,8 +672,8 @@ abstract class SpyQueueProcess implements ActiveRecordInterface
                 $col = null;
             }
             $this->updated_at = (null !== $col) ? PropelDateTime::newInstance($col, null, 'DateTime') : null;
-            $this->resetModified();
 
+            $this->resetModified();
             $this->setNew(false);
 
             if ($rehydrate) {
@@ -959,24 +959,31 @@ abstract class SpyQueueProcess implements ActiveRecordInterface
                 switch ($columnName) {
                     case 'id_queue_process':
                         $stmt->bindValue($identifier, $this->id_queue_process, PDO::PARAM_INT);
+
                         break;
                     case 'server_id':
                         $stmt->bindValue($identifier, $this->server_id, PDO::PARAM_STR);
+
                         break;
                     case 'process_pid':
                         $stmt->bindValue($identifier, $this->process_pid, PDO::PARAM_INT);
+
                         break;
                     case 'worker_pid':
                         $stmt->bindValue($identifier, $this->worker_pid, PDO::PARAM_INT);
+
                         break;
                     case 'queue_name':
                         $stmt->bindValue($identifier, $this->queue_name, PDO::PARAM_STR);
+
                         break;
                     case 'created_at':
                         $stmt->bindValue($identifier, $this->created_at ? $this->created_at->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
+
                         break;
                     case 'updated_at':
                         $stmt->bindValue($identifier, $this->updated_at ? $this->updated_at->format("Y-m-d H:i:s.u") : null, PDO::PARAM_STR);
+
                         break;
                 }
             }

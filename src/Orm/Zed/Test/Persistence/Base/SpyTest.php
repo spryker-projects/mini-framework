@@ -422,8 +422,8 @@ abstract class SpyTest implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyTestTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
             $this->name = (null !== $col) ? (string) $col : null;
-            $this->resetModified();
 
+            $this->resetModified();
             $this->setNew(false);
 
             if ($rehydrate) {
@@ -681,9 +681,11 @@ abstract class SpyTest implements ActiveRecordInterface
                 switch ($columnName) {
                     case 'id_test':
                         $stmt->bindValue($identifier, $this->id_test, PDO::PARAM_INT);
+
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+
                         break;
                 }
             }

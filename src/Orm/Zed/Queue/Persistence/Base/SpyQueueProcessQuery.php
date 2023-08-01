@@ -18,9 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriter
 use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
 
 /**
- * Base class that represents a query for the 'spy_queue_process' table.
- *
- *
+ * Base class that represents a query for the `spy_queue_process` table.
  *
  * @method     ChildSpyQueueProcessQuery orderByIdQueueProcess($order = Criteria::ASC) Order by the id_queue_process column
  * @method     ChildSpyQueueProcessQuery orderByServerId($order = Criteria::ASC) Order by the server_id column
@@ -55,8 +53,8 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyQueueProcess|null findOneByWorkerPid(int $worker_pid) Return the first ChildSpyQueueProcess filtered by the worker_pid column
  * @method     ChildSpyQueueProcess|null findOneByQueueName(string $queue_name) Return the first ChildSpyQueueProcess filtered by the queue_name column
  * @method     ChildSpyQueueProcess|null findOneByCreatedAt(string $created_at) Return the first ChildSpyQueueProcess filtered by the created_at column
- * @method     ChildSpyQueueProcess|null findOneByUpdatedAt(string $updated_at) Return the first ChildSpyQueueProcess filtered by the updated_at column *
-
+ * @method     ChildSpyQueueProcess|null findOneByUpdatedAt(string $updated_at) Return the first ChildSpyQueueProcess filtered by the updated_at column
+ *
  * @method     ChildSpyQueueProcess requirePk($key, ?ConnectionInterface $con = null) Return the ChildSpyQueueProcess by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyQueueProcess requireOne(?ConnectionInterface $con = null) Return the first ChildSpyQueueProcess matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
@@ -70,23 +68,24 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  *
  * @method     ChildSpyQueueProcess[]|Collection find(?ConnectionInterface $con = null) Return ChildSpyQueueProcess objects based on current ModelCriteria
  * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> find(?ConnectionInterface $con = null) Return ChildSpyQueueProcess objects based on current ModelCriteria
- * @method     ChildSpyQueueProcess[]|Collection findByIdQueueProcess(int $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
- * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByIdQueueProcess(int $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
- * @method     ChildSpyQueueProcess[]|Collection findByServerId(string $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
- * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByServerId(string $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
- * @method     ChildSpyQueueProcess[]|Collection findByProcessPid(int $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
- * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByProcessPid(int $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
- * @method     ChildSpyQueueProcess[]|Collection findByWorkerPid(int $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
- * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByWorkerPid(int $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
- * @method     ChildSpyQueueProcess[]|Collection findByQueueName(string $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
- * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByQueueName(string $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
- * @method     ChildSpyQueueProcess[]|Collection findByCreatedAt(string $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
- * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByCreatedAt(string $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
- * @method     ChildSpyQueueProcess[]|Collection findByUpdatedAt(string $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
- * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByUpdatedAt(string $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
+ *
+ * @method     ChildSpyQueueProcess[]|Collection findByIdQueueProcess(int|array<int> $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByIdQueueProcess(int|array<int> $id_queue_process) Return ChildSpyQueueProcess objects filtered by the id_queue_process column
+ * @method     ChildSpyQueueProcess[]|Collection findByServerId(string|array<string> $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByServerId(string|array<string> $server_id) Return ChildSpyQueueProcess objects filtered by the server_id column
+ * @method     ChildSpyQueueProcess[]|Collection findByProcessPid(int|array<int> $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByProcessPid(int|array<int> $process_pid) Return ChildSpyQueueProcess objects filtered by the process_pid column
+ * @method     ChildSpyQueueProcess[]|Collection findByWorkerPid(int|array<int> $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByWorkerPid(int|array<int> $worker_pid) Return ChildSpyQueueProcess objects filtered by the worker_pid column
+ * @method     ChildSpyQueueProcess[]|Collection findByQueueName(string|array<string> $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByQueueName(string|array<string> $queue_name) Return ChildSpyQueueProcess objects filtered by the queue_name column
+ * @method     ChildSpyQueueProcess[]|Collection findByCreatedAt(string|array<string> $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByCreatedAt(string|array<string> $created_at) Return ChildSpyQueueProcess objects filtered by the created_at column
+ * @method     ChildSpyQueueProcess[]|Collection findByUpdatedAt(string|array<string> $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
+ * @psalm-method Collection&\Traversable<ChildSpyQueueProcess> findByUpdatedAt(string|array<string> $updated_at) Return ChildSpyQueueProcess objects filtered by the updated_at column
+ *
  * @method     ChildSpyQueueProcess[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyQueueProcess> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
- *
  */
 abstract class SpyQueueProcessQuery extends ModelCriteria
 {
@@ -205,7 +204,7 @@ abstract class SpyQueueProcessQuery extends ModelCriteria
     {
         return parent::exists($con);
     }
-    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
+        protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \Orm\Zed\Queue\Persistence\Base\SpyQueueProcessQuery object.

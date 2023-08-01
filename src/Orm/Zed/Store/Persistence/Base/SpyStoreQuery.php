@@ -4,12 +4,15 @@ namespace Orm\Zed\Store\Persistence\Base;
 
 use \Exception;
 use \PDO;
+use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\Locale\Persistence\SpyLocaleStore;
 use Orm\Zed\Store\Persistence\SpyStore as ChildSpyStore;
 use Orm\Zed\Store\Persistence\SpyStoreQuery as ChildSpyStoreQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -18,14 +21,14 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriter
 use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
 
 /**
- * Base class that represents a query for the 'spy_store' table.
- *
- *
+ * Base class that represents a query for the `spy_store` table.
  *
  * @method     ChildSpyStoreQuery orderByIdStore($order = Criteria::ASC) Order by the id_store column
+ * @method     ChildSpyStoreQuery orderByFkLocale($order = Criteria::ASC) Order by the fk_locale column
  * @method     ChildSpyStoreQuery orderByName($order = Criteria::ASC) Order by the name column
  *
  * @method     ChildSpyStoreQuery groupByIdStore() Group by the id_store column
+ * @method     ChildSpyStoreQuery groupByFkLocale() Group by the fk_locale column
  * @method     ChildSpyStoreQuery groupByName() Group by the name column
  *
  * @method     ChildSpyStoreQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
@@ -36,27 +39,54 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyStoreQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildSpyStoreQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
+ * @method     ChildSpyStoreQuery leftJoinDefaultLocale($relationAlias = null) Adds a LEFT JOIN clause to the query using the DefaultLocale relation
+ * @method     ChildSpyStoreQuery rightJoinDefaultLocale($relationAlias = null) Adds a RIGHT JOIN clause to the query using the DefaultLocale relation
+ * @method     ChildSpyStoreQuery innerJoinDefaultLocale($relationAlias = null) Adds a INNER JOIN clause to the query using the DefaultLocale relation
+ *
+ * @method     ChildSpyStoreQuery joinWithDefaultLocale($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the DefaultLocale relation
+ *
+ * @method     ChildSpyStoreQuery leftJoinWithDefaultLocale() Adds a LEFT JOIN clause and with to the query using the DefaultLocale relation
+ * @method     ChildSpyStoreQuery rightJoinWithDefaultLocale() Adds a RIGHT JOIN clause and with to the query using the DefaultLocale relation
+ * @method     ChildSpyStoreQuery innerJoinWithDefaultLocale() Adds a INNER JOIN clause and with to the query using the DefaultLocale relation
+ *
+ * @method     ChildSpyStoreQuery leftJoinLocaleStore($relationAlias = null) Adds a LEFT JOIN clause to the query using the LocaleStore relation
+ * @method     ChildSpyStoreQuery rightJoinLocaleStore($relationAlias = null) Adds a RIGHT JOIN clause to the query using the LocaleStore relation
+ * @method     ChildSpyStoreQuery innerJoinLocaleStore($relationAlias = null) Adds a INNER JOIN clause to the query using the LocaleStore relation
+ *
+ * @method     ChildSpyStoreQuery joinWithLocaleStore($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the LocaleStore relation
+ *
+ * @method     ChildSpyStoreQuery leftJoinWithLocaleStore() Adds a LEFT JOIN clause and with to the query using the LocaleStore relation
+ * @method     ChildSpyStoreQuery rightJoinWithLocaleStore() Adds a RIGHT JOIN clause and with to the query using the LocaleStore relation
+ * @method     ChildSpyStoreQuery innerJoinWithLocaleStore() Adds a INNER JOIN clause and with to the query using the LocaleStore relation
+ *
+ * @method     \Orm\Zed\Locale\Persistence\SpyLocaleQuery|\Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ *
  * @method     ChildSpyStore|null findOne(?ConnectionInterface $con = null) Return the first ChildSpyStore matching the query
  * @method     ChildSpyStore findOneOrCreate(?ConnectionInterface $con = null) Return the first ChildSpyStore matching the query, or a new ChildSpyStore object populated from the query conditions when no match is found
  *
  * @method     ChildSpyStore|null findOneByIdStore(int $id_store) Return the first ChildSpyStore filtered by the id_store column
- * @method     ChildSpyStore|null findOneByName(string $name) Return the first ChildSpyStore filtered by the name column *
-
+ * @method     ChildSpyStore|null findOneByFkLocale(int $fk_locale) Return the first ChildSpyStore filtered by the fk_locale column
+ * @method     ChildSpyStore|null findOneByName(string $name) Return the first ChildSpyStore filtered by the name column
+ *
  * @method     ChildSpyStore requirePk($key, ?ConnectionInterface $con = null) Return the ChildSpyStore by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyStore requireOne(?ConnectionInterface $con = null) Return the first ChildSpyStore matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyStore requireOneByIdStore(int $id_store) Return the first ChildSpyStore filtered by the id_store column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildSpyStore requireOneByFkLocale(int $fk_locale) Return the first ChildSpyStore filtered by the fk_locale column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyStore requireOneByName(string $name) Return the first ChildSpyStore filtered by the name column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildSpyStore[]|Collection find(?ConnectionInterface $con = null) Return ChildSpyStore objects based on current ModelCriteria
  * @psalm-method Collection&\Traversable<ChildSpyStore> find(?ConnectionInterface $con = null) Return ChildSpyStore objects based on current ModelCriteria
- * @method     ChildSpyStore[]|Collection findByIdStore(int $id_store) Return ChildSpyStore objects filtered by the id_store column
- * @psalm-method Collection&\Traversable<ChildSpyStore> findByIdStore(int $id_store) Return ChildSpyStore objects filtered by the id_store column
- * @method     ChildSpyStore[]|Collection findByName(string $name) Return ChildSpyStore objects filtered by the name column
- * @psalm-method Collection&\Traversable<ChildSpyStore> findByName(string $name) Return ChildSpyStore objects filtered by the name column
+ *
+ * @method     ChildSpyStore[]|Collection findByIdStore(int|array<int> $id_store) Return ChildSpyStore objects filtered by the id_store column
+ * @psalm-method Collection&\Traversable<ChildSpyStore> findByIdStore(int|array<int> $id_store) Return ChildSpyStore objects filtered by the id_store column
+ * @method     ChildSpyStore[]|Collection findByFkLocale(int|array<int> $fk_locale) Return ChildSpyStore objects filtered by the fk_locale column
+ * @psalm-method Collection&\Traversable<ChildSpyStore> findByFkLocale(int|array<int> $fk_locale) Return ChildSpyStore objects filtered by the fk_locale column
+ * @method     ChildSpyStore[]|Collection findByName(string|array<string> $name) Return ChildSpyStore objects filtered by the name column
+ * @psalm-method Collection&\Traversable<ChildSpyStore> findByName(string|array<string> $name) Return ChildSpyStore objects filtered by the name column
+ *
  * @method     ChildSpyStore[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyStore> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
- *
  */
 abstract class SpyStoreQuery extends ModelCriteria
 {
@@ -175,7 +205,7 @@ abstract class SpyStoreQuery extends ModelCriteria
     {
         return parent::exists($con);
     }
-    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
+        protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \Orm\Zed\Store\Persistence\Base\SpyStoreQuery object.
@@ -268,7 +298,7 @@ abstract class SpyStoreQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT id_store, name FROM spy_store WHERE id_store = :p0';
+        $sql = 'SELECT id_store, fk_locale, name FROM spy_store WHERE id_store = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -447,6 +477,90 @@ abstract class SpyStoreQuery extends ModelCriteria
     }
 
     /**
+     * Applies SprykerCriteria::BETWEEN filtering criteria for the column.
+     *
+     * @param array $fkLocale Filter value.
+     * [
+     *    'min' => 3, 'max' => 5
+     * ]
+     *
+     * 'min' and 'max' are optional, when neither is specified, throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException.
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function filterByFkLocale_Between(array $fkLocale)
+    {
+        return $this->filterByFkLocale($fkLocale, SprykerCriteria::BETWEEN);
+    }
+
+    /**
+     * Applies Criteria::IN filtering criteria for the column.
+     *
+     * @param array $fkLocales Filter value.
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function filterByFkLocale_In(array $fkLocales)
+    {
+        return $this->filterByFkLocale($fkLocales, Criteria::IN);
+    }
+
+    /**
+     * Filter the query on the fk_locale column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByFkLocale(1234); // WHERE fk_locale = 1234
+     * $query->filterByFkLocale(array(12, 34), Criteria::IN); // WHERE fk_locale IN (12, 34)
+     * $query->filterByFkLocale(array('min' => 12), SprykerCriteria::BETWEEN); // WHERE fk_locale > 12
+     * </code>
+     *
+     * @see       filterByDefaultLocale()
+     *
+     * @param     mixed $fkLocale The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent. Add Criteria::IN explicitly.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals. Add SprykerCriteria::BETWEEN explicitly.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this The current query, for fluid interface
+     *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+     */
+    public function filterByFkLocale($fkLocale = null, $comparison = Criteria::EQUAL)
+    {
+
+        if (is_array($fkLocale)) {
+            $useMinMax = false;
+            if (isset($fkLocale['min'])) {
+                if ($comparison != SprykerCriteria::BETWEEN && $comparison != Criteria::GREATER_EQUAL && $comparison != Criteria::GREATER_THAN) {
+                    throw new AmbiguousComparisonException('\'min\' requires explicit Criteria::GREATER_EQUAL, Criteria::GREATER_THAN or SprykerCriteria::BETWEEN when \'max\' is also needed as comparison criteria.');
+                }
+                $this->addUsingAlias(SpyStoreTableMap::COL_FK_LOCALE, $fkLocale['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($fkLocale['max'])) {
+                if ($comparison != SprykerCriteria::BETWEEN && $comparison != Criteria::LESS_EQUAL && $comparison != Criteria::LESS_THAN) {
+                    throw new AmbiguousComparisonException('\'max\' requires explicit Criteria::LESS_EQUAL, Criteria::LESS_THAN or SprykerCriteria::BETWEEN when \'min\' is also needed as comparison criteria.');
+                }
+                $this->addUsingAlias(SpyStoreTableMap::COL_FK_LOCALE, $fkLocale['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+
+            if (!in_array($comparison, [Criteria::IN, Criteria::NOT_IN])) {
+                throw new AmbiguousComparisonException('$fkLocale of type array requires one of [Criteria::IN, Criteria::NOT_IN] as comparison criteria.');
+            }
+        }
+
+        $query = $this->addUsingAlias(SpyStoreTableMap::COL_FK_LOCALE, $fkLocale, $comparison);
+
+        return $query;
+    }
+
+    /**
      * Applies Criteria::IN filtering criteria for the column.
      *
      * @param array $names Filter value.
@@ -501,6 +615,354 @@ abstract class SpyStoreQuery extends ModelCriteria
         $query = $this->addUsingAlias(SpyStoreTableMap::COL_NAME, $name, $comparison);
 
         return $query;
+    }
+
+    /**
+     * Filter the query by a related \Orm\Zed\Locale\Persistence\SpyLocale object
+     *
+     * @param \Orm\Zed\Locale\Persistence\SpyLocale|ObjectCollection $spyLocale The related object(s) to use as filter
+     * @param string|null $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function filterByDefaultLocale($spyLocale, ?string $comparison = null)
+    {
+        if ($spyLocale instanceof \Orm\Zed\Locale\Persistence\SpyLocale) {
+            return $this
+                ->addUsingAlias(SpyStoreTableMap::COL_FK_LOCALE, $spyLocale->getIdLocale(), $comparison);
+        } elseif ($spyLocale instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            $this
+                ->addUsingAlias(SpyStoreTableMap::COL_FK_LOCALE, $spyLocale->toKeyValue('PrimaryKey', 'IdLocale'), $comparison);
+
+            return $this;
+        } else {
+            throw new PropelException('filterByDefaultLocale() only accepts arguments of type \Orm\Zed\Locale\Persistence\SpyLocale or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the DefaultLocale relation
+     *
+     * @param string|null $relationAlias Optional alias for the relation
+     * @param string|null $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function joinDefaultLocale(?string $relationAlias = null, ?string $joinType = Criteria::LEFT_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('DefaultLocale');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'DefaultLocale');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the DefaultLocale relation SpyLocale object
+     *
+     * @see useQuery()
+     *
+     * @param string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery A secondary query class using the current class as primary query
+     */
+    public function useDefaultLocaleQuery($relationAlias = null, $joinType = Criteria::LEFT_JOIN)
+    {
+        return $this
+            ->joinDefaultLocale($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'DefaultLocale', '\Orm\Zed\Locale\Persistence\SpyLocaleQuery');
+    }
+
+    /**
+     * Use the DefaultLocale relation SpyLocale object
+     *
+     * @param callable(\Orm\Zed\Locale\Persistence\SpyLocaleQuery):\Orm\Zed\Locale\Persistence\SpyLocaleQuery $callable A function working on the related query
+     *
+     * @param string|null $relationAlias optional alias for the relation
+     *
+     * @param string|null $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this
+     */
+    public function withDefaultLocaleQuery(
+        callable $callable,
+        string $relationAlias = null,
+        ?string $joinType = Criteria::LEFT_JOIN
+    ) {
+        $relatedQuery = $this->useDefaultLocaleQuery(
+            $relationAlias,
+            $joinType
+        );
+        $callable($relatedQuery);
+        $relatedQuery->endUse();
+
+        return $this;
+    }
+
+    /**
+     * Use the DefaultLocale relation to the SpyLocale table for an EXISTS query.
+     *
+     * @see \Propel\Runtime\ActiveQuery\ModelCriteria::useExistsQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the exists query, like ExtendedBookQuery::class
+     * @param string $typeOfExists Either ExistsQueryCriterion::TYPE_EXISTS or ExistsQueryCriterion::TYPE_NOT_EXISTS
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery The inner query object of the EXISTS statement
+     */
+    public function useDefaultLocaleExistsQuery($modelAlias = null, $queryClass = null, $typeOfExists = 'EXISTS')
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleQuery */
+        $q = $this->useExistsQuery('DefaultLocale', $modelAlias, $queryClass, $typeOfExists);
+        return $q;
+    }
+
+    /**
+     * Use the DefaultLocale relation to the SpyLocale table for a NOT EXISTS query.
+     *
+     * @see useDefaultLocaleExistsQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the exists query, like ExtendedBookQuery::class
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery The inner query object of the NOT EXISTS statement
+     */
+    public function useDefaultLocaleNotExistsQuery($modelAlias = null, $queryClass = null)
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleQuery */
+        $q = $this->useExistsQuery('DefaultLocale', $modelAlias, $queryClass, 'NOT EXISTS');
+        return $q;
+    }
+
+    /**
+     * Use the DefaultLocale relation to the SpyLocale table for an IN query.
+     *
+     * @see \Propel\Runtime\ActiveQuery\ModelCriteria::useInQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the IN query, like ExtendedBookQuery::class
+     * @param string $typeOfIn Criteria::IN or Criteria::NOT_IN
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery The inner query object of the IN statement
+     */
+    public function useInDefaultLocaleQuery($modelAlias = null, $queryClass = null, $typeOfIn = 'IN')
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleQuery */
+        $q = $this->useInQuery('DefaultLocale', $modelAlias, $queryClass, $typeOfIn);
+        return $q;
+    }
+
+    /**
+     * Use the DefaultLocale relation to the SpyLocale table for a NOT IN query.
+     *
+     * @see useDefaultLocaleInQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the NOT IN query, like ExtendedBookQuery::class
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery The inner query object of the NOT IN statement
+     */
+    public function useNotInDefaultLocaleQuery($modelAlias = null, $queryClass = null)
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleQuery */
+        $q = $this->useInQuery('DefaultLocale', $modelAlias, $queryClass, 'NOT IN');
+        return $q;
+    }
+
+    /**
+     * Filter the query by a related \Orm\Zed\Locale\Persistence\SpyLocaleStore object
+     *
+     * @param \Orm\Zed\Locale\Persistence\SpyLocaleStore|ObjectCollection $spyLocaleStore the related object to use as filter
+     * @param string|null $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function filterByLocaleStore($spyLocaleStore, ?string $comparison = null)
+    {
+        if ($spyLocaleStore instanceof \Orm\Zed\Locale\Persistence\SpyLocaleStore) {
+            $this
+                ->addUsingAlias(SpyStoreTableMap::COL_ID_STORE, $spyLocaleStore->getFkStore(), $comparison);
+
+            return $this;
+        } elseif ($spyLocaleStore instanceof ObjectCollection) {
+            $this
+                ->useLocaleStoreQuery()
+                ->filterByPrimaryKeys($spyLocaleStore->getPrimaryKeys())
+                ->endUse();
+
+            return $this;
+        } else {
+            throw new PropelException('filterByLocaleStore() only accepts arguments of type \Orm\Zed\Locale\Persistence\SpyLocaleStore or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the LocaleStore relation
+     *
+     * @param string|null $relationAlias Optional alias for the relation
+     * @param string|null $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this The current query, for fluid interface
+     */
+    public function joinLocaleStore(?string $relationAlias = null, ?string $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('LocaleStore');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'LocaleStore');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the LocaleStore relation SpyLocaleStore object
+     *
+     * @see useQuery()
+     *
+     * @param string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery A secondary query class using the current class as primary query
+     */
+    public function useLocaleStoreQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinLocaleStore($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'LocaleStore', '\Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery');
+    }
+
+    /**
+     * Use the LocaleStore relation SpyLocaleStore object
+     *
+     * @param callable(\Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery):\Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery $callable A function working on the related query
+     *
+     * @param string|null $relationAlias optional alias for the relation
+     *
+     * @param string|null $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this
+     */
+    public function withLocaleStoreQuery(
+        callable $callable,
+        string $relationAlias = null,
+        ?string $joinType = Criteria::INNER_JOIN
+    ) {
+        $relatedQuery = $this->useLocaleStoreQuery(
+            $relationAlias,
+            $joinType
+        );
+        $callable($relatedQuery);
+        $relatedQuery->endUse();
+
+        return $this;
+    }
+
+    /**
+     * Use the LocaleStore relation to the SpyLocaleStore table for an EXISTS query.
+     *
+     * @see \Propel\Runtime\ActiveQuery\ModelCriteria::useExistsQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the exists query, like ExtendedBookQuery::class
+     * @param string $typeOfExists Either ExistsQueryCriterion::TYPE_EXISTS or ExistsQueryCriterion::TYPE_NOT_EXISTS
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery The inner query object of the EXISTS statement
+     */
+    public function useLocaleStoreExistsQuery($modelAlias = null, $queryClass = null, $typeOfExists = 'EXISTS')
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery */
+        $q = $this->useExistsQuery('LocaleStore', $modelAlias, $queryClass, $typeOfExists);
+        return $q;
+    }
+
+    /**
+     * Use the LocaleStore relation to the SpyLocaleStore table for a NOT EXISTS query.
+     *
+     * @see useLocaleStoreExistsQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the exists query, like ExtendedBookQuery::class
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery The inner query object of the NOT EXISTS statement
+     */
+    public function useLocaleStoreNotExistsQuery($modelAlias = null, $queryClass = null)
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery */
+        $q = $this->useExistsQuery('LocaleStore', $modelAlias, $queryClass, 'NOT EXISTS');
+        return $q;
+    }
+
+    /**
+     * Use the LocaleStore relation to the SpyLocaleStore table for an IN query.
+     *
+     * @see \Propel\Runtime\ActiveQuery\ModelCriteria::useInQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the IN query, like ExtendedBookQuery::class
+     * @param string $typeOfIn Criteria::IN or Criteria::NOT_IN
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery The inner query object of the IN statement
+     */
+    public function useInLocaleStoreQuery($modelAlias = null, $queryClass = null, $typeOfIn = 'IN')
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery */
+        $q = $this->useInQuery('LocaleStore', $modelAlias, $queryClass, $typeOfIn);
+        return $q;
+    }
+
+    /**
+     * Use the LocaleStore relation to the SpyLocaleStore table for a NOT IN query.
+     *
+     * @see useLocaleStoreInQuery()
+     *
+     * @param string|null $modelAlias sets an alias for the nested query
+     * @param string|null $queryClass Allows to use a custom query class for the NOT IN query, like ExtendedBookQuery::class
+     *
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery The inner query object of the NOT IN statement
+     */
+    public function useNotInLocaleStoreQuery($modelAlias = null, $queryClass = null)
+    {
+        /** @var $q \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery */
+        $q = $this->useInQuery('LocaleStore', $modelAlias, $queryClass, 'NOT IN');
+        return $q;
     }
 
     /**

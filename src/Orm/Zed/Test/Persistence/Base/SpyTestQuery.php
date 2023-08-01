@@ -18,9 +18,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria as SprykerCriter
 use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
 
 /**
- * Base class that represents a query for the 'spy_test' table.
- *
- *
+ * Base class that represents a query for the `spy_test` table.
  *
  * @method     ChildSpyTestQuery orderByIdTest($order = Criteria::ASC) Order by the id_test column
  * @method     ChildSpyTestQuery orderByName($order = Criteria::ASC) Order by the name column
@@ -40,8 +38,8 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  * @method     ChildSpyTest findOneOrCreate(?ConnectionInterface $con = null) Return the first ChildSpyTest matching the query, or a new ChildSpyTest object populated from the query conditions when no match is found
  *
  * @method     ChildSpyTest|null findOneByIdTest(int $id_test) Return the first ChildSpyTest filtered by the id_test column
- * @method     ChildSpyTest|null findOneByName(string $name) Return the first ChildSpyTest filtered by the name column *
-
+ * @method     ChildSpyTest|null findOneByName(string $name) Return the first ChildSpyTest filtered by the name column
+ *
  * @method     ChildSpyTest requirePk($key, ?ConnectionInterface $con = null) Return the ChildSpyTest by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildSpyTest requireOne(?ConnectionInterface $con = null) Return the first ChildSpyTest matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
@@ -50,13 +48,14 @@ use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
  *
  * @method     ChildSpyTest[]|Collection find(?ConnectionInterface $con = null) Return ChildSpyTest objects based on current ModelCriteria
  * @psalm-method Collection&\Traversable<ChildSpyTest> find(?ConnectionInterface $con = null) Return ChildSpyTest objects based on current ModelCriteria
- * @method     ChildSpyTest[]|Collection findByIdTest(int $id_test) Return ChildSpyTest objects filtered by the id_test column
- * @psalm-method Collection&\Traversable<ChildSpyTest> findByIdTest(int $id_test) Return ChildSpyTest objects filtered by the id_test column
- * @method     ChildSpyTest[]|Collection findByName(string $name) Return ChildSpyTest objects filtered by the name column
- * @psalm-method Collection&\Traversable<ChildSpyTest> findByName(string $name) Return ChildSpyTest objects filtered by the name column
+ *
+ * @method     ChildSpyTest[]|Collection findByIdTest(int|array<int> $id_test) Return ChildSpyTest objects filtered by the id_test column
+ * @psalm-method Collection&\Traversable<ChildSpyTest> findByIdTest(int|array<int> $id_test) Return ChildSpyTest objects filtered by the id_test column
+ * @method     ChildSpyTest[]|Collection findByName(string|array<string> $name) Return ChildSpyTest objects filtered by the name column
+ * @psalm-method Collection&\Traversable<ChildSpyTest> findByName(string|array<string> $name) Return ChildSpyTest objects filtered by the name column
+ *
  * @method     ChildSpyTest[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  * @psalm-method \Propel\Runtime\Util\PropelModelPager&\Traversable<ChildSpyTest> paginate($page = 1, $maxPerPage = 10, ?ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
- *
  */
 abstract class SpyTestQuery extends ModelCriteria
 {
@@ -175,7 +174,7 @@ abstract class SpyTestQuery extends ModelCriteria
     {
         return parent::exists($con);
     }
-    protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
+        protected $entityNotFoundExceptionClass = '\\Propel\\Runtime\\Exception\\EntityNotFoundException';
 
     /**
      * Initializes internal state of \Orm\Zed\Test\Persistence\Base\SpyTestQuery object.

@@ -4,6 +4,13 @@ namespace Orm\Zed\Store\Persistence\Base;
 
 use \Exception;
 use \PDO;
+use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleStore;
+use Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery;
+use Orm\Zed\Locale\Persistence\Base\SpyLocaleStore as BaseSpyLocaleStore;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleStoreTableMap;
+use Orm\Zed\Store\Persistence\SpyStore as ChildSpyStore;
 use Orm\Zed\Store\Persistence\SpyStoreQuery as ChildSpyStoreQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\Propel;
@@ -11,6 +18,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\BadMethodCallException;
 use Propel\Runtime\Exception\LogicException;
@@ -69,11 +77,30 @@ abstract class SpyStore implements ActiveRecordInterface
     protected $id_store;
 
     /**
+     * The value for the fk_locale field.
+     * Default locale of the store.
+     * @var        int|null
+     */
+    protected $fk_locale;
+
+    /**
      * The value for the name field.
      *
      * @var        string|null
      */
     protected $name;
+
+    /**
+     * @var        SpyLocale
+     */
+    protected $aDefaultLocale;
+
+    /**
+     * @var        ObjectCollection|SpyLocaleStore[] Collection to store aggregation of SpyLocaleStore objects.
+     * @phpstan-var ObjectCollection&\Traversable<SpyLocaleStore> Collection to store aggregation of SpyLocaleStore objects.
+     */
+    protected $collLocaleStores;
+    protected $collLocaleStoresPartial;
 
     /**
      * Flag to prevent endless save loop, if this object is referenced
@@ -82,6 +109,13 @@ abstract class SpyStore implements ActiveRecordInterface
      * @var bool
      */
     protected $alreadyInSave = false;
+
+    /**
+     * An array of objects scheduled for deletion.
+     * @var ObjectCollection|SpyLocaleStore[]
+     * @phpstan-var ObjectCollection&\Traversable<SpyLocaleStore>
+     */
+    protected $localeStoresScheduledForDeletion = null;
 
     /**
      * Initializes internal state of Orm\Zed\Store\Persistence\Base\SpyStore object.
@@ -320,6 +354,16 @@ abstract class SpyStore implements ActiveRecordInterface
     }
 
     /**
+     * Get the [fk_locale] column value.
+     * Default locale of the store.
+     * @return int|null
+     */
+    public function getFkLocale()
+    {
+        return $this->fk_locale;
+    }
+
+    /**
      * Get the [name] column value.
      *
      * @return string|null
@@ -350,6 +394,36 @@ abstract class SpyStore implements ActiveRecordInterface
         if (($this->isNew() && $hasDefaultValue) || $this->id_store !== $v) {
             $this->id_store = $v;
             $this->modifiedColumns[SpyStoreTableMap::COL_ID_STORE] = true;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set the value of [fk_locale] column.
+     * Default locale of the store.
+     * @param int|null $v New value
+     * @return $this The current object (for fluent API support)
+     */
+    public function setFkLocale($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        // When this is true we will not check for value equality as we need to be able to set a value for this field
+        // to its initial value and have the column marked as modified. This is relevant for update cases when
+        // we create an instance of an entity manually.
+        // @see \Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper::mapEntity()
+        $hasDefaultValue = false;
+
+        if (($this->isNew() && $hasDefaultValue) || $this->fk_locale !== $v) {
+            $this->fk_locale = $v;
+            $this->modifiedColumns[SpyStoreTableMap::COL_FK_LOCALE] = true;
+        }
+
+        if ($this->aDefaultLocale !== null && $this->aDefaultLocale->getIdLocale() !== $v) {
+            $this->aDefaultLocale = null;
         }
 
         return $this;
@@ -420,17 +494,20 @@ abstract class SpyStore implements ActiveRecordInterface
             $col = $row[TableMap::TYPE_NUM == $indexType ? 0 + $startcol : SpyStoreTableMap::translateFieldName('IdStore', TableMap::TYPE_PHPNAME, $indexType)];
             $this->id_store = (null !== $col) ? (int) $col : null;
 
-            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyStoreTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
-            $this->name = (null !== $col) ? (string) $col : null;
-            $this->resetModified();
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 1 + $startcol : SpyStoreTableMap::translateFieldName('FkLocale', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->fk_locale = (null !== $col) ? (int) $col : null;
 
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 2 + $startcol : SpyStoreTableMap::translateFieldName('Name', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->name = (null !== $col) ? (string) $col : null;
+
+            $this->resetModified();
             $this->setNew(false);
 
             if ($rehydrate) {
                 $this->ensureConsistency();
             }
 
-            return $startcol + 2; // 2 = SpyStoreTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 3; // 3 = SpyStoreTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Orm\\Zed\\Store\\Persistence\\SpyStore'), 0, $e);
@@ -453,6 +530,9 @@ abstract class SpyStore implements ActiveRecordInterface
      */
     public function ensureConsistency(): void
     {
+        if ($this->aDefaultLocale !== null && $this->fk_locale !== $this->aDefaultLocale->getIdLocale()) {
+            $this->aDefaultLocale = null;
+        }
     }
 
     /**
@@ -491,6 +571,9 @@ abstract class SpyStore implements ActiveRecordInterface
         $this->hydrate($row, 0, true, $dataFetcher->getIndexType()); // rehydrate
 
         if ($deep) {  // also de-associate any related objects?
+
+            $this->aDefaultLocale = null;
+            $this->collLocaleStores = null;
 
         } // if (deep)
     }
@@ -625,6 +708,18 @@ abstract class SpyStore implements ActiveRecordInterface
         if (!$this->alreadyInSave) {
             $this->alreadyInSave = true;
 
+            // We call the save method on the following object(s) if they
+            // were passed to this object by their corresponding set
+            // method.  This object relates to these object(s) by a
+            // foreign key reference.
+
+            if ($this->aDefaultLocale !== null) {
+                if ($this->aDefaultLocale->isModified() || $this->aDefaultLocale->isNew()) {
+                    $affectedRows += $this->aDefaultLocale->save($con);
+                }
+                $this->setDefaultLocale($this->aDefaultLocale);
+            }
+
             if ($this->isNew() || $this->isModified()) {
                 // persist changes
                 if ($this->isNew()) {
@@ -634,6 +729,23 @@ abstract class SpyStore implements ActiveRecordInterface
                     $affectedRows += $this->doUpdate($con);
                 }
                 $this->resetModified();
+            }
+
+            if ($this->localeStoresScheduledForDeletion !== null) {
+                if (!$this->localeStoresScheduledForDeletion->isEmpty()) {
+                    \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery::create()
+                        ->filterByPrimaryKeys($this->localeStoresScheduledForDeletion->getPrimaryKeys(false))
+                        ->delete($con);
+                    $this->localeStoresScheduledForDeletion = null;
+                }
+            }
+
+            if ($this->collLocaleStores !== null) {
+                foreach ($this->collLocaleStores as $referrerFK) {
+                    if (!$referrerFK->isDeleted() && ($referrerFK->isNew() || $referrerFK->isModified())) {
+                        $affectedRows += $referrerFK->save($con);
+                    }
+                }
             }
 
             $this->alreadyInSave = false;
@@ -665,6 +777,9 @@ abstract class SpyStore implements ActiveRecordInterface
         if ($this->isColumnModified(SpyStoreTableMap::COL_ID_STORE)) {
             $modifiedColumns[':p' . $index++]  = 'id_store';
         }
+        if ($this->isColumnModified(SpyStoreTableMap::COL_FK_LOCALE)) {
+            $modifiedColumns[':p' . $index++]  = 'fk_locale';
+        }
         if ($this->isColumnModified(SpyStoreTableMap::COL_NAME)) {
             $modifiedColumns[':p' . $index++]  = 'name';
         }
@@ -681,9 +796,15 @@ abstract class SpyStore implements ActiveRecordInterface
                 switch ($columnName) {
                     case 'id_store':
                         $stmt->bindValue($identifier, $this->id_store, PDO::PARAM_INT);
+
+                        break;
+                    case 'fk_locale':
+                        $stmt->bindValue($identifier, $this->fk_locale, PDO::PARAM_INT);
+
                         break;
                     case 'name':
                         $stmt->bindValue($identifier, $this->name, PDO::PARAM_STR);
+
                         break;
                 }
             }
@@ -751,6 +872,9 @@ abstract class SpyStore implements ActiveRecordInterface
                 return $this->getIdStore();
 
             case 1:
+                return $this->getFkLocale();
+
+            case 2:
                 return $this->getName();
 
             default:
@@ -769,10 +893,11 @@ abstract class SpyStore implements ActiveRecordInterface
      *                    Defaults to TableMap::TYPE_FIELDNAME.
      * @param bool $includeLazyLoadColumns (optional) Whether to include lazy loaded columns. Defaults to TRUE.
      * @param array $alreadyDumpedObjects List of objects to skip to avoid recursion
+     * @param bool $includeForeignObjects (optional) Whether to include hydrated related objects. Default to FALSE.
      *
      * @return array An associative array containing the field names (as keys) and field values
      */
-    public function toArray(string $keyType = TableMap::TYPE_FIELDNAME, bool $includeLazyLoadColumns = true, array $alreadyDumpedObjects = []): array
+    public function toArray(string $keyType = TableMap::TYPE_FIELDNAME, bool $includeLazyLoadColumns = true, array $alreadyDumpedObjects = [], bool $includeForeignObjects = false): array
     {
         if (isset($alreadyDumpedObjects['SpyStore'][$this->hashCode()])) {
             return ['*RECURSION*'];
@@ -781,13 +906,46 @@ abstract class SpyStore implements ActiveRecordInterface
         $keys = SpyStoreTableMap::getFieldNames($keyType);
         $result = [
             $keys[0] => $this->getIdStore(),
-            $keys[1] => $this->getName(),
+            $keys[1] => $this->getFkLocale(),
+            $keys[2] => $this->getName(),
         ];
         $virtualColumns = $this->virtualColumns;
         foreach ($virtualColumns as $key => $virtualColumn) {
             $result[$key] = $virtualColumn;
         }
 
+        if ($includeForeignObjects) {
+            if (null !== $this->aDefaultLocale) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'spyLocale';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'spy_locale';
+                        break;
+                    default:
+                        $key = 'DefaultLocale';
+                }
+
+                $result[$key] = $this->aDefaultLocale->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->collLocaleStores) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'spyLocaleStores';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'spy_locale_stores';
+                        break;
+                    default:
+                        $key = 'LocaleStores';
+                }
+
+                $result[$key] = $this->collLocaleStores->toArray(null, false, $keyType, $includeLazyLoadColumns, $alreadyDumpedObjects);
+            }
+        }
 
         return $result;
     }
@@ -827,6 +985,9 @@ abstract class SpyStore implements ActiveRecordInterface
                 $this->setIdStore($value);
                 break;
             case 1:
+                $this->setFkLocale($value);
+                break;
+            case 2:
                 $this->setName($value);
                 break;
         } // switch()
@@ -859,7 +1020,10 @@ abstract class SpyStore implements ActiveRecordInterface
             $this->setIdStore($arr[$keys[0]]);
         }
         if (array_key_exists($keys[1], $arr)) {
-            $this->setName($arr[$keys[1]]);
+            $this->setFkLocale($arr[$keys[1]]);
+        }
+        if (array_key_exists($keys[2], $arr)) {
+            $this->setName($arr[$keys[2]]);
         }
 
         return $this;
@@ -906,6 +1070,9 @@ abstract class SpyStore implements ActiveRecordInterface
 
         if ($this->isColumnModified(SpyStoreTableMap::COL_ID_STORE)) {
             $criteria->add(SpyStoreTableMap::COL_ID_STORE, $this->id_store);
+        }
+        if ($this->isColumnModified(SpyStoreTableMap::COL_FK_LOCALE)) {
+            $criteria->add(SpyStoreTableMap::COL_FK_LOCALE, $this->fk_locale);
         }
         if ($this->isColumnModified(SpyStoreTableMap::COL_NAME)) {
             $criteria->add(SpyStoreTableMap::COL_NAME, $this->name);
@@ -998,7 +1165,22 @@ abstract class SpyStore implements ActiveRecordInterface
      */
     public function copyInto(object $copyObj, bool $deepCopy = false, bool $makeNew = true): void
     {
+        $copyObj->setFkLocale($this->getFkLocale());
         $copyObj->setName($this->getName());
+
+        if ($deepCopy) {
+            // important: temporarily setNew(false) because this affects the behavior of
+            // the getter/setter methods for fkey referrer objects.
+            $copyObj->setNew(false);
+
+            foreach ($this->getLocaleStores() as $relObj) {
+                if ($relObj !== $this) {  // ensure that we don't try to copy a reference to ourselves
+                    $copyObj->addLocaleStore($relObj->copy($deepCopy));
+                }
+            }
+
+        } // if ($deepCopy)
+
         if ($makeNew) {
             $copyObj->setNew(true);
             $copyObj->setIdStore(NULL); // this is a auto-increment column, so set to default value
@@ -1028,6 +1210,339 @@ abstract class SpyStore implements ActiveRecordInterface
     }
 
     /**
+     * Declares an association between this object and a SpyLocale object.
+     *
+     * @param SpyLocale|null $v
+     * @return $this The current object (for fluent API support)
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function setDefaultLocale(SpyLocale $v = null)
+    {
+        if ($v === null) {
+            $this->setFkLocale(NULL);
+        } else {
+            $this->setFkLocale($v->getIdLocale());
+        }
+
+        $this->aDefaultLocale = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the SpyLocale object, it will not be re-added.
+        if ($v !== null) {
+            $v->addStoreDefault($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated SpyLocale object
+     *
+     * @param ConnectionInterface $con Optional Connection object.
+     * @return SpyLocale|null The associated SpyLocale object.
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function getDefaultLocale(?ConnectionInterface $con = null)
+    {
+        if ($this->aDefaultLocale === null && ($this->fk_locale != 0)) {
+            $this->aDefaultLocale = SpyLocaleQuery::create()->findPk($this->fk_locale, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aDefaultLocale->addStoreDefaults($this);
+             */
+        }
+
+        return $this->aDefaultLocale;
+    }
+
+
+    /**
+     * Initializes a collection based on the name of a relation.
+     * Avoids crafting an 'init[$relationName]s' method name
+     * that wouldn't work when StandardEnglishPluralizer is used.
+     *
+     * @param string $relationName The name of the relation to initialize
+     * @return void
+     */
+    public function initRelation($relationName): void
+    {
+        if ('LocaleStore' === $relationName) {
+            $this->initLocaleStores();
+            return;
+        }
+    }
+
+    /**
+     * Clears out the collLocaleStores collection
+     *
+     * This does not modify the database; however, it will remove any associated objects, causing
+     * them to be refetched by subsequent calls to accessor method.
+     *
+     * @return $this
+     * @see addLocaleStores()
+     */
+    public function clearLocaleStores()
+    {
+        $this->collLocaleStores = null; // important to set this to NULL since that means it is uninitialized
+
+        return $this;
+    }
+
+    /**
+     * Reset is the collLocaleStores collection loaded partially.
+     *
+     * @return void
+     */
+    public function resetPartialLocaleStores($v = true): void
+    {
+        $this->collLocaleStoresPartial = $v;
+    }
+
+    /**
+     * Initializes the collLocaleStores collection.
+     *
+     * By default this just sets the collLocaleStores collection to an empty array (like clearcollLocaleStores());
+     * however, you may wish to override this method in your stub class to provide setting appropriate
+     * to your application -- for example, setting the initial array to the values stored in database.
+     *
+     * @param bool $overrideExisting If set to true, the method call initializes
+     *                                        the collection even if it is not empty
+     *
+     * @return void
+     */
+    public function initLocaleStores(bool $overrideExisting = true): void
+    {
+        if (null !== $this->collLocaleStores && !$overrideExisting) {
+            return;
+        }
+
+        $collectionClassName = SpyLocaleStoreTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collLocaleStores = new $collectionClassName;
+        $this->collLocaleStores->setModel('\Orm\Zed\Locale\Persistence\SpyLocaleStore');
+    }
+
+    /**
+     * Gets an array of SpyLocaleStore objects which contain a foreign key that references this object.
+     *
+     * If the $criteria is not null, it is used to always fetch the results from the database.
+     * Otherwise the results are fetched from the database the first time, then cached.
+     * Next time the same method is called without $criteria, the cached collection is returned.
+     * If this ChildSpyStore is new, it will return
+     * an empty collection or the current collection; the criteria is ignored on a new object.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param ConnectionInterface $con optional connection object
+     * @return ObjectCollection|SpyLocaleStore[] List of SpyLocaleStore objects
+     * @phpstan-return ObjectCollection&\Traversable<SpyLocaleStore> List of SpyLocaleStore objects
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function getLocaleStores(?Criteria $criteria = null, ?ConnectionInterface $con = null)
+    {
+        $partial = $this->collLocaleStoresPartial && !$this->isNew();
+        if (null === $this->collLocaleStores || null !== $criteria || $partial) {
+            if ($this->isNew()) {
+                // return empty collection
+                if (null === $this->collLocaleStores) {
+                    $this->initLocaleStores();
+                } else {
+                    $collectionClassName = SpyLocaleStoreTableMap::getTableMap()->getCollectionClassName();
+
+                    $collLocaleStores = new $collectionClassName;
+                    $collLocaleStores->setModel('\Orm\Zed\Locale\Persistence\SpyLocaleStore');
+
+                    return $collLocaleStores;
+                }
+            } else {
+                $collLocaleStores = SpyLocaleStoreQuery::create(null, $criteria)
+                    ->filterByStore($this)
+                    ->find($con);
+
+                if (null !== $criteria) {
+                    if (false !== $this->collLocaleStoresPartial && count($collLocaleStores)) {
+                        $this->initLocaleStores(false);
+
+                        foreach ($collLocaleStores as $obj) {
+                            if (false == $this->collLocaleStores->contains($obj)) {
+                                $this->collLocaleStores->append($obj);
+                            }
+                        }
+
+                        $this->collLocaleStoresPartial = true;
+                    }
+
+                    return $collLocaleStores;
+                }
+
+                if ($partial && $this->collLocaleStores) {
+                    foreach ($this->collLocaleStores as $obj) {
+                        if ($obj->isNew()) {
+                            $collLocaleStores[] = $obj;
+                        }
+                    }
+                }
+
+                $this->collLocaleStores = $collLocaleStores;
+                $this->collLocaleStoresPartial = false;
+            }
+        }
+
+        return $this->collLocaleStores;
+    }
+
+    /**
+     * Sets a collection of SpyLocaleStore objects related by a one-to-many relationship
+     * to the current object.
+     * It will also schedule objects for deletion based on a diff between old objects (aka persisted)
+     * and new objects from the given Propel collection.
+     *
+     * @param Collection $localeStores A Propel collection.
+     * @param ConnectionInterface $con Optional connection object
+     * @return $this The current object (for fluent API support)
+     */
+    public function setLocaleStores(Collection $localeStores, ?ConnectionInterface $con = null)
+    {
+        /** @var SpyLocaleStore[] $localeStoresToDelete */
+        $localeStoresToDelete = $this->getLocaleStores(new Criteria(), $con)->diff($localeStores);
+
+
+        $this->localeStoresScheduledForDeletion = $localeStoresToDelete;
+
+        foreach ($localeStoresToDelete as $localeStoreRemoved) {
+            $localeStoreRemoved->setStore(null);
+        }
+
+        $this->collLocaleStores = null;
+        foreach ($localeStores as $localeStore) {
+            $this->addLocaleStore($localeStore);
+        }
+
+        $this->collLocaleStores = $localeStores;
+        $this->collLocaleStoresPartial = false;
+
+        return $this;
+    }
+
+    /**
+     * Returns the number of related BaseSpyLocaleStore objects.
+     *
+     * @param Criteria $criteria
+     * @param bool $distinct
+     * @param ConnectionInterface $con
+     * @return int Count of related BaseSpyLocaleStore objects.
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    public function countLocaleStores(?Criteria $criteria = null, bool $distinct = false, ?ConnectionInterface $con = null): int
+    {
+        $partial = $this->collLocaleStoresPartial && !$this->isNew();
+        if (null === $this->collLocaleStores || null !== $criteria || $partial) {
+            if ($this->isNew() && null === $this->collLocaleStores) {
+                return 0;
+            }
+
+            if ($partial && !$criteria) {
+                return count($this->getLocaleStores());
+            }
+
+            $query = SpyLocaleStoreQuery::create(null, $criteria);
+            if ($distinct) {
+                $query->distinct();
+            }
+
+            return $query
+                ->filterByStore($this)
+                ->count($con);
+        }
+
+        return count($this->collLocaleStores);
+    }
+
+    /**
+     * Method called to associate a SpyLocaleStore object to this object
+     * through the SpyLocaleStore foreign key attribute.
+     *
+     * @param SpyLocaleStore $l SpyLocaleStore
+     * @return $this The current object (for fluent API support)
+     */
+    public function addLocaleStore(SpyLocaleStore $l)
+    {
+        if ($this->collLocaleStores === null) {
+            $this->initLocaleStores();
+            $this->collLocaleStoresPartial = true;
+        }
+
+        if (!$this->collLocaleStores->contains($l)) {
+            $this->doAddLocaleStore($l);
+
+            if ($this->localeStoresScheduledForDeletion and $this->localeStoresScheduledForDeletion->contains($l)) {
+                $this->localeStoresScheduledForDeletion->remove($this->localeStoresScheduledForDeletion->search($l));
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param SpyLocaleStore $localeStore The SpyLocaleStore object to add.
+     */
+    protected function doAddLocaleStore(SpyLocaleStore $localeStore): void
+    {
+        $this->collLocaleStores[]= $localeStore;
+        $localeStore->setStore($this);
+    }
+
+    /**
+     * @param SpyLocaleStore $localeStore The SpyLocaleStore object to remove.
+     * @return $this The current object (for fluent API support)
+     */
+    public function removeLocaleStore(SpyLocaleStore $localeStore)
+    {
+        if ($this->getLocaleStores()->contains($localeStore)) {
+            $pos = $this->collLocaleStores->search($localeStore);
+            $this->collLocaleStores->remove($pos);
+            if (null === $this->localeStoresScheduledForDeletion) {
+                $this->localeStoresScheduledForDeletion = clone $this->collLocaleStores;
+                $this->localeStoresScheduledForDeletion->clear();
+            }
+            $this->localeStoresScheduledForDeletion[]= clone $localeStore;
+            $localeStore->setStore(null);
+        }
+
+        return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this SpyStore is new, it will return
+     * an empty collection; or if this SpyStore has previously
+     * been saved, it will retrieve related LocaleStores from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in SpyStore.
+     *
+     * @param Criteria $criteria optional Criteria object to narrow the query
+     * @param ConnectionInterface $con optional connection object
+     * @param string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|SpyLocaleStore[] List of SpyLocaleStore objects
+     * @phpstan-return ObjectCollection&\Traversable<SpyLocaleStore}> List of SpyLocaleStore objects
+     */
+    public function getLocaleStoresJoinLocale(?Criteria $criteria = null, ?ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = SpyLocaleStoreQuery::create(null, $criteria);
+        $query->joinWith('Locale', $joinBehavior);
+
+        return $this->getLocaleStores($query, $con);
+    }
+
+    /**
      * Clears the current object, sets all attributes to their default values and removes
      * outgoing references as well as back-references (from other objects to this one. Results probably in a database
      * change of those foreign objects when you call `save` there).
@@ -1036,7 +1551,11 @@ abstract class SpyStore implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aDefaultLocale) {
+            $this->aDefaultLocale->removeStoreDefault($this);
+        }
         $this->id_store = null;
+        $this->fk_locale = null;
         $this->name = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
@@ -1059,8 +1578,15 @@ abstract class SpyStore implements ActiveRecordInterface
     public function clearAllReferences(bool $deep = false)
     {
         if ($deep) {
+            if ($this->collLocaleStores) {
+                foreach ($this->collLocaleStores as $o) {
+                    $o->clearAllReferences($deep);
+                }
+            }
         } // if ($deep)
 
+        $this->collLocaleStores = null;
+        $this->aDefaultLocale = null;
         return $this;
     }
 

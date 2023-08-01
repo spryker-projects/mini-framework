@@ -46,6 +46,11 @@ class SpyStoreTableMap extends TableMap
     public const TABLE_NAME = 'spy_store';
 
     /**
+     * The PHP name of this class (PascalCase)
+     */
+    public const TABLE_PHP_NAME = 'SpyStore';
+
+    /**
      * The related Propel class for this table
      */
     public const OM_CLASS = '\\Orm\\Zed\\Store\\Persistence\\SpyStore';
@@ -58,7 +63,7 @@ class SpyStoreTableMap extends TableMap
     /**
      * The total number of columns
      */
-    public const NUM_COLUMNS = 2;
+    public const NUM_COLUMNS = 3;
 
     /**
      * The number of lazy-loaded columns
@@ -68,12 +73,17 @@ class SpyStoreTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    public const NUM_HYDRATE_COLUMNS = 2;
+    public const NUM_HYDRATE_COLUMNS = 3;
 
     /**
      * the column name for the id_store field
      */
     public const COL_ID_STORE = 'spy_store.id_store';
+
+    /**
+     * the column name for the fk_locale field
+     */
+    public const COL_FK_LOCALE = 'spy_store.fk_locale';
 
     /**
      * the column name for the name field
@@ -94,11 +104,11 @@ class SpyStoreTableMap extends TableMap
      * @var array<string, mixed>
      */
     protected static $fieldNames = [
-        self::TYPE_PHPNAME       => ['IdStore', 'Name', ],
-        self::TYPE_CAMELNAME     => ['idStore', 'name', ],
-        self::TYPE_COLNAME       => [SpyStoreTableMap::COL_ID_STORE, SpyStoreTableMap::COL_NAME, ],
-        self::TYPE_FIELDNAME     => ['id_store', 'name', ],
-        self::TYPE_NUM           => [0, 1, ]
+        self::TYPE_PHPNAME       => ['IdStore', 'FkLocale', 'Name', ],
+        self::TYPE_CAMELNAME     => ['idStore', 'fkLocale', 'name', ],
+        self::TYPE_COLNAME       => [SpyStoreTableMap::COL_ID_STORE, SpyStoreTableMap::COL_FK_LOCALE, SpyStoreTableMap::COL_NAME, ],
+        self::TYPE_FIELDNAME     => ['id_store', 'fk_locale', 'name', ],
+        self::TYPE_NUM           => [0, 1, 2, ]
     ];
 
     /**
@@ -110,11 +120,11 @@ class SpyStoreTableMap extends TableMap
      * @var array<string, mixed>
      */
     protected static $fieldKeys = [
-        self::TYPE_PHPNAME       => ['IdStore' => 0, 'Name' => 1, ],
-        self::TYPE_CAMELNAME     => ['idStore' => 0, 'name' => 1, ],
-        self::TYPE_COLNAME       => [SpyStoreTableMap::COL_ID_STORE => 0, SpyStoreTableMap::COL_NAME => 1, ],
-        self::TYPE_FIELDNAME     => ['id_store' => 0, 'name' => 1, ],
-        self::TYPE_NUM           => [0, 1, ]
+        self::TYPE_PHPNAME       => ['IdStore' => 0, 'FkLocale' => 1, 'Name' => 2, ],
+        self::TYPE_CAMELNAME     => ['idStore' => 0, 'fkLocale' => 1, 'name' => 2, ],
+        self::TYPE_COLNAME       => [SpyStoreTableMap::COL_ID_STORE => 0, SpyStoreTableMap::COL_FK_LOCALE => 1, SpyStoreTableMap::COL_NAME => 2, ],
+        self::TYPE_FIELDNAME     => ['id_store' => 0, 'fk_locale' => 1, 'name' => 2, ],
+        self::TYPE_NUM           => [0, 1, 2, ]
     ];
 
     /**
@@ -131,6 +141,14 @@ class SpyStoreTableMap extends TableMap
         'COL_ID_STORE' => 'ID_STORE',
         'id_store' => 'ID_STORE',
         'spy_store.id_store' => 'ID_STORE',
+        'FkLocale' => 'FK_LOCALE',
+        'SpyStore.FkLocale' => 'FK_LOCALE',
+        'fkLocale' => 'FK_LOCALE',
+        'spyStore.fkLocale' => 'FK_LOCALE',
+        'SpyStoreTableMap::COL_FK_LOCALE' => 'FK_LOCALE',
+        'COL_FK_LOCALE' => 'FK_LOCALE',
+        'fk_locale' => 'FK_LOCALE',
+        'spy_store.fk_locale' => 'FK_LOCALE',
         'Name' => 'NAME',
         'SpyStore.Name' => 'NAME',
         'name' => 'NAME',
@@ -159,6 +177,7 @@ class SpyStoreTableMap extends TableMap
         $this->setPrimaryKeyMethodInfo('spy_store_pk_seq');
         // columns
         $this->addPrimaryKey('id_store', 'IdStore', 'INTEGER', true, null, null);
+        $this->addForeignKey('fk_locale', 'FkLocale', 'INTEGER', 'spy_locale', 'id_locale', false, null, null);
         $this->addColumn('name', 'Name', 'VARCHAR', false, 255, null);
     }
 
@@ -169,6 +188,20 @@ class SpyStoreTableMap extends TableMap
      */
     public function buildRelations(): void
     {
+        $this->addRelation('DefaultLocale', '\\Orm\\Zed\\Locale\\Persistence\\SpyLocale', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':fk_locale',
+    1 => ':id_locale',
+  ),
+), null, null, null, false);
+        $this->addRelation('LocaleStore', '\\Orm\\Zed\\Locale\\Persistence\\SpyLocaleStore', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':fk_store',
+    1 => ':id_store',
+  ),
+), null, null, 'LocaleStores', false);
     }
 
     /**
@@ -260,7 +293,7 @@ class SpyStoreTableMap extends TableMap
             SpyStoreTableMap::addInstanceToPool($obj, $key);
         }
 
-        return array($obj, $col);
+        return [$obj, $col];
     }
 
     /**
@@ -314,9 +347,11 @@ class SpyStoreTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->addSelectColumn(SpyStoreTableMap::COL_ID_STORE);
+            $criteria->addSelectColumn(SpyStoreTableMap::COL_FK_LOCALE);
             $criteria->addSelectColumn(SpyStoreTableMap::COL_NAME);
         } else {
             $criteria->addSelectColumn($alias . '.id_store');
+            $criteria->addSelectColumn($alias . '.fk_locale');
             $criteria->addSelectColumn($alias . '.name');
         }
     }
@@ -337,9 +372,11 @@ class SpyStoreTableMap extends TableMap
     {
         if (null === $alias) {
             $criteria->removeSelectColumn(SpyStoreTableMap::COL_ID_STORE);
+            $criteria->removeSelectColumn(SpyStoreTableMap::COL_FK_LOCALE);
             $criteria->removeSelectColumn(SpyStoreTableMap::COL_NAME);
         } else {
             $criteria->removeSelectColumn($alias . '.id_store');
+            $criteria->removeSelectColumn($alias . '.fk_locale');
             $criteria->removeSelectColumn($alias . '.name');
         }
     }
