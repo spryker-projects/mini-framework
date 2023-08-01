@@ -23,7 +23,7 @@ use Codeception\Actor;
  * @method void comment($description)
  * @method void pause()
  *
- * @SuppressWarnings(PHPMD)
+ * @SuppressWarnings(\PyzTest\Zed\Test\PHPMD)
  *
  * @method \Pyz\Zed\Test\Business\TestFacadeInterface getFacade()
  */
