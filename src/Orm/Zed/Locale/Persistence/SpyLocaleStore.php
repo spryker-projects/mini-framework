@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 namespace Orm\Zed\Locale\Persistence;
 
 use Spryker\Zed\Locale\Persistence\Propel\AbstractSpyLocaleStore as BaseSpyLocaleStore;
@@ -10,10 +15,9 @@ use Spryker\Zed\Locale\Persistence\Propel\AbstractSpyLocaleStore as BaseSpyLocal
  *
  *
  * You should add additional methods to this class to meet the
- * application requirements.  This class will only be generated as
+ * application requirements. This class will only be generated as
  * long as it does not already exist in the output directory.
  */
 class SpyLocaleStore extends BaseSpyLocaleStore
 {
-
 }
