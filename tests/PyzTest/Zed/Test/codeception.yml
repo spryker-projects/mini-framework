@@ -4,17 +4,17 @@ paths:
     tests: .
     data: _data
     support: _support
-    log: _output
+    output: _output
 
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*.php'] }
+    whitelist: { include: ['../../../../src/Pyz/*.php'] }
 
 suites:
     Business:
         path: Business
-        class_name: TestBusinessTester
+        actor: TestBusinessTester
         modules:
             enabled:
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper

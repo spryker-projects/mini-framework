@@ -81,9 +81,6 @@ npm-debug.log
 /tests/PyzTest/*/*/_support/_generated/*
 
 # propel classes
-/src/Propel/Base/*
-/src/Propel/Map/*
-
 /src/Orm/Zed/*/Persistence/Base
 /src/Orm/Zed/*/Persistence/Map
 
