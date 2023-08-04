@@ -16,6 +16,7 @@ use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Scheduler\SchedulerConstants;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
+use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -61,6 +62,7 @@ $config[MonitoringConstants::IGNORABLE_TRANSACTIONS] = [
 // ------------------------------ SECURITY ------------------------------------
 // ----------------------------------------------------------------------------
 
+$config[ZedRequestConstants::ZED_API_SSL_ENABLED] = (bool)getenv('SPRYKER_ZED_SSL_ENABLED');
 $config[KernelConstants::DOMAIN_WHITELIST] = array_filter(explode(',', getenv('SPRYKER_TRUSTED_HOSTS') ?: ''));
 $config[KernelConstants::STRICT_DOMAIN_REDIRECT] = true;
 
