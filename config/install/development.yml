@@ -59,6 +59,9 @@ sections:
         generate-service-backend-ide-auto-completion:
             command: 'vendor/bin/console dev:ide-auto-completion:service:generate'
 
+        codeception-build:
+            command: 'vendor/bin/codecept build'
+
     database-flush:
 #        drop-database:
 #            command: 'vendor/bin/console propel:database:drop'
