@@ -8,6 +8,7 @@ use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
+use Spryker\Shared\GlueJsonApiConvention\GlueJsonApiConventionConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
@@ -126,7 +127,24 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED]
 // ----------------------------------------------------------------------------
 // ------------------------------ Glue Backend API ----------------------------
 // ----------------------------------------------------------------------------
-$config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = getenv('SPRYKER_GLUE_BACKEND_HOST');
+$sprykerGlueBackendHost = getenv('SPRYKER_GLUE_BACKEND_HOST');
+$config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = $sprykerGlueBackendHost;
+$config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = [
+    'Pyz',
+];
+$config[GlueBackendApiApplicationConstants::GLUE_BACKEND_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '*';
+
+// ----------------------------------------------------------------------------
+// ------------------------------ Glue Storefront API -------------------------
+// ----------------------------------------------------------------------------
+$sprykerGlueStorefrontHost = getenv('SPRYKER_GLUE_STOREFRONT_HOST');
+$gluePort = (int)(getenv('SPRYKER_API_PORT')) ?: 443;
+$protocol = $gluePort === 433 ? 'https' : 'http';
+$config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
+    '%s://%s',
+    $protocol,
+    $sprykerGlueStorefrontHost ?: $sprykerGlueBackendHost ?: 'localhost',
+);
 
 // ----------------------------------------------------------------------------
 // ------------------------------ Scheduler -----------------------------------
