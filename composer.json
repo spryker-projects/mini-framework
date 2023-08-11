@@ -42,6 +42,17 @@
             "SprykerConfig\\": "src/SprykerConfig/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "PyzTest\\": [
+                "tests/PyzTest/",
+                "tests/_support"
+            ]
+        },
+        "files": [
+            "test-autoload.php"
+        ]
+    },
     "scripts": {
         "cs-check": "phpcs -p",
         "cs-fix": "phpcbf -p",
