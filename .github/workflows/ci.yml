@@ -57,9 +57,7 @@ jobs:
         run: composer stan
 
       - name: Run tests
-        run: |
-          vendor/bin/codecept build
-          vendor/bin/codecept run --coverage-xml
+        run: vendor/bin/codecept run --coverage-xml
 
       - name: Code Coverage Report
         if: success() && matrix.php-version == '8.1'
