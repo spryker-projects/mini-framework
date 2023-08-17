@@ -10,7 +10,6 @@ namespace Pyz\Glue\GlueBackendApiApplication;
 use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin;
-use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\LocaleRequestBuilderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\RequestCorsValidatorPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ScopeRequestAfterRoutingValidatorPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\SecurityHeaderResponseFormatterPlugin;
@@ -68,7 +67,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     {
         return [
             new ApplicationIdentifierRequestBuilderPlugin(),
-            new LocaleRequestBuilderPlugin(),
         ];
     }
 }
