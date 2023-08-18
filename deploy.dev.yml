@@ -9,7 +9,7 @@ image:
     php:
         enabled-extensions:
             - blackfire
- 
+
 composer:
     mode: ''
     autoload: ''
@@ -41,7 +41,7 @@ groups:
             glue_backend_eu:
                 application: glue-backend
                 endpoints:
-                    glue-backend.de.spryker.local:
+                    my-shop.de.spryker.local:
                         store: DE
 
 services:
@@ -57,7 +57,7 @@ services:
 
 # When you need one of the below services, uncomment the service and rebuild your containers with
 # `docker/sdk boot deploy.dev.yml && docker/sdk up`
-    
+
 #    broker:
 #        engine: rabbitmq
 #        version: '3.9'
@@ -68,10 +68,10 @@ services:
 #            queue.spryker.local:
 #            localhost:5672:
 #                protocol: tcp
- 
+
 #    session:
 #        engine: redis
-#        
+#
 #    key_value_store:
 #        engine: redis
 #        endpoints:

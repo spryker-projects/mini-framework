@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae82150ac8321dd03c4da974e1560837",
+    "content-hash": "edffb1283ba4866bed3129548777d191",
     "packages": [
         {
             "name": "brick/math",
@@ -9784,6 +9784,75 @@
             "time": "2021-10-12T13:05:09+00:00"
         },
         {
+            "name": "cebe/php-openapi",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cebe/php-openapi.git",
+                "reference": "020d72b8e3a9a60bc229953e93eda25c49f46f45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cebe/php-openapi/zipball/020d72b8e3a9a60bc229953e93eda25c49f46f45",
+                "reference": "020d72b8e3a9a60bc229953e93eda25c49f46f45",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "justinrainbow/json-schema": "^5.2",
+                "php": ">=7.1.0",
+                "symfony/yaml": "^3.4 || ^4 || ^5 || ^6"
+            },
+            "conflict": {
+                "symfony/yaml": "3.4.0 - 3.4.4 || 4.0.0 - 4.4.17 || 5.0.0 - 5.1.9 || 5.2.0"
+            },
+            "require-dev": {
+                "apis-guru/openapi-directory": "1.0.0",
+                "cebe/indent": "*",
+                "mermade/openapi3-examples": "1.0.0",
+                "nexmo/api-specification": "1.0.0",
+                "oai/openapi-specification": "3.0.3",
+                "phpstan/phpstan": "^0.12.0",
+                "phpunit/phpunit": "^6.5 || ^7.5 || ^8.5 || ^9.4"
+            },
+            "bin": [
+                "bin/php-openapi"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "cebe\\openapi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc",
+                    "homepage": "https://cebe.cc/",
+                    "role": "Creator"
+                }
+            ],
+            "description": "Read and write OpenAPI yaml/json files and make the content accessable in PHP objects.",
+            "homepage": "https://github.com/cebe/php-openapi#readme",
+            "keywords": [
+                "openapi"
+            ],
+            "support": {
+                "issues": "https://github.com/cebe/php-openapi/issues",
+                "source": "https://github.com/cebe/php-openapi"
+            },
+            "time": "2022-04-20T14:46:44+00:00"
+        },
+        {
             "name": "codeception/codeception",
             "version": "5.0.10",
             "source": {
@@ -13689,6 +13758,125 @@
             "time": "2023-02-12T18:53:17+00:00"
         },
         {
+            "name": "spryker-sdk/acp",
+            "version": "0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/acp.git",
+                "reference": "3897e50f876efcca0a47889f88d9969a67290df7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/acp/zipball/3897e50f876efcca0a47889f88d9969a67290df7",
+                "reference": "3897e50f876efcca0a47889f88d9969a67290df7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=8.0",
+                "spryker-sdk/async-api": "^0.3.0",
+                "spryker-sdk/spryk": "^0.4.0 || ^0.5.0",
+                "spryker-sdk/sync-api": "^0.1.6",
+                "symfony/console": "^5.3.0 || ^6.0.0",
+                "symfony/finder": "^5.3 || ^6.0.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "*",
+                "codeception/module-asserts": "*",
+                "codeception/module-phpbrowser": "*",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpdoc-parser": "~1.5.1",
+                "sllh/composer-versions-check": "^2.0",
+                "spryker-sdk/architector": "0.1.x-dev",
+                "spryker/code-sniffer": "*",
+                "spryker/kernel": "^3.68",
+                "symfony/var-dumper": "*"
+            },
+            "bin": [
+                "bin/acp"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Transfer\\": "src/Transfer/",
+                    "SprykerSdk\\": "src/SprykerSdk/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SDK for ACP.",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/acp/issues",
+                "source": "https://github.com/spryker-sdk/acp/tree/0.3.2"
+            },
+            "time": "2023-08-03T11:00:36+00:00"
+        },
+        {
+            "name": "spryker-sdk/async-api",
+            "version": "dev-feature/0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/async-api.git",
+                "reference": "f2c4c67afbfe7359f490d0d8674ca9b54ae8fa66"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/async-api/zipball/f2c4c67afbfe7359f490d0d8674ca9b54ae8fa66",
+                "reference": "f2c4c67afbfe7359f490d0d8674ca9b54ae8fa66",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "~1.4.2 || ~2.0.0",
+                "php": ">=8.0",
+                "symfony/console": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/finder": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/process": "^4.0.0 || ^5.4 || ^6.0",
+                "symfony/property-access": "^4.0.0 || ^5.4 || ^6.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^5.0.0",
+                "codeception/module-asserts": "^3.0.0",
+                "mikey179/vfsstream": "^1.6.10",
+                "phpstan/phpdoc-parser": "~1.5.1",
+                "sllh/composer-versions-check": "^2.0",
+                "spryker-sdk/architector": "0.1.x-dev",
+                "spryker/code-sniffer": "^0.17.18",
+                "symfony/var-dumper": "^6.0.0"
+            },
+            "bin": [
+                "bin/asyncapi"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Transfer\\": "src/Transfer/",
+                    "SprykerSdk\\AsyncApi\\": "src/SprykerSdk/AsyncApi/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SDK for AsyncAPI.",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/async-api/issues",
+                "source": "https://github.com/spryker-sdk/async-api/tree/feature/0.3.2"
+            },
+            "time": "2023-08-17T06:43:38+00:00"
+        },
+        {
             "name": "spryker-sdk/phpstan-spryker",
             "version": "0.4.0",
             "source": {
@@ -13752,6 +13940,106 @@
                 "source": "https://github.com/spryker-sdk/phpstan-spryker"
             },
             "time": "2021-12-10T14:07:19+00:00"
+        },
+        {
+            "name": "spryker-sdk/spryk",
+            "version": "dev-feature/0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/spryk.git",
+                "reference": "14eeb13006bbf7ad436024ddc6460e3f9c74260a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/spryk/zipball/14eeb13006bbf7ad436024ddc6460e3f9c74260a",
+                "reference": "14eeb13006bbf7ad436024ddc6460e3f9c74260a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "bin": [
+                "bin/spryk-build",
+                "bin/spryk-dump",
+                "bin/spryk-run",
+                "spryk.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Spryk module",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/spryk/issues",
+                "source": "https://github.com/spryker-sdk/spryk/tree/feature/0.5.2"
+            },
+            "time": "2023-08-18T07:44:13+00:00"
+        },
+        {
+            "name": "spryker-sdk/sync-api",
+            "version": "0.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/sync-api.git",
+                "reference": "f2e46d0e597564afc3715e1ef75dce718e84a4e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/sync-api/zipball/f2e46d0e597564afc3715e1ef75dce718e84a4e9",
+                "reference": "f2e46d0e597564afc3715e1ef75dce718e84a4e9",
+                "shasum": ""
+            },
+            "require": {
+                "cebe/php-openapi": "^1.6",
+                "doctrine/inflector": "^1.4.0 || ^2.0",
+                "php": ">=8.0",
+                "spryker-sdk/spryk": "^0.4.0 || ^0.5.0",
+                "symfony/console": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/finder": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/process": "^4.0.0 || ^5.4 || ^6"
+            },
+            "require-dev": {
+                "codeception/codeception": "*",
+                "codeception/module-asserts": "*",
+                "codeception/stub": "^4.1.0",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpdoc-parser": "~1.5.1",
+                "spryker-sdk/architector": "0.1.x-dev",
+                "spryker/code-sniffer": "dev-master",
+                "symfony/filesystem": "^4.0 || ^5.3",
+                "symfony/var-dumper": "*"
+            },
+            "bin": [
+                "bin/syncapi"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Transfer\\": "src/Transfer/",
+                    "SprykerSdk\\SyncApi\\": "src/SprykerSdk/SyncApi/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SDK for SyncAPI.",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/sync-api/issues",
+                "source": "https://github.com/spryker-sdk/sync-api/tree/0.1.6"
+            },
+            "time": "2023-08-03T10:51:13+00:00"
         },
         {
             "name": "spryker/code-sniffer",
@@ -13949,6 +14237,67 @@
             "time": "2021-08-30T13:35:56+00:00"
         },
         {
+            "name": "spryker/message-broker",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/message-broker.git",
+                "reference": "b6328abd9e362ba500ffbcf9665f9eabb1284a33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/message-broker/zipball/b6328abd9e362ba500ffbcf9665f9eabb1284a33",
+                "reference": "b6328abd9e362ba500ffbcf9665f9eabb1284a33",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/log": "^3.0.0",
+                "spryker/message-broker-extension": "^1.2.0",
+                "spryker/monolog": "^2.0.0",
+                "spryker/symfony": "^3.10.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/util-encoding": "^1.0.0 || ^2.0.0"
+            },
+            "require-dev": {
+                "spryker-sdk/async-api": "^0.3.0",
+                "spryker/application": "*",
+                "spryker/code-sniffer": "*",
+                "spryker/console": "*",
+                "spryker/container": "*",
+                "spryker/event-dispatcher": "*",
+                "spryker/message-broker-aws": "*",
+                "spryker/ramsey-uuid": "*",
+                "spryker/store": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/ramsey-uuid": "When the CorrelationIdMessageAttributeProviderPlugin is used you need to install this."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Zed\\MessageBroker\\Helper\\": "tests/SprykerTest/Zed/MessageBroker/_support/Helper"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "MessageBroker module",
+            "support": {
+                "source": "https://github.com/spryker/message-broker/tree/1.8.0"
+            },
+            "time": "2023-07-21T13:09:09+00:00"
+        },
+        {
             "name": "spryker/module-finder",
             "version": "1.2.0",
             "source": {
@@ -14067,6 +14416,51 @@
             "description": "Testify module",
             "support": {
                 "source": "https://github.com/spryker/testify/tree/3.49.1"
+            },
+            "time": "2023-07-21T13:09:09+00:00"
+        },
+        {
+            "name": "spryker/testify-async-api",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/testify-async-api.git",
+                "reference": "4fc5d7c20496723fdb644012ef3879fe212f7abb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/testify-async-api/zipball/4fc5d7c20496723fdb644012ef3879fe212f7abb",
+                "reference": "4fc5d7c20496723fdb644012ef3879fe212f7abb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker-sdk/async-api": "^0.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/message-broker": "^1.8.0",
+                "spryker/testify": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "TestifyAsyncApi module",
+            "support": {
+                "source": "https://github.com/spryker/testify-async-api/tree/0.1.0"
             },
             "time": "2023-07-21T13:09:09+00:00"
         },
@@ -14475,9 +14869,25 @@
             "time": "2021-07-28T10:34:58+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "spryker-sdk/async-api",
+            "version": "dev-feature/0.3.2",
+            "alias": "0.3.1",
+            "alias_normalized": "0.3.1.0"
+        },
+        {
+            "package": "spryker-sdk/spryk",
+            "version": "dev-feature/0.5.2",
+            "alias": "0.5.2",
+            "alias_normalized": "0.5.2.0"
+        }
+    ],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "spryker-sdk/spryk": 20,
+        "spryker-sdk/async-api": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -14487,5 +14897,5 @@
     "platform-overrides": {
         "php": "8.0.19"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
