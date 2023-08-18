@@ -1,0 +1,44 @@
+asyncapi: 2.6.0
+info:
+    title: Hello World App AsyncAPI
+    version: 1.0.0
+channels:
+    user-events:
+        publish:
+            summary: User Created Event, used to store User data in the App database.
+            message:
+                $ref: '#/components/messages/UserCreated'
+    user-commands:
+        subscribe:
+            summary: Greet a User, this can be consumed by any application.
+            message:
+                $ref: '#/components/messages/GreetUser'
+components:
+    messages:
+        UserCreated:
+            name: UserCreated
+            x-spryker:
+                module: HelloWorld
+            payload:
+                type: object
+                properties:
+                    uuid:
+                        type: string
+                        format: uuid
+                    username:
+                        type: string
+                example:
+                    uuid: 1234-5678-9012-3456
+                    username: John Doe
+        GreetUser:
+            name: GreetUser
+            x-spryker:
+                module: HelloWorld
+            payload:
+                type: object
+                properties:
+                    uuid:
+                        type: string
+                        format: uuid
+                example:
+                    uuid: 1234-5678-9012-3456
