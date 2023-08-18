@@ -1,0 +1,44 @@
+asyncapi: 2.6.0
+info:
+    title: Hello World AsyncAPI
+    version: 1.0.0
+channels:
+    user-events:
+        subscribe:
+            summary: Subscribe to this message when you need the User data of a created User by this API.
+            message:
+                $ref: '#/components/messages/UserCreated'
+    user-commands:
+        publish:
+            summary: Send this message to this API to let this application greet a User.
+            message:
+                $ref: '#/components/messages/GreetUser'
+components:
+    messages:
+        UserCreated:
+            name: UserCreated
+            x-spryker:
+                module: HelloWorld
+            payload:
+                type: object
+                properties:
+                    uuid:
+                        type: string
+                        format: uuid
+                    username:
+                        type: string
+                example:
+                    uuid: 1234-5678-9012-3456
+                    username: John Doe
+        GreetUser:
+            name: GreetUser
+            x-spryker:
+                module: HelloWorld
+            payload:
+                type: object
+                properties:
+                    uuid:
+                        type: string
+                        format: uuid
+                example:
+                    uuid: 1234-5678-9012-3456
