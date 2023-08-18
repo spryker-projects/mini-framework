@@ -83,7 +83,7 @@ class UserCrudHelper extends Module
 
         $userTransfer = $userBuilder->build();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($userTransfer) {
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($userTransfer): void {
             SpyUserQuery::create()->filterByUuid($userTransfer->getUuid())->delete();
         });
 

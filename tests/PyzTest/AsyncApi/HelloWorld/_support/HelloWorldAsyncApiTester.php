@@ -1,11 +1,19 @@
 <?php
 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
 namespace PyzTest\AsyncApi\HelloWorld;
 
+use Codeception\Actor;
+
 /**
  * Inherited Methods
+ *
  * @method void wantTo($text)
  * @method void wantToTest($text)
  * @method void execute($callable)
@@ -17,9 +25,9 @@ namespace PyzTest\AsyncApi\HelloWorld;
  * @method void comment($description)
  * @method void pause($vars = [])
  *
- * @SuppressWarnings(PHPMD)
-*/
-class HelloWorldAsyncApiTester extends \Codeception\Actor
+ * @SuppressWarnings(\PyzTest\AsyncApi\HelloWorld\PHPMD)
+ */
+class HelloWorldAsyncApiTester extends Actor
 {
     use _generated\HelloWorldAsyncApiTesterActions;
 
