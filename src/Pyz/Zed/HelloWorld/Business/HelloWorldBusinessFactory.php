@@ -23,6 +23,7 @@ use Pyz\Zed\HelloWorld\Business\User\Writer\UserUpdater;
 use Pyz\Zed\HelloWorld\Business\User\Writer\UserUpdaterInterface;
 use Pyz\Zed\HelloWorld\HelloWorldDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MessageBroker\Business\MessageBrokerFacade;
 
 /**
  * @method \Pyz\Zed\HelloWorld\HelloWorldConfig getConfig()
@@ -44,7 +45,7 @@ class HelloWorldBusinessFactory extends AbstractBusinessFactory
      */
     public function createUserCreator(): UserCreatorInterface
     {
-        return new UserCreator($this->getEntityManager(), $this->createUserCreateValidator(), $this->createUserIdentifierBuilder(), $this->getUserPreCreatePlugins(), $this->getUserPostCreatePlugins());
+        return new UserCreator($this->getEntityManager(), $this->createUserCreateValidator(), $this->createUserIdentifierBuilder(), new MessageBrokerFacade(), $this->getUserPreCreatePlugins(), $this->getUserPostCreatePlugins());
     }
 
     /**

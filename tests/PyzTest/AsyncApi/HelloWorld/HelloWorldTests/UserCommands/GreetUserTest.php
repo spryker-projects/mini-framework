@@ -8,7 +8,10 @@
 namespace PyzTest\AsyncApi\HelloWorld\HelloWorldTests\UserCommands;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\UserCollectionRequestTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use PyzTest\AsyncApi\HelloWorld\HelloWorldAsyncApiTester;
+use Ramsey\Uuid\Uuid;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerFacade;
 
 /**
@@ -38,7 +41,14 @@ class GreetUserTest extends Unit
         $greetUserTransfer = $this->tester->haveGreetUserTransfer();
 
         // Act: Here you call the facade method where you expect that the message will be sent
-        (new MessageBrokerFacade())->sendMessage($greetUserTransfer);
+        $userTransfer = new UserTransfer();
+        $userTransfer->setUsername('FooBar')
+            ->setUuid(Uuid::uuid4()->toString());
+
+        $userCollectionRequestTransfer = new UserCollectionRequestTransfer();
+        $userCollectionRequestTransfer->addUser($userTransfer);
+
+        $this->tester->getFacade()->createUserCollection($userCollectionRequestTransfer);
 
         // Assert
         $this->tester->assertMessageWasEmittedOnChannel($greetUserTransfer, 'user-commands');
