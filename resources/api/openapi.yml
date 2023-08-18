@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+    title: Hello World Shop API
+    version: 1.0.0
+
+paths:
+    /users:
+        x-spryker:
+            module: HelloWorldBackendApi
+            controller: UsersController
+        post:
+            summary: Create a new user
+            description: Creates a new user with provided UUID and name.
+
+            requestBody:
+                description: User data object
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UserData'
+            responses:
+                '201':
+                    description: Created
+
+
+components:
+    schemas:
+        UserData:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    format: uuid
+                username:
+                    type: string
+            example:
+                uuid: "1234-5678-9012-3456"
+                username: "John Doe"
