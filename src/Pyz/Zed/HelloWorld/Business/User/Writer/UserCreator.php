@@ -11,10 +11,12 @@ use ArrayObject;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\UserCollectionRequestTransfer;
 use Generated\Shared\Transfer\UserCollectionResponseTransfer;
+use Generated\Shared\Transfer\UserCreatedTransfer;
 use Pyz\Zed\HelloWorld\Business\User\IdentifierBuilder\UserIdentifierBuilderInterface;
 use Pyz\Zed\HelloWorld\Business\User\Validator\UserValidatorInterface;
 use Pyz\Zed\HelloWorld\Persistence\HelloWorldEntityManagerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface;
 
 class UserCreator implements UserCreatorInterface
 {
@@ -36,6 +38,11 @@ class UserCreator implements UserCreatorInterface
     protected UserIdentifierBuilderInterface $userIdentifierBuilder;
 
     /**
+     * @var \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface
+     */
+    protected MessageBrokerFacadeInterface $messageBrokerFacade;
+
+    /**
      * @var \Pyz\Zed\HelloWorldExtension\Dependency\Plugin\User\Writer\UserCreatePluginInterface[]
      */
     protected array $userPreCreatePlugins;
@@ -49,6 +56,7 @@ class UserCreator implements UserCreatorInterface
      * @param \Pyz\Zed\HelloWorld\Persistence\HelloWorldEntityManagerInterface $helloWorldEntityManager
      * @param \Pyz\Zed\HelloWorld\Business\User\Validator\UserValidatorInterface $userValidator
      * @param \Pyz\Zed\HelloWorld\Business\User\IdentifierBuilder\UserIdentifierBuilderInterface $userIdentifierBuilder
+     * @param \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface $messageBrokerFacade
      * @param \Pyz\Zed\HelloWorldExtension\Dependency\Plugin\User\Writer\UserCreatePluginInterface[] $userPreCreatePlugins
      * @param \Pyz\Zed\HelloWorldExtension\Dependency\Plugin\User\Writer\UserCreatePluginInterface[] $userPostCreatePlugins
      */
@@ -56,12 +64,14 @@ class UserCreator implements UserCreatorInterface
         HelloWorldEntityManagerInterface $helloWorldEntityManager,
         UserValidatorInterface $userValidator,
         UserIdentifierBuilderInterface $userIdentifierBuilder,
+        MessageBrokerFacadeInterface $messageBrokerFacade,
         array $userPreCreatePlugins,
         array $userPostCreatePlugins
     ) {
         $this->helloWorldEntityManager = $helloWorldEntityManager;
         $this->userValidator = $userValidator;
         $this->userIdentifierBuilder = $userIdentifierBuilder;
+        $this->messageBrokerFacade = $messageBrokerFacade;
         $this->userPreCreatePlugins = $userPreCreatePlugins;
         $this->userPostCreatePlugins = $userPostCreatePlugins;
     }
@@ -129,6 +139,12 @@ class UserCreator implements UserCreatorInterface
 
         foreach ($userTransfers as $userTransfer) {
             $persistedUserTransfers[] = $this->helloWorldEntityManager->createUser($userTransfer);
+
+            $userCreatedTransfer = new UserCreatedTransfer();
+            $userCreatedTransfer->setUuid($userTransfer->getUuid());
+            $userCreatedTransfer->setUsername($userTransfer->getUsername());
+
+            $this->messageBrokerFacade->sendMessage($userCreatedTransfer);
         }
 
         // Run post-save plugins

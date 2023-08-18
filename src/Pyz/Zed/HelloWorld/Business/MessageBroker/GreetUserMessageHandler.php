@@ -18,6 +18,6 @@ class GreetUserMessageHandler implements GreetUserMessageHandlerInterface
      */
     public function handleGreetUser(GreetUserTransfer $greetUserTransfer): void
     {
-        // Handle the message here
+        $foo = 'bar';
     }
 }
