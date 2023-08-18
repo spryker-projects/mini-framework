@@ -7,10 +7,20 @@
 
 namespace Pyz\Zed\HelloWorld\Business\MessageBroker;
 
+use Generated\Shared\Transfer\UserCollectionRequestTransfer;
 use Generated\Shared\Transfer\UserCreatedTransfer;
+use Generated\Shared\Transfer\UserTransfer;
+use Pyz\Zed\HelloWorld\Business\HelloWorldFacadeInterface;
 
 class UserCreatedMessageHandler implements UserCreatedMessageHandlerInterface
 {
+    /**
+     * @param HelloWorldFacadeInterface $helloWorldFacade
+     */
+    public function __construct(private HelloWorldFacadeInterface $helloWorldFacade)
+    {
+    }
+
     /**
      * @param \Generated\Shared\Transfer\UserCreatedTransfer $userCreatedTransfer
      *
@@ -18,6 +28,12 @@ class UserCreatedMessageHandler implements UserCreatedMessageHandlerInterface
      */
     public function handleUserCreated(UserCreatedTransfer $userCreatedTransfer): void
     {
-        // Handle the message here
+        $userTransfer = new UserTransfer();
+        $userTransfer->fromArray($userCreatedTransfer->toArray(), true);
+
+        $userCollectionRequestTransfer = new UserCollectionRequestTransfer();
+        $userCollectionRequestTransfer->addUser($userTransfer);
+
+        $this->helloWorldFacade->createUserCollection($userCollectionRequestTransfer);
     }
 }

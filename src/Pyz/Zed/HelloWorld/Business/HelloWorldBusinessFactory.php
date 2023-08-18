@@ -165,6 +165,6 @@ class HelloWorldBusinessFactory extends AbstractBusinessFactory
      */
     public function createUserCreatedMessageHandler(): UserCreatedMessageHandlerInterface
     {
-        return new UserCreatedMessageHandler();
+        return new UserCreatedMessageHandler(new HelloWorldFacade());
     }
 }
