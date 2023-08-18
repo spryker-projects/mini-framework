@@ -21,6 +21,20 @@ use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
 use Spryker\Zed\Propel\PropelConfig;
 
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
+use Spryker\Shared\App\AppConstants;
+
+$config[AppConstants::APP_IDENTIFIER] = getenv('APP_IDENTIFIER') ?: 'hello-world';
+$config[MessageBrokerConstants::IS_ENABLED] = true;
+$config[MessageBrokerConstants::LOCAL_EXCHANGE_FILE_PATH] = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'data.json';
+$config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] = [
+    '*' => '*',
+];
+
+$config[MessageBrokerConstants::CHANNEL_TO_TRANSPORT_MAP] = [
+    '*' => 'local',
+];
+
 // ############################################################################
 // ############################## PRODUCTION CONFIGURATION ####################
 // ############################################################################
