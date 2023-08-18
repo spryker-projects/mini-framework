@@ -7,6 +7,7 @@
 
 namespace Pyz\Zed\MessageBroker;
 
+use Pyz\Zed\HelloWorld\Communication\Plugin\MessageBroker\UserCreatedMessageHandlerPlugin;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\LocalSenderReceiverPlugin;
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider as SprykerMessageBrokerDependencyProvider;
 
@@ -30,5 +31,13 @@ class MessageBrokerDependencyProvider extends SprykerMessageBrokerDependencyProv
         return [
             new LocalSenderReceiverPlugin(),
         ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface>
+     */
+    public function getMessageHandlerPlugins(): array
+    {
+        return [new UserCreatedMessageHandlerPlugin()];
     }
 }

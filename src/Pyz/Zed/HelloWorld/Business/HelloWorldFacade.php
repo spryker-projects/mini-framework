@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\UserCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\UserCollectionRequestTransfer;
 use Generated\Shared\Transfer\UserCollectionResponseTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCreatedTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -77,5 +78,19 @@ class HelloWorldFacade extends AbstractFacade implements HelloWorldFacadeInterfa
         UserCollectionDeleteCriteriaTransfer $userCollectionDeleteCriteriaTransfer
     ): UserCollectionResponseTransfer {
         return $this->getFactory()->createUserDeleter()->deleteUserCollection($userCollectionDeleteCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCreatedTransfer $userCreatedTransfer
+     *
+     * @return void
+     */
+    public function handleUserCreated(UserCreatedTransfer $userCreatedTransfer): void
+    {
+        $this->getFactory()->createUserCreatedMessageHandler()->handleUserCreated($userCreatedTransfer);
     }
 }

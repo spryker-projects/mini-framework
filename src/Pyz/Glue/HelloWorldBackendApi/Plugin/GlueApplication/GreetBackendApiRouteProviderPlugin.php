@@ -24,6 +24,7 @@ class GreetBackendApiRouteProviderPlugin extends AbstractPlugin implements Route
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection->add('getGreet', $this->getGetGreetRoute());
+        $routeCollection->add('getGreet', $this->getGetGreetRoute());
 
         return $routeCollection;
     }

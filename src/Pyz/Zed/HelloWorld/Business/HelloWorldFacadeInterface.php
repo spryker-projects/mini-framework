@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\UserCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\UserCollectionRequestTransfer;
 use Generated\Shared\Transfer\UserCollectionResponseTransfer;
 use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCreatedTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 
 interface HelloWorldFacadeInterface
@@ -90,4 +91,13 @@ interface HelloWorldFacadeInterface
     public function deleteUserCollection(
         UserCollectionDeleteCriteriaTransfer $userCollectionDeleteCriteriaTransfer
     ): UserCollectionResponseTransfer;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCreatedTransfer $userCreatedTransfer
+     *
+     * @return void
+     */
+    public function handleUserCreated(UserCreatedTransfer $userCreatedTransfer): void;
 }

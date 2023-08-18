@@ -24,6 +24,7 @@ class UsersBackendApiRouteProviderPlugin extends AbstractPlugin implements Route
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
         $routeCollection->add('postUsers', $this->getPostUsersRoute());
+        $routeCollection->add('postUsers', $this->getPostUsersRoute());
 
         return $routeCollection;
     }
