@@ -7,6 +7,7 @@
 
 namespace Pyz\Zed\HelloWorld\Business;
 
+use Generated\Shared\Transfer\GreetUserTransfer;
 use Generated\Shared\Transfer\UserCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\UserCollectionRequestTransfer;
 use Generated\Shared\Transfer\UserCollectionResponseTransfer;
@@ -90,4 +91,13 @@ interface HelloWorldFacadeInterface
     public function deleteUserCollection(
         UserCollectionDeleteCriteriaTransfer $userCollectionDeleteCriteriaTransfer
     ): UserCollectionResponseTransfer;
+
+    /**
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GreetUserTransfer $greetUserTransfer
+     *
+     * @return void
+     */
+    public function handleGreetUser(GreetUserTransfer $greetUserTransfer): void;
 }

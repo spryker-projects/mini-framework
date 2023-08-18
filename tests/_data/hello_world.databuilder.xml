@@ -10,4 +10,14 @@
     <transfer name="UserCollectionResponse" strict="true"/>
     <transfer name="UserCollectionDeleteCriteria" strict="true"/>
     <transfer name="Error"/>
+    <transfer name="" strict="true"/>
+    <transfer name="GreetUser" strict="true">
+        <property name="uuid" dataBuilderRule="uuid()"/>
+    </transfer>
+
+    <transfer name="UserCreated" strict="true">
+        <property name="uuid" dataBuilderRule="uuid()"/>
+        <property name="username" dataBuilderRule="word()"/>
+    </transfer>
+
 </transfers>

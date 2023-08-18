@@ -7,6 +7,8 @@
 
 namespace Pyz\Zed\HelloWorld\Business;
 
+use Pyz\Zed\HelloWorld\Business\MessageBroker\GreetUserMessageHandler;
+use Pyz\Zed\HelloWorld\Business\MessageBroker\GreetUserMessageHandlerInterface;
 use Pyz\Zed\HelloWorld\Business\User\Deleter\UserDeleter;
 use Pyz\Zed\HelloWorld\Business\User\Deleter\UserDeleterInterface;
 use Pyz\Zed\HelloWorld\Business\User\IdentifierBuilder\UserIdentifierBuilder;
@@ -155,5 +157,13 @@ class HelloWorldBusinessFactory extends AbstractBusinessFactory
     public function getUserUpdateValidatorRulePlugins(): array
     {
         return $this->getProvidedDependency(HelloWorldDependencyProvider::PLUGINS_USER_UPDATE_VALIDATOR_RULE);
+    }
+
+    /**
+     * @return \Pyz\Zed\HelloWorld\Business\MessageBroker\GreetUserMessageHandlerInterface
+     */
+    public function createGreetUserMessageHandler(): GreetUserMessageHandlerInterface
+    {
+        return new GreetUserMessageHandler();
     }
 }

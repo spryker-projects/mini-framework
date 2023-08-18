@@ -61,4 +61,16 @@
         <property name="entityIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="GreetUser" strict="true">
+        <property name="uuid" type="string" strict="true"/>
+        <property name="messageAttributes" type="MessageAttributes" strict="true"/>
+    </transfer>
+
+    <transfer name="MessageAttributes"/>
+    <transfer name="UserCreated" strict="true">
+        <property name="uuid" type="string" strict="true"/>
+        <property name="username" type="string" strict="true"/>
+        <property name="messageAttributes" type="MessageAttributes" strict="true"/>
+    </transfer>
+
 </transfers>

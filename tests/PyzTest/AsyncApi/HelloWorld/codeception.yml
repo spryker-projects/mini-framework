@@ -1,0 +1,38 @@
+namespace: PyzTest\AsyncApi\HelloWorld
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/Pyz/*/HelloWorld/*'
+suites:
+    AsyncApi:
+        path: HelloWorldTests
+        actor: HelloWorldAsyncApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \PyzTest\AsyncApi\HelloWorld\Helper\HelloWorldHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                -
+                    \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                        projectNamespaces:
+                            - Pyz
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelper
+                -
+                    \Spryker\Zed\TestifyAsyncApi\Business\Codeception\Helper\AsyncApiHelper:
+                        asyncapi: resources/api/asyncapi.yml
+                        handlers:
+                            - \Pyz\Zed\HelloWorld\Communication\Plugin\MessageBroker\GreetUserMessageHandlerPlugin
+                - PyzTest\AsyncApi\HelloWorld\Helper\HelloWorldHelper
