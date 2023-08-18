@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\HelloWorld\Persistence" package="src.Orm.Zed.HelloWorld.Persistence">
+    <table name="spy_user" idMethod="native" class="SpyUser">
+        <column name="id_user" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" type="CHAR" size="36"/>
+        <unique name="spy_user-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_user"/>
+        </behavior>
+    </table>
+</database>
