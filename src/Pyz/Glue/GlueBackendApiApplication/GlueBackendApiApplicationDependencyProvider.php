@@ -7,6 +7,8 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
+use Pyz\Glue\HelloWorldBackendApi\Plugin\GlueApplication\GreetBackendApiRouteProviderPlugin;
+use Pyz\Glue\HelloWorldBackendApi\Plugin\GlueApplication\UsersBackendApiRouteProviderPlugin;
 use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
 use Spryker\Glue\App\Plugin\RouteProvider\AppRouteProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
@@ -15,6 +17,7 @@ use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\RequestCorsVal
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ScopeRequestAfterRoutingValidatorPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\SecurityHeaderResponseFormatterPlugin;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Plugin\GlueBackendApiApplication\AuthorizationRequestAfterRoutingValidatorPlugin;
+use Spryker\Glue\Kernel\Backend\Container;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 
 class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiApplicationDependencyProvider
@@ -77,7 +80,19 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getRouteProviderPlugins(): array
     {
         return [
-            new AppRouteProviderPlugin(),
+            new AppRouteProviderPlugin(), new UsersBackendApiRouteProviderPlugin(), new GreetBackendApiRouteProviderPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Backend\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Backend\Container
+     */
+    public function provideBackendDependencies(Container $container): Container
+    {
+        $container = parent::provideBackendDependencies($container);
+
+        return $container;
     }
 }
