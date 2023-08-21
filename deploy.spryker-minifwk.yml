@@ -129,6 +129,19 @@ services:
         endpoints:
             localhost:3306:
                 protocol: tcp
+    broker:
+        engine: rabbitmq
+        api:
+            username: 'spryker'
+            password: 'secret'
+        endpoints:
+            rabbitmq.mini-framework-new.demo-spryker.com:
+            localhost:5672:
+                protocol: tcp
+    scheduler:
+        engine: jenkins
+        endpoints:
+            scheduler.mini-framework-new.demo-spryker.com:
 
 docker:
     blackfire:
