@@ -18,7 +18,8 @@
         "spryker/uuid-behavior": "^1.3",
         "spryker/app-kernel": "dev-master",
         "spryker/message-broker-aws": "^1.4",
-        "spryker/message-broker": "dev-beta/localstack-replacement as 1.8.0"
+        "spryker/message-broker": "dev-beta/localstack-replacement as 1.8.0",
+        "spryker/health-check": "^1.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "^0.17.10",
