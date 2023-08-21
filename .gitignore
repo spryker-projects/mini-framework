@@ -37,6 +37,7 @@ FOSS.md
 /public/Backoffice/maintenance/maintenance.marker
 
 /data/*
+!/data/.gitkeep
 !/data/import/
 !/data/export/
 
