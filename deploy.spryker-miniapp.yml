@@ -80,7 +80,7 @@ regions:
                     name: Spryker No-Reply
                     email: no-reply@mini-app.demo-spryker.com
             database:
-                database: spryker-mini-app
+                database: spryker_miniapp
                 username: spryker
                 password: secret
 
@@ -107,13 +107,18 @@ groups:
                         redirect:
                             code: 302
                             url: www.de.mini-app.demo-spryker.com
-            glue_backend_eu:
+            glue_backend:
                 application: glue-backend
                 endpoints:
                     backend-api.de.mini-app.demo-spryker.com:
                         store: DE
                         entry-point: GlueBackend
                         primal: true
+            boffice:
+                application: zed
+                endpoints:
+                    boffice.de.mini-app.demo-spryker.com:
+                        store: DE
 services:
     database:
         engine: mysql
@@ -124,6 +129,34 @@ services:
         endpoints:
             localhost:3306:
                 protocol: tcp
+    broker:
+        engine: rabbitmq
+        version: 3.9
+        api:
+            username: "spryker"
+            password: "secret"
+        endpoints:
+            queue.mini-app.demo-spryker.com:
+            localhost:5672:
+                protocol: tcp
+    session:
+        engine: redis
+    key_value_store:
+        engine: redis
+        endpoints:
+            localhost:16379:
+                protocol: tcp
+    search:
+        engine: elastic
+        version: 7.6
+        endpoints:
+            localhost:9200:
+                protocol: tcp
+    scheduler:
+        engine: jenkins
+        version: 2.324
+        endpoints:
+            scheduler.mini-app.demo-spryker.com:
 
 docker:
     blackfire:
