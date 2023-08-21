@@ -34,5 +34,5 @@ sections:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
 
     scheduler-start:
-        scheduler-setup:
-            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
+#        scheduler-setup:
+#            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
