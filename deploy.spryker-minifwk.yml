@@ -61,7 +61,7 @@ image:
         npm: 8
 
 composer:
-    mode:
+    mode: --no-dev
     autoload: --classmap-authoritative
 
 assets:
@@ -112,13 +112,18 @@ groups:
                         redirect:
                             code: 302
                             url: www.at.mini-framework-new.demo-spryker.com
-            backapi:
-                application: zed
+            glue_backend:
+                application: glue-backend
                 endpoints:
                     backend-api.de.mini-framework-new.demo-spryker.com:
                         store: DE
-                        entry-point: BackendApi
+                        entry-point: GlueBackend
                         primal: true
+            boffice:
+                application: zed
+                endpoints:
+                    boffice.de.mini-framework-new.demo-spryker.com:
+                        store: DE
 services:
     database:
         engine: mysql
@@ -131,6 +136,7 @@ services:
                 protocol: tcp
     broker:
         engine: rabbitmq
+        version: '3.9'
         api:
             username: 'spryker'
             password: 'secret'
@@ -140,6 +146,7 @@ services:
                 protocol: tcp
     scheduler:
         engine: jenkins
+        version: '2.324'
         endpoints:
             scheduler.mini-framework-new.demo-spryker.com:
 

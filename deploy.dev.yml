@@ -31,7 +31,7 @@ regions:
                     broker:
                         namespace: de-docker
                     key_value_store:
-                        namespace: 1
+                        namespace: 21
                     search:
                         namespace: de_search
 groups:

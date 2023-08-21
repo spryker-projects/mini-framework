@@ -61,7 +61,7 @@ image:
         npm: 8
 
 composer:
-    mode:
+    mode: --no-dev
     autoload: --classmap-authoritative
 
 assets:
