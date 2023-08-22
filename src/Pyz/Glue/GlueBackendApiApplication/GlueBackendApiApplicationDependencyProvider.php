@@ -7,7 +7,9 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
+use Pyz\Glue\HelloWorldBackendApi\Plugin\RouteProvider\HelloWorldRouteProviderPlugin;
 use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
+use Spryker\Glue\App\Plugin\RouteProvider\AppRouteProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\RequestCorsValidatorPlugin;
@@ -67,6 +69,17 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     {
         return [
             new ApplicationIdentifierRequestBuilderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
+     */
+    protected function getRouteProviderPlugins(): array
+    {
+        return [
+            new AppRouteProviderPlugin(),
+            new HelloWorldRouteProviderPlugin(),
         ];
     }
 }

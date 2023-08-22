@@ -4,6 +4,7 @@ use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
+use Spryker\Shared\App\AppConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
@@ -11,6 +12,7 @@ use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueJsonApiConvention\GlueJsonApiConventionConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
@@ -20,6 +22,18 @@ use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
 use Spryker\Zed\Propel\PropelConfig;
+
+$config[MessageBrokerConstants::IS_ENABLED] = true;
+$config[MessageBrokerConstants::LOCAL_EXCHANGE_FILE_PATH] = APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'data.json';
+$config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] = [
+    '*' => '*',
+];
+
+$config[MessageBrokerConstants::CHANNEL_TO_TRANSPORT_MAP] = [
+    '*' => 'local',
+];
+
+$config[AppConstants::APP_IDENTIFIER] = getenv('APP_IDENTIFIER') ?: 'hello-world';
 
 // ############################################################################
 // ############################## PRODUCTION CONFIGURATION ####################
