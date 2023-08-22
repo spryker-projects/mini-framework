@@ -23,6 +23,7 @@ use Spryker\Zed\Development\Communication\Console\RemoveZedIdeAutoCompletionCons
 use Spryker\Zed\Kernel\Communication\Console\ResolvableClassCacheConsole;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Log\Communication\Console\DeleteLogFilesConsole;
+use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerWorkerConsole;
 use Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin;
 use Spryker\Zed\Propel\Communication\Console\DatabaseDropConsole;
 use Spryker\Zed\Propel\Communication\Console\DatabaseDropTablesConsole;
@@ -84,6 +85,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             new DeleteLogFilesConsole(),
 
             new ResolvableClassCacheConsole(),
+            new MessageBrokerWorkerConsole(),
         ];
 
         $propelCommands = $container->getLocator()->propel()->facade()->getConsoleCommands();
