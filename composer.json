@@ -16,8 +16,7 @@
         "spryker/scheduler": "^1.2",
         "spryker/scheduler-jenkins": "^1.2",
         "spryker/uuid-behavior": "^1.3",
-        "spryker/message-broker": "dev-beta/localstack-replacement as 1.8.0",
-        "spryker/testify-async-api": "^0.1.0"
+        "spryker/message-broker": "dev-beta/localstack-replacement as 1.8.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "^0.17.10",
