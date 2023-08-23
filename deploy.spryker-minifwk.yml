@@ -107,12 +107,7 @@ groups:
                         redirect:
                             code: 302
                             url: www.de.mini-framework-new.demo-spryker.com
-                    at.mini-framework-new.demo-spryker.com:
-                        store: AT
-                        redirect:
-                            code: 302
-                            url: www.at.mini-framework-new.demo-spryker.com
-            glue_backend:
+            backapi:
                 application: glue-backend
                 endpoints:
                     backend-api.de.mini-framework-new.demo-spryker.com:
