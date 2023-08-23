@@ -149,12 +149,6 @@ groups:
                     backend-gateway.de.mini-framework-new.demo-spryker.com:
                         store: DE
                         entry-point: GlueBackend
-            backapi:
-                application: zed
-                endpoints:
-                    backend-api.de.mini-framework-new.demo-spryker.com:
-                        store: DE
-                        entry-point: GlueBackend
             Glue:
                 application: glue
                 endpoints:
