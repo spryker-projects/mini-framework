@@ -131,7 +131,6 @@ groups:
                     mp.de.mini-framework-new.demo-spryker.com:
                         entry-point: MerchantPortal
                         store: DE
-                        primal: true
                         services:
                             session:
                                 namespace: 7
@@ -142,25 +141,26 @@ groups:
                         entry-point: Configurator
                     www.de.mini-framework-new.demo-spryker.com:
                         store: DE
+                        entry-point: GlueBackend
                         <<: *frontend-auth
             backgw:
                 application: backend-gateway
                 endpoints:
                     backend-gateway.de.mini-framework-new.demo-spryker.com:
                         store: DE
-                        primal: true
+                        entry-point: GlueBackend
             backapi:
                 application: zed
                 endpoints:
                     backend-api.de.mini-framework-new.demo-spryker.com:
                         store: DE
-                        entry-point: BackendApi
-                        primal: true
+                        entry-point: GlueBackend
             Glue:
                 application: glue
                 endpoints:
                     glue.de.mini-framework-new.demo-spryker.com:
                         store: DE
+                        entry-point: GlueBackend
 services:
     database:
         engine: mysql
