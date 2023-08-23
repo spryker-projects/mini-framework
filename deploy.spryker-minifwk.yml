@@ -124,6 +124,43 @@ groups:
                 endpoints:
                     boffice.de.mini-framework-new.demo-spryker.com:
                         store: DE
+                        
+            mportal:
+                application: merchant-portal
+                endpoints:
+                    mp.de.mini-framework-new.demo-spryker.com:
+                        entry-point: MerchantPortal
+                        store: DE
+                        primal: true
+                        services:
+                            session:
+                                namespace: 7
+            Yves:
+                application: yves
+                endpoints:
+                    date-time-configurator.mini-framework-new.demo-spryker.com:
+                        entry-point: Configurator
+                    www.de.mini-framework-new.demo-spryker.com:
+                        store: DE
+                        <<: *frontend-auth
+            backgw:
+                application: backend-gateway
+                endpoints:
+                    backend-gateway.de.mini-framework-new.demo-spryker.com:
+                        store: DE
+                        primal: true
+            backapi:
+                application: zed
+                endpoints:
+                    backend-api.de.mini-framework-new.demo-spryker.com:
+                        store: DE
+                        entry-point: BackendApi
+                        primal: true
+            Glue:
+                application: glue
+                endpoints:
+                    glue.de.mini-framework-new.demo-spryker.com:
+                        store: DE
 services:
     database:
         engine: mysql
