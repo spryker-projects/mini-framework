@@ -6,16 +6,16 @@
     "url": "https://www.example.com",
     "isAvailable": true,
     "categories": [
-        "PLAYGROUND"
+        "PAYMENT"
     ],
     "assets": [
         {
             "type": "icon",
-            "url": "/assets/img/hello-world/logo.png"
+            "url": "https://app-catalog.atrs.spryker.com/assets/images/acquia/logo.svg"
         },
         {
             "type": "image",
-            "url": "/assets/img/hello-world/gallery/image.png"
+            "url": "https://app-catalog.atrs.spryker.com/assets/images/bloomreach/logo.svg"
         }
     ],
     "resources": [
