@@ -71,7 +71,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getResourcePlugins(): array
     {
         return [
-            new TestResource(),
         ];
     }
 
@@ -81,7 +80,8 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getRouteProviderPlugins(): array
     {
         return [
-            new AppRouteProviderPlugin(), new ProductDescriptionBackendApiRouteProviderPlugin(),
+            new AppRouteProviderPlugin(),
+            new ProductDescriptionBackendApiRouteProviderPlugin(),
         ];
     }
 
