@@ -1,25 +1,5 @@
 {
     "properties": {
-        "clientId": {
-            "type": "string",
-            "title": "clientId_title",
-            "placeholder": "clientId_placeholder",
-            "isRequired": true,
-            "isLockable": true,
-            "widget": {
-                "id": "password"
-            }
-        },
-        "clientSecret": {
-            "type": "string",
-            "title": "clientSecret_title",
-            "placeholder": "clientSecret_placeholder",
-            "isRequired": true,
-            "isLockable": true,
-            "widget": {
-                "id": "password"
-            }
-        },
         "isActive": {
             "type": "boolean",
             "title": "isActive_title",
@@ -29,27 +9,7 @@
             "default": false
         }
     },
-    "fieldsets": [
-        {
-            "id": "notifications",
-            "fields": [
-                "isActive"
-            ],
-            "layout": "noLayout"
-        },
-        {
-            "id": "configurations",
-            "title": "configurations_fieldset_title",
-            "fields": [
-                "clientId",
-                "clientSecret"
-            ],
-            "hint": "configurations_hint"
-        }
-    ],
     "required": [
-        "clientId",
-        "clientSecret",
         "isActive"
     ]
 }

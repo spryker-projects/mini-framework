@@ -1,0 +1,39 @@
+openapi: 3.0.0
+info:
+    title: Product Description API
+    description: An API to get product description
+    version: 1.0.0
+
+paths:
+    /product-description/{sku}:
+        x-spryker:
+            module: ProductDescriptionBackendApi
+            controller: ProductDescriptionController
+        get:
+            summary: Get product description
+            description: Reads product description from database by product sku
+
+            parameters:
+                -   name: sku
+                    in: path
+                    description: The SKU of product to get description
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ProductDescription'
+
+components:
+    schemas:
+        ProductDescription:
+            type: object
+            properties:
+                description:
+                    type: string
+            example:
+                greet: "This is a great product"

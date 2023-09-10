@@ -1,0 +1,7 @@
+# Example of a B2C demo shop 'STORE SPECIFIC' data import for 'DE' store.
+version: 0
+
+actions:
+  # Product
+  - data_entity: product-abstract-store
+    source: data/import/common/DE/product_abstract_store.csv

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "750ae9c36edc58bdb92b3657f86aa8ac",
+    "content-hash": "187063bbac4d268da58e672e6ba84058",
     "packages": [
         {
             "name": "async-aws/core",
@@ -3072,6 +3072,51 @@
             "time": "2022-01-04T12:43:20+00:00"
         },
         {
+            "name": "spryker/checkout-rest-api-extension",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/checkout-rest-api-extension.git",
+                "reference": "caaad97546e5fc735ea5d1a444592a17885b93d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/checkout-rest-api-extension/zipball/caaad97546e5fc735ea5d1a444592a17885b93d2",
+                "reference": "caaad97546e5fc735ea5d1a444592a17885b93d2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/glue-application": "*"
+            },
+            "suggest": {
+                "spryker/glue-application": "Required if you want to use \\Spryker\\Glue\\CheckoutRestApiExtension\\Dependency\\Plugin\\CheckoutRequestExpanderPluginInterface."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "CheckoutRestApiExtension module",
+            "support": {
+                "source": "https://github.com/spryker/checkout-rest-api-extension/tree/1.5.0"
+            },
+            "time": "2020-11-26T11:14:15+00:00"
+        },
+        {
             "name": "spryker/config",
             "version": "3.6.0",
             "source": {
@@ -3242,6 +3287,112 @@
             "time": "2022-11-11T07:06:41+00:00"
         },
         {
+            "name": "spryker/country",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/country.git",
+                "reference": "98885772899f19fb0296734bd466db01ad7b4180"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/country/zipball/98885772899f19fb0296734bd466db01ad7b4180",
+                "reference": "98885772899f19fb0296734bd466db01ad7b4180",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/checkout-rest-api-extension": "^1.2.0",
+                "spryker/gui": "^3.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/store": "^1.19.0",
+                "spryker/store-extension": "^1.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/zed-request": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/installer": "*",
+                "spryker/log": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/installer": "If you want to use Installer plugins."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Zed\\Country\\Helper\\": "tests/SprykerTest/Zed/Country/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Country module",
+            "support": {
+                "source": "https://github.com/spryker/country/tree/4.1.0"
+            },
+            "time": "2023-05-04T11:09:49+00:00"
+        },
+        {
+            "name": "spryker/country-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/country-data-import.git",
+                "reference": "e4cd644870c52dbca50ad0245b9e3ae9c9fe7823"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/country-data-import/zipball/e4cd644870c52dbca50ad0245b9e3ae9c9fe7823",
+                "reference": "e4cd644870c52dbca50ad0245b9e3ae9c9fe7823",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/country": "^4.0.0",
+                "spryker/data-import": "^1.0.0",
+                "spryker/kernel": "^3.33.0",
+                "spryker/store": "^1.19.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "CountryDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/country-data-import/tree/0.1.0"
+            },
+            "time": "2023-03-31T19:36:11+00:00"
+        },
+        {
             "name": "spryker/currency",
             "version": "4.0.0",
             "source": {
@@ -3311,6 +3462,53 @@
             "time": "2023-03-31T19:36:11+00:00"
         },
         {
+            "name": "spryker/currency-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/currency-data-import.git",
+                "reference": "a2ead1dff9d26794f128a26ef14f9f4bbee8e1f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/currency-data-import/zipball/a2ead1dff9d26794f128a26ef14f9f4bbee8e1f3",
+                "reference": "a2ead1dff9d26794f128a26ef14f9f4bbee8e1f3",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/currency": "^4.0.0",
+                "spryker/data-import": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/store": "^1.19.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "CurrencyDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/currency-data-import/tree/0.1.0"
+            },
+            "time": "2023-03-31T19:36:11+00:00"
+        },
+        {
             "name": "spryker/currency-extension",
             "version": "1.0.0",
             "source": {
@@ -3351,6 +3549,114 @@
                 "source": "https://github.com/spryker/currency-extension/tree/master"
             },
             "time": "2018-04-18T07:46:48+00:00"
+        },
+        {
+            "name": "spryker/data-import",
+            "version": "1.21.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/data-import.git",
+                "reference": "f42bb05c089f97c86563b110ba9a7146a3634c6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/data-import/zipball/f42bb05c089f97c86563b110ba9a7146a3634c6e",
+                "reference": "f42bb05c089f97c86563b110ba9a7146a3634c6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/config": "^3.0.0",
+                "spryker/data-import-extension": "^1.2.0",
+                "spryker/error-handler": "^2.1.0",
+                "spryker/event": "^2.3.0",
+                "spryker/graceful-runner": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/locale": "^2.0.0 || ^3.0.0 || ^4.0.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/queue": "^1.5.0",
+                "spryker/store": "^1.15.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/touch": "^3.0.0 || ^4.0.0",
+                "spryker/transfer": "^3.25.0",
+                "spryker/util-data-reader": "^1.1.0",
+                "spryker/util-encoding": "^2.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/event-behavior": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "suggest": {
+                "spryker/event-behavior": "To be able to use the DataImportEventBehaviorPlugin please install the spryker/event-behavior module, minimum required version: 0.1.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Zed\\DataImport\\Helper\\": "tests/SprykerTest/Zed/DataImport/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "DataImport module",
+            "support": {
+                "source": "https://github.com/spryker/data-import/tree/1.21.0"
+            },
+            "time": "2023-03-31T19:36:11+00:00"
+        },
+        {
+            "name": "spryker/data-import-extension",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/data-import-extension.git",
+                "reference": "c7c828a64e4508dbbb2a3b51898d7698e44eaafc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/data-import-extension/zipball/c7c828a64e4508dbbb2a3b51898d7698e44eaafc",
+                "reference": "c7c828a64e4508dbbb2a3b51898d7698e44eaafc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/data-import": "*"
+            },
+            "suggest": {
+                "spryker/data-import": "If you want to provide plugins to DataImport module"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "DataImportExtension module",
+            "support": {
+                "source": "https://github.com/spryker/data-import-extension/tree/1.2.0"
+            },
+            "time": "2020-11-24T17:01:15+00:00"
         },
         {
             "name": "spryker/decimal-object",
@@ -4655,6 +4961,92 @@
             "time": "2023-01-24T16:01:41+00:00"
         },
         {
+            "name": "spryker/installer",
+            "version": "4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/installer.git",
+                "reference": "808cf76da76f548c0f1603270439489fa9bc6736"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/installer/zipball/808cf76da76f548c0f1603270439489fa9bc6736",
+                "reference": "808cf76da76f548c0f1603270439489fa9bc6736",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/installer-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/symfony": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Installer module",
+            "support": {
+                "source": "https://github.com/spryker/installer/tree/4.1.0"
+            },
+            "time": "2023-03-03T10:58:02+00:00"
+        },
+        {
+            "name": "spryker/installer-extension",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/installer-extension.git",
+                "reference": "ce09343aa0783b5baae2a4108770c464db8c5f13"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/installer-extension/zipball/ce09343aa0783b5baae2a4108770c464db8c5f13",
+                "reference": "ce09343aa0783b5baae2a4108770c464db8c5f13",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "InstallerExtension module",
+            "support": {
+                "source": "https://github.com/spryker/installer-extension/tree/1.0.0"
+            },
+            "time": "2023-03-03T10:58:02+00:00"
+        },
+        {
             "name": "spryker/kernel",
             "version": "3.73.0",
             "source": {
@@ -4863,6 +5255,53 @@
                 "source": "https://github.com/spryker/locale/tree/4.1.0"
             },
             "time": "2023-07-11T10:55:36+00:00"
+        },
+        {
+            "name": "spryker/locale-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/locale-data-import.git",
+                "reference": "81b2918dd33a23ee84202caf90788d2a95102771"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/locale-data-import/zipball/81b2918dd33a23ee84202caf90788d2a95102771",
+                "reference": "81b2918dd33a23ee84202caf90788d2a95102771",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/data-import": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/locale": "^4.0.0",
+                "spryker/store": "^1.19.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "LocaleDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/locale-data-import/tree/0.1.0"
+            },
+            "time": "2023-03-31T19:36:11+00:00"
         },
         {
             "name": "spryker/locale-extension",
@@ -5508,6 +5947,113 @@
                 "source": "https://github.com/spryker/oauth-extension/tree/1.8.0"
             },
             "time": "2023-02-08T18:31:45+00:00"
+        },
+        {
+            "name": "spryker/product",
+            "version": "6.37.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product.git",
+                "reference": "4e4cb5700ec4340d9a3cc87c350fe4d40e044b33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product/zipball/4e4cb5700ec4340d9a3cc87c350fe4d40e044b33",
+                "reference": "4e4cb5700ec4340d9a3cc87c350fe4d40e044b33",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/event": "^1.0.0 || ^2.3.0",
+                "spryker/kernel": "^3.34.0",
+                "spryker/key-builder": "^1.0.0",
+                "spryker/locale": "^3.0.0 || ^4.0.0",
+                "spryker/log": "^3.0.0",
+                "spryker/message-broker": "^1.0.0",
+                "spryker/message-broker-extension": "^1.0.0",
+                "spryker/product-extension": "^1.5.0",
+                "spryker/propel-orm": "^1.0.0",
+                "spryker/publisher-extension": "^1.0.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/store": "^1.1.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/touch": "^3.0.0 || ^4.0.0",
+                "spryker/transfer": "^3.27.0",
+                "spryker/url": "^3.2.1",
+                "spryker/util-encoding": "^2.0.0",
+                "spryker/util-text": "^1.1.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/container": "*",
+                "spryker/product-image": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "6.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\Product\\Helper\\": "tests/SprykerTest/Shared/Product/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Product module",
+            "support": {
+                "source": "https://github.com/spryker/product/tree/6.37.0"
+            },
+            "time": "2023-08-11T07:36:13+00:00"
+        },
+        {
+            "name": "spryker/product-extension",
+            "version": "1.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/product-extension.git",
+                "reference": "65f1bf69230f73e9e582de4660b188b2b8a5e1d5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/product-extension/zipball/65f1bf69230f73e9e582de4660b188b2b8a5e1d5",
+                "reference": "65f1bf69230f73e9e582de4660b188b2b8a5e1d5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "ProductExtension module",
+            "support": {
+                "source": "https://github.com/spryker/product-extension/tree/1.5.0"
+            },
+            "time": "2023-02-01T20:05:58+00:00"
         },
         {
             "name": "spryker/product-page-search-extension",
@@ -6564,6 +7110,52 @@
             "time": "2023-07-24T13:36:15+00:00"
         },
         {
+            "name": "spryker/store-data-import",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/store-data-import.git",
+                "reference": "5cd1cad61387cfe9886a6132bc71136edcd1065a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/store-data-import/zipball/5cd1cad61387cfe9886a6132bc71136edcd1065a",
+                "reference": "5cd1cad61387cfe9886a6132bc71136edcd1065a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/data-import": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/store": "^1.19.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/testify": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "StoreDataImport module",
+            "support": {
+                "source": "https://github.com/spryker/store-data-import/tree/0.1.0"
+            },
+            "time": "2023-03-31T19:36:11+00:00"
+        },
+        {
             "name": "spryker/store-extension",
             "version": "1.0.0",
             "source": {
@@ -7169,6 +7761,66 @@
                 "source": "https://github.com/spryker/twig-extension/tree/1.1.2"
             },
             "time": "2020-10-09T11:31:07+00:00"
+        },
+        {
+            "name": "spryker/url",
+            "version": "3.12.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/url.git",
+                "reference": "c2b6dfb9739f3a52acc46dad05e99706594c8154"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/url/zipball/c2b6dfb9739f3a52acc46dad05e99706594c8154",
+                "reference": "c2b6dfb9739f3a52acc46dad05e99706594c8154",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker/acl-merchant-portal-extension": "^1.0.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/key-builder": "^1.0.0",
+                "spryker/locale": "^3.8.0 || ^4.0.0",
+                "spryker/propel-orm": "^1.16.0",
+                "spryker/storage": "^3.0.0",
+                "spryker/symfony": "^3.0.0",
+                "spryker/touch": "^3.0.0 || ^4.0.0",
+                "spryker/transfer": "^3.27.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*",
+                "spryker/propel": "*",
+                "spryker/silex": "*",
+                "spryker/testify": "*",
+                "spryker/twig": "*",
+                "spryker/util-text": "*"
+            },
+            "suggest": {
+                "spryker/silex": "Required by url Twig component.",
+                "spryker/twig": "Required because of the url component."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/",
+                    "SprykerTest\\Shared\\Url\\Helper\\": "tests/SprykerTest/Shared/Url/_support/Helper/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Url module",
+            "support": {
+                "source": "https://github.com/spryker/url/tree/3.12.0"
+            },
+            "time": "2023-03-31T19:36:11+00:00"
         },
         {
             "name": "spryker/util-data-reader",
@@ -12440,6 +13092,75 @@
             "time": "2021-10-12T13:05:09+00:00"
         },
         {
+            "name": "cebe/php-openapi",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cebe/php-openapi.git",
+                "reference": "020d72b8e3a9a60bc229953e93eda25c49f46f45"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cebe/php-openapi/zipball/020d72b8e3a9a60bc229953e93eda25c49f46f45",
+                "reference": "020d72b8e3a9a60bc229953e93eda25c49f46f45",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "justinrainbow/json-schema": "^5.2",
+                "php": ">=7.1.0",
+                "symfony/yaml": "^3.4 || ^4 || ^5 || ^6"
+            },
+            "conflict": {
+                "symfony/yaml": "3.4.0 - 3.4.4 || 4.0.0 - 4.4.17 || 5.0.0 - 5.1.9 || 5.2.0"
+            },
+            "require-dev": {
+                "apis-guru/openapi-directory": "1.0.0",
+                "cebe/indent": "*",
+                "mermade/openapi3-examples": "1.0.0",
+                "nexmo/api-specification": "1.0.0",
+                "oai/openapi-specification": "3.0.3",
+                "phpstan/phpstan": "^0.12.0",
+                "phpunit/phpunit": "^6.5 || ^7.5 || ^8.5 || ^9.4"
+            },
+            "bin": [
+                "bin/php-openapi"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.6.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "cebe\\openapi\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc",
+                    "homepage": "https://cebe.cc/",
+                    "role": "Creator"
+                }
+            ],
+            "description": "Read and write OpenAPI yaml/json files and make the content accessable in PHP objects.",
+            "homepage": "https://github.com/cebe/php-openapi#readme",
+            "keywords": [
+                "openapi"
+            ],
+            "support": {
+                "issues": "https://github.com/cebe/php-openapi/issues",
+                "source": "https://github.com/cebe/php-openapi"
+            },
+            "time": "2022-04-20T14:46:44+00:00"
+        },
+        {
             "name": "codeception/codeception",
             "version": "5.0.10",
             "source": {
@@ -16345,6 +17066,125 @@
             "time": "2023-02-12T18:53:17+00:00"
         },
         {
+            "name": "spryker-sdk/acp",
+            "version": "0.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/acp.git",
+                "reference": "8257542010c744bda66379455529bc10b703a1e3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/acp/zipball/8257542010c744bda66379455529bc10b703a1e3",
+                "reference": "8257542010c744bda66379455529bc10b703a1e3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=8.0",
+                "spryker-sdk/async-api": "^0.3.0",
+                "spryker-sdk/spryk": "^0.4.0 || ^0.5.0",
+                "spryker-sdk/sync-api": "^0.1.6",
+                "symfony/console": "^5.3.0 || ^6.0.0",
+                "symfony/finder": "^5.3 || ^6.0.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "*",
+                "codeception/module-asserts": "*",
+                "codeception/module-phpbrowser": "*",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpdoc-parser": "~1.5.1",
+                "sllh/composer-versions-check": "^2.0",
+                "spryker-sdk/architector": "0.1.x-dev",
+                "spryker/code-sniffer": "*",
+                "spryker/kernel": "^3.68",
+                "symfony/var-dumper": "*"
+            },
+            "bin": [
+                "bin/acp"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Transfer\\": "src/Transfer/",
+                    "SprykerSdk\\": "src/SprykerSdk/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SDK for ACP.",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/acp/issues",
+                "source": "https://github.com/spryker-sdk/acp/tree/0.3.3"
+            },
+            "time": "2023-08-25T11:12:20+00:00"
+        },
+        {
+            "name": "spryker-sdk/async-api",
+            "version": "0.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/async-api.git",
+                "reference": "1c73fa4914247f289ff07989886a0fe2cb61533d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/async-api/zipball/1c73fa4914247f289ff07989886a0fe2cb61533d",
+                "reference": "1c73fa4914247f289ff07989886a0fe2cb61533d",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/inflector": "~1.4.2 || ~2.0.0",
+                "php": ">=8.0",
+                "symfony/console": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/finder": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/process": "^4.0.0 || ^5.4 || ^6.0",
+                "symfony/property-access": "^4.0.0 || ^5.4 || ^6.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^5.0.0",
+                "codeception/module-asserts": "^3.0.0",
+                "mikey179/vfsstream": "^1.6.10",
+                "phpstan/phpdoc-parser": "~1.5.1",
+                "sllh/composer-versions-check": "^2.0",
+                "spryker-sdk/architector": "0.1.x-dev",
+                "spryker/code-sniffer": "^0.17.18",
+                "symfony/var-dumper": "^6.0.0"
+            },
+            "bin": [
+                "bin/asyncapi"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Transfer\\": "src/Transfer/",
+                    "SprykerSdk\\AsyncApi\\": "src/SprykerSdk/AsyncApi/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SDK for AsyncAPI.",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/async-api/issues",
+                "source": "https://github.com/spryker-sdk/async-api/tree/0.3.2"
+            },
+            "time": "2023-08-18T12:42:31+00:00"
+        },
+        {
             "name": "spryker-sdk/phpstan-spryker",
             "version": "0.4.0",
             "source": {
@@ -16408,6 +17248,106 @@
                 "source": "https://github.com/spryker-sdk/phpstan-spryker"
             },
             "time": "2021-12-10T14:07:19+00:00"
+        },
+        {
+            "name": "spryker-sdk/spryk",
+            "version": "0.5.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/spryk.git",
+                "reference": "6a1da970ed3f3a8d67e7c0ee3b36ee94b090ceca"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/spryk/zipball/6a1da970ed3f3a8d67e7c0ee3b36ee94b090ceca",
+                "reference": "6a1da970ed3f3a8d67e7c0ee3b36ee94b090ceca",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "bin": [
+                "bin/spryk-build",
+                "bin/spryk-dump",
+                "bin/spryk-run",
+                "spryk.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Spryk module",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/spryk/issues",
+                "source": "https://github.com/spryker-sdk/spryk/tree/0.5.2"
+            },
+            "time": "2023-08-18T12:43:30+00:00"
+        },
+        {
+            "name": "spryker-sdk/sync-api",
+            "version": "0.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker-sdk/sync-api.git",
+                "reference": "f2e46d0e597564afc3715e1ef75dce718e84a4e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker-sdk/sync-api/zipball/f2e46d0e597564afc3715e1ef75dce718e84a4e9",
+                "reference": "f2e46d0e597564afc3715e1ef75dce718e84a4e9",
+                "shasum": ""
+            },
+            "require": {
+                "cebe/php-openapi": "^1.6",
+                "doctrine/inflector": "^1.4.0 || ^2.0",
+                "php": ">=8.0",
+                "spryker-sdk/spryk": "^0.4.0 || ^0.5.0",
+                "symfony/console": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/finder": "^4.0.0 || ^5.3 || ^6.0",
+                "symfony/process": "^4.0.0 || ^5.4 || ^6"
+            },
+            "require-dev": {
+                "codeception/codeception": "*",
+                "codeception/module-asserts": "*",
+                "codeception/stub": "^4.1.0",
+                "mikey179/vfsstream": "^1.6",
+                "phpstan/phpdoc-parser": "~1.5.1",
+                "spryker-sdk/architector": "0.1.x-dev",
+                "spryker/code-sniffer": "dev-master",
+                "symfony/filesystem": "^4.0 || ^5.3",
+                "symfony/var-dumper": "*"
+            },
+            "bin": [
+                "bin/syncapi"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Transfer\\": "src/Transfer/",
+                    "SprykerSdk\\SyncApi\\": "src/SprykerSdk/SyncApi/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "SDK for SyncAPI.",
+            "support": {
+                "issues": "https://github.com/spryker-sdk/sync-api/issues",
+                "source": "https://github.com/spryker-sdk/sync-api/tree/0.1.6"
+            },
+            "time": "2023-08-03T10:51:13+00:00"
         },
         {
             "name": "spryker/code-sniffer",
@@ -16723,6 +17663,51 @@
             "description": "Testify module",
             "support": {
                 "source": "https://github.com/spryker/testify/tree/3.49.1"
+            },
+            "time": "2023-07-21T13:09:09+00:00"
+        },
+        {
+            "name": "spryker/testify-async-api",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spryker/testify-async-api.git",
+                "reference": "4fc5d7c20496723fdb644012ef3879fe212f7abb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spryker/testify-async-api/zipball/4fc5d7c20496723fdb644012ef3879fe212f7abb",
+                "reference": "4fc5d7c20496723fdb644012ef3879fe212f7abb",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0",
+                "spryker-sdk/async-api": "^0.3.0",
+                "spryker/kernel": "^3.30.0",
+                "spryker/message-broker": "^1.8.0",
+                "spryker/testify": "^3.0.0"
+            },
+            "require-dev": {
+                "spryker/code-sniffer": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spryker\\": "src/Spryker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "TestifyAsyncApi module",
+            "support": {
+                "source": "https://github.com/spryker/testify-async-api/tree/0.1.0"
             },
             "time": "2023-07-21T13:09:09+00:00"
         },

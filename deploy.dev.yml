@@ -29,11 +29,11 @@ regions:
             DE:
                 services:
                     broker:
-                        namespace: de-docker
+                        namespace: product-description-app
                     key_value_store:
-                        namespace: 1
+                        namespace: product-description-app
                     search:
-                        namespace: de_search
+                        namespace: product-description-app
 groups:
     EU:
         region: EU
@@ -41,7 +41,7 @@ groups:
             glue_backend_eu:
                 application: glue-backend
                 endpoints:
-                    my-app.de.spryker.local:
+                    product-description-app.de.spryker.local:
                         store: DE
 
 services:
@@ -54,64 +54,6 @@ services:
         endpoints:
             localhost:3306:
                 protocol: tcp
-
-# When you need one of the below services, uncomment the service and rebuild your containers with
-# `docker/sdk boot deploy.dev.yml && docker/sdk up`
-
-#    broker:
-#        engine: rabbitmq
-#        version: '3.9'
-#        api:
-#            username: 'spryker'
-#            password: 'secret'
-#        endpoints:
-#            queue.spryker.local:
-#            localhost:5672:
-#                protocol: tcp
-
-#    session:
-#        engine: redis
-#
-#    key_value_store:
-#        engine: redis
-#        endpoints:
-#            localhost:16379:
-#                protocol: tcp
-
-#    search:
-#        engine: elastic
-#        version: '7.10'
-#        endpoints:
-#            localhost:9200:
-#                protocol: tcp
-
-#    scheduler:
-#        engine: jenkins
-#        version: '2.324'
-#        csrf-protection-enabled: true
-#        endpoints:
-#            scheduler.spryker.local:
-
-#    mail_catcher:
-#        engine: mailhog
-#        endpoints:
-#            mail.spryker.local:
-
-#    swagger:
-#        engine: swagger-ui
-#        endpoints:
-#            swagger.spryker.local:
-
-#    redis-gui:
-#        engine: redis-commander
-#        endpoints:
-#            redis-commander.spryker.local:
-
-#    dashboard:
-#        engine: dashboard
-#        endpoints:
-#            spryker.local:
-
 docker:
     ssl:
         enabled: false

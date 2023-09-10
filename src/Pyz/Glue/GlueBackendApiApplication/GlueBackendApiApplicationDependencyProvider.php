@@ -7,14 +7,16 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
-use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
+use Pyz\Glue\ProductDescriptionBackendApi\Plugin\GlueApplication\ProductDescriptionBackendApiResourcePlugin;
 use Spryker\Glue\App\Plugin\RouteProvider\AppRouteProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\LocaleRequestBuilderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\RequestCorsValidatorPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ScopeRequestAfterRoutingValidatorPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\SecurityHeaderResponseFormatterPlugin;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Plugin\GlueBackendApiApplication\AuthorizationRequestAfterRoutingValidatorPlugin;
+use Spryker\Glue\Kernel\Backend\Container;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 
 class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiApplicationDependencyProvider
@@ -40,7 +42,16 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new AuthorizationRequestAfterRoutingValidatorPlugin(),
         ];
     }
-
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     */
+    protected function getRequestBuilderPlugins(): array
+    {
+        return [
+            new ApplicationIdentifierRequestBuilderPlugin(),
+            new LocaleRequestBuilderPlugin(),
+        ];
+    }
     /**
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
      */
@@ -57,17 +68,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getResourcePlugins(): array
     {
         return [
-            new TestResource(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
-     */
-    protected function getRequestBuilderPlugins(): array
-    {
-        return [
-            new ApplicationIdentifierRequestBuilderPlugin(),
+            new ProductDescriptionBackendApiResourcePlugin(),
         ];
     }
 
@@ -79,5 +80,17 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
         return [
             new AppRouteProviderPlugin(),
         ];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Backend\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Backend\Container
+     */
+    public function provideBackendDependencies(Container $container): Container
+    {
+        $container = parent::provideBackendDependencies($container);
+
+        return $container;
     }
 }

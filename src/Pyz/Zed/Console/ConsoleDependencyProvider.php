@@ -7,8 +7,11 @@
 
 namespace Pyz\Zed\Console;
 
+use Pyz\Zed\DataImport\DataImportConfig;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+use Spryker\Zed\CurrencyDataImport\CurrencyDataImportConfig;
+use Spryker\Zed\DataImport\Communication\Console\DataImportConsole;
 use Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateClientIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\GenerateGlueBackendIdeAutoCompletionConsole;
@@ -20,6 +23,7 @@ use Spryker\Zed\Development\Communication\Console\RemoveGlueBackendIdeAutoComple
 use Spryker\Zed\Development\Communication\Console\RemoveIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveServiceIdeAutoCompletionConsole;
 use Spryker\Zed\Development\Communication\Console\RemoveZedIdeAutoCompletionConsole;
+use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 use Spryker\Zed\Kernel\Communication\Console\ResolvableClassCacheConsole;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Log\Communication\Console\DeleteLogFilesConsole;
@@ -63,6 +67,14 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
     protected function getConsoleCommands(Container $container): array
     {
         $commands = [
+            new DataImportConsole(),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . ':' . DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . ':' . DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT_STORE),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . ':' . DataImportConfig::IMPORT_TYPE_CURRENCY),
+            new DataImportConsole(DataImportConsole::DEFAULT_NAME . ':' . CurrencyDataImportConfig::IMPORT_TYPE_CURRENCY_STORE),
+
+            new InitializeDatabaseConsole(),
+
             new TransferGeneratorConsole(),
             new RemoveTransferConsole(),
             new EntityTransferGeneratorConsole(),

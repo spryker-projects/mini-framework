@@ -7,10 +7,8 @@
 
 namespace Pyz\Zed\MessageBroker;
 
-use Pyz\Zed\HelloWorld\Communication\Plugin\MessageBroker\UserCreatedMessageHandlerPlugin;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\LocalSenderReceiverPlugin;
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider as SprykerMessageBrokerDependencyProvider;
-use Spryker\Zed\MessageBrokerAws\Communication\Plugin\MessageBroker\Sender\AwsSqsMessageSenderPlugin;
 
 class MessageBrokerDependencyProvider extends SprykerMessageBrokerDependencyProvider
 {
