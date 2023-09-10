@@ -7,7 +7,6 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
-use Pyz\Glue\ProductDescriptionBackendApi\Plugin\GlueApplication\ProductDescriptionBackendApiRouteProviderPlugin;
 use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
 use Spryker\Glue\App\Plugin\RouteProvider\AppRouteProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
@@ -71,6 +70,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getResourcePlugins(): array
     {
         return [
+            new TestResource(),
         ];
     }
 
@@ -81,7 +81,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     {
         return [
             new AppRouteProviderPlugin(),
-            new ProductDescriptionBackendApiRouteProviderPlugin(),
         ];
     }
 
