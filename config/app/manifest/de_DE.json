@@ -1,12 +1,12 @@
 {
-    "name":"",
-    "provider":"",
-    "descriptionShort":"",
-    "description":"",
-    "url":"",
+    "name":"API generated product description",
+    "provider":"Spryker",
+    "descriptionShort":"Generates product description from AI",
+    "description":"Generates product description from AI",
+    "url":"http://www.spryker.com",
     "isAvailable":true,
     "businessModels":[
-
+        'B2C', 'B2B'
     ],
     "categories":[
         "PRODUCT_INFORMATION_MANAGEMENT"
@@ -15,15 +15,15 @@
     "pages":{
         "Overview":[
             {
-                "title":"",
-                "type":"",
+                "title":"Features",
+                "type":"list",
                 "data":[
-                    ""
+                    "Product descriptions"
                 ]
             }
         ]
     },
     "labels":[],
     "resources":[],
-    "developedBy": ""
+    "developedBy": "Spryker Systems GmbH"
 }

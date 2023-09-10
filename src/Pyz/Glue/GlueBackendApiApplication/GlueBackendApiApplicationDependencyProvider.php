@@ -7,6 +7,7 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
+use Pyz\Glue\ProductDescriptionBackendApi\Plugin\GlueApplication\ProductDescriptionBackendApiRouteProviderPlugin;
 use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
 use Spryker\Glue\App\Plugin\RouteProvider\AppRouteProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
@@ -42,6 +43,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new AuthorizationRequestAfterRoutingValidatorPlugin(),
         ];
     }
+
     /**
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
      */
@@ -52,6 +54,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
             new LocaleRequestBuilderPlugin(),
         ];
     }
+
     /**
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
      */
@@ -78,7 +81,7 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     protected function getRouteProviderPlugins(): array
     {
         return [
-            new AppRouteProviderPlugin(),
+            new AppRouteProviderPlugin(), new ProductDescriptionBackendApiRouteProviderPlugin(),
         ];
     }
 
