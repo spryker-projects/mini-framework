@@ -34,6 +34,13 @@ sections:
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
+    setup:
+        setup-data:
+            command: 'vendor/bin/console setup:init-db'
+    demodata:
+        import-eu-region-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+
     setup-test:
         codeception-build:
             command: 'vendor/bin/codecept build --ansi'
@@ -44,4 +51,3 @@ sections:
     scheduler-start:
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
-

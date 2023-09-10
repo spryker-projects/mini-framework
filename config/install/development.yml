@@ -113,6 +113,13 @@ sections:
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
+    setup:
+        setup-data:
+            command: 'vendor/bin/console setup:init-db'
+    demodata:
+        import-eu-region-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+
     performance:
         composer-autoloader:
             command: 'composer dumpautoload -a -o --classmap-authoritative'

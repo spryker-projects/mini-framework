@@ -45,6 +45,13 @@ sections:
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete'
 
+    setup:
+        setup-data:
+            command: 'vendor/bin/console setup:init-db'
+    demodata:
+        import-eu-region-demodata:
+            command: 'vendor/bin/console data:import --config=data/import/local/full_EU.yml'
+
     scheduler-start:
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
