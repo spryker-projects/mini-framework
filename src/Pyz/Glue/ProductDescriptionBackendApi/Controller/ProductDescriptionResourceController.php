@@ -8,7 +8,9 @@
 namespace Pyz\Glue\ProductDescriptionBackendApi\Controller;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Generated\Shared\Transfer\ProductDescriptionTransfer;
 use Spryker\Glue\Kernel\Backend\Controller\AbstractController;
 
 /**
@@ -27,11 +29,28 @@ class ProductDescriptionResourceController extends AbstractController
             ->mapGlueRequestTransferToProductAbstractCriteriaTransfer($glueRequestTransfer);
         $productAbstractCollectionTransfer = $this->getFactory()->getProductFacade()
             ->getProductAbstractCollection($productAbstractCriteriaTransfer);
+        $productAbstractTransfer = $productAbstractCollectionTransfer->getProductAbstracts()->offsetGet(0);
 
-        return $this->getFactory()->createGlueResponseProductDescriptionMapper()
-            ->mapProductAbstractCollectionTransferToSingleResourceGlueResponseTransfer(
-                $productAbstractCollectionTransfer,
-                $glueRequestTransfer->getLocale()
-            );
+
+        $glueResponseTransfer = new GlueResponseTransfer();
+        $description = '';
+        foreach($productAbstractTransfer->getLocalizedAttributes() as $localizedAttribute) {
+            if($localizedAttribute->getLocale()->getLocaleName() === $glueRequestTransfer->getLocale()) {
+                $description = 'PRODUCT DESCRIPTION PBC '. $localizedAttribute->getDescription();
+                break;
+            }
+        }
+
+        if(!$description) {
+            $description =
+                'PRODUCT DESCRIPTION PBC ' . $productAbstractTransfer->getLocalizedAttributes()->offsetGet(0)->getDescription();
+        }
+        $glueResponseTransfer->setContent(json_encode([
+            'description' => $description
+        ]));
+
+        $glueResponseTransfer->setMeta(array_merge($glueResponseTransfer->getMeta(), ['Content-Type' => 'application/json']));
+
+        return $glueResponseTransfer;
     }
 }

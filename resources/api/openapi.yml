@@ -36,4 +36,4 @@ components:
                 description:
                     type: string
             example:
-                greet: "This is a great product"
+                description: "This is a great product"

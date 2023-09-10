@@ -26,9 +26,15 @@ class GlueRequestProductDescriptionMapper implements GlueRequestProductDescripti
         $productAbstractCriteriaTransfer->setPagination($glueRequestTransfer->getPagination());
         $productAbstractCriteriaTransfer->setSortCollection($glueRequestTransfer->getSortings());
         $productAbstractConditionsTransfer = new ProductAbstractConditionsTransfer();
-        if ($glueRequestTransfer->getResource()->getId()) {
-            $productAbstractConditionsTransfer->addSku($glueRequestTransfer->getResource()->getId());
-        }
+        // Extract the JSON from the payload
+        $parts = explode('=', $glueRequestTransfer->getParametersString(), 2);
+
+        // URL decode
+        $jsonString = urldecode($parts[1]);
+
+        // Decode JSON to PHP array
+        $array = json_decode($jsonString, true);
+        $productAbstractConditionsTransfer->addSku($array['sku']);
         $productAbstractCriteriaTransfer->setProductAbstractConditions($productAbstractConditionsTransfer);
         $productAbstractCriteriaTransfer->setProductAbstractRelations(
             (new ProductAbstractRelationsTransfer())->setWithLocalizedAttributes(true)

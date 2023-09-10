@@ -41,7 +41,6 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
      */
     public function getDataImporterByType(DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer): ?DataImporterInterface
     {
-        $test = 1;
         return match ($dataImportConfigurationActionTransfer->getDataEntity()) {
             DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT => $this->createProductAbstractImporter($dataImportConfigurationActionTransfer),
             DataImportConfig::IMPORT_TYPE_PRODUCT_ABSTRACT_STORE => $this->createProductAbstractStoreImporter($dataImportConfigurationActionTransfer),
