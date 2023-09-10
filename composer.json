@@ -18,15 +18,7 @@
         "spryker/uuid-behavior": "^1.3",
         "spryker/app-kernel": "^1.0@dev",
         "spryker/message-broker-aws": "^1.4",
-        "spryker/message-broker": "dev-beta/localstack-replacement as 1.8.0",
-        "spryker/product": "^6.37",
-        "spryker/data-import": "^1.21",
-        "spryker/store-data-import": "^0.1.0",
-        "spryker/country-data-import": "^0.1.0",
-        "spryker/locale-data-import": "^0.1.0",
-        "spryker/currency-data-import": "^0.1.0",
-        "spryker/installer": "^4.1"
-
+        "spryker/message-broker": "dev-beta/localstack-replacement as 1.8.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "^0.17.10",
@@ -43,8 +35,6 @@
         "phpunit/phpunit": "^9.5.0 || ^10.0.0",
         "spryker/testify": "^3.49.0",
         "spryker-sdk/phpstan-spryker": "^0.4.0",
-        "galbar/jsonpath": "^3.0",
-        "spryker/testify-async-api": "^0.1.0",
         "spryker-sdk/acp": "^0.3.3"
     },
     "autoload": {

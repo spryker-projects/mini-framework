@@ -29,11 +29,11 @@ regions:
             DE:
                 services:
                     broker:
-                        namespace: product-description-app
+                        namespace: "NAME HERE"
                     key_value_store:
-                        namespace: product-description-app
+                        namespace: "NAME HERE"
                     search:
-                        namespace: product-description-app
+                        namespace: "NAME HERE"
 groups:
     EU:
         region: EU
@@ -41,7 +41,7 @@ groups:
             glue_backend_eu:
                 application: glue-backend
                 endpoints:
-                    product-description-app.de.spryker.local:
+                    "NAME HERE".de.spryker.local:
                         store: DE
 
 services:
