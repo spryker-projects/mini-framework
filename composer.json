@@ -76,14 +76,6 @@
         "platform": {
             "php": "8.0.19"
         },
-        "preferred-install": {
-            "spryker/*": "source",
-            "spryker-shop/*": "source",
-            "spryker-eco/*": "source",
-            "spryker-middleware/*": "source",
-            "spryker-sdk/*": "source",
-            "*": "dist"
-        },
         "use-include-path": true,
         "process-timeout": 1800,
         "chromium-revision": 814168,
