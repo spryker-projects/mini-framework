@@ -51,16 +51,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface>
-     */
-    protected function getResourcePlugins(): array
-    {
-        return [
-            new TestResource(),
-        ];
-    }
-
-    /**
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
      */
     protected function getRequestBuilderPlugins(): array
