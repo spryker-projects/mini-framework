@@ -67,19 +67,6 @@ $config[ZedRequestConstants::ZED_API_SSL_ENABLED] = (bool)getenv('SPRYKER_ZED_SS
 $config[KernelConstants::DOMAIN_WHITELIST] = array_filter(explode(',', getenv('SPRYKER_TRUSTED_HOSTS') ?: ''));
 $config[KernelConstants::STRICT_DOMAIN_REDIRECT] = true;
 
-//$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
-//    = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
-//    = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
-//    = true;
-//$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG]
-//    = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG]
-//    = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG]
-//    = [
-//    'max_age' => 31536000,
-//    'include_sub_domains' => true,
-//    'preload' => true,
-//];
-
 $config[LogConstants::LOG_SANITIZE_FIELDS] = [
     'password',
 ];

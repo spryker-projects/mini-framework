@@ -2,7 +2,7 @@ version: "1.0"
 
 imports:
     # see config/deploy-templates
-    deploy.dev.template.yml:
+    deploy.live.template.yml:
         parameters:
             namespace: 'app-stripe'
             environment: 'stripe.spryker.local'
@@ -13,4 +13,3 @@ imports:
             database.root_password: 'secret'
 
             hosts.glue: 'my-app.spryker.local'
-

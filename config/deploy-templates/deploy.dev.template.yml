@@ -1,0 +1,47 @@
+imports:
+    deploy.base.template.yml:
+
+tag: 'dev'
+
+# our template contains configuration that only applies if using this environment name
+# see config/Shared/config_default-docker.dev.php
+environment: docker.dev
+
+image:
+    php:
+        ini:
+            "opcache.enable_cli": 0
+            "opcache.enable": 0
+
+composer:
+    mode: ''
+    autoload: ''
+
+assets:
+    mode: development
+
+docker:
+    ssl:
+        enabled: false
+        redirect: true
+
+    testing:
+        store: GLOBAL
+
+    debug:
+        enabled: true
+        xdebug:
+            enabled: true
+
+    mount:
+        native:
+            platforms:
+                - linux
+
+        docker-sync:
+            platforms:
+                - windows
+
+        mutagen:
+            platforms:
+                - macos
