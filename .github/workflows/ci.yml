@@ -1,59 +1,91 @@
 name: CI
 
 on:
-  pull_request:
-  push:
-    branches:
-      - master
-  workflow_dispatch:
+    pull_request:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
 
 jobs:
-  validation:
-    runs-on: ubuntu-20.04
-    strategy:
-      fail-fast: false
-      matrix:
-        php-version: [
-            '8.2'
-        ]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+    validation:
+        runs-on: ubuntu-20.04
+        strategy:
+            fail-fast: false
+            matrix:
+                php-version: [
+                    '8.2'
+                ]
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v3
 
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-            php-version: ${{ matrix.php-version }}
-            extensions: mbstring, intl, pdo_mysql
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: ${{ matrix.php-version }}
+                    extensions: mbstring, intl, pdo_mysql
 
-      - name: Validate composer.json and composer.lock
-        run: composer validate
+            -   name: Validate composer.json and composer.lock
+                run: composer validate
 
-      - name: Get Composer Cache Directory
-        id: composer-cache
-        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+            -   name: Get Composer Cache Directory
+                id: composer-cache
+                run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-      - name: Composer Cache
-        uses: actions/cache@v3
-        with:
-            path: ${{ steps.composer-cache.outputs.dir }}
-            key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-            restore-keys: ${{ runner.os }}-composer-
+            -   name: Composer Cache
+                uses: actions/cache@v3
+                with:
+                    path: ${{ steps.composer-cache.outputs.dir }}
+                    key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+                    restore-keys: ${{ runner.os }}-composer-
 
-      - name: Composer Install
-        run: composer install --no-interaction -o
+            -   name: Composer validate
+                run: composer validate
 
-      - name: Check PHP for syntax errors
-        run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+            -   name: Composer version
+                run: composer --version
 
-      - name: Run Install
-        run: vendor/bin/install -r development.yml
+            -   name: Composer Install
+                run: composer install --no-interaction -o
 
-      - name: CodeStyle Checks
-        run: composer cs-check
+            -   name: Generate transfer objects
+                run: vendor/bin/console transfer:generate
 
-      - name: PHPStan Checks
-        run: composer stan
+            -   name: Generate transfer databuilder objects
+                run: vendor/bin/console transfer:databuilder:generate
 
-      - name: Run tests
-        run: vendor/bin/codecept run
+            -   name: Propel install
+                run: |
+                    vendor/bin/console propel:schema:copy
+                    vendor/bin/console propel:model:build
+                    vendor/bin/console transfer:entity:generate
+
+            -   name: Codecept build
+                run: vendor/bin/codecept build --ansi
+
+            -   name: Generate autocompletion files
+                run: vendor/bin/console dev:ide-auto-completion:generate
+
+            -   name: Validate propel files
+                run: |
+                    vendor/bin/console propel:schema:validate
+                    vendor/bin/console propel:schema:validate-xml-names
+
+            -   name: Validate transfer files
+                run: vendor/bin/console transfer:validate
+
+            -   name: Check PHP for syntax errors
+                run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+
+            -   name: CodeStyle Checks
+                run: composer cs-check
+
+            -   name: PHPStan Checks
+                run: composer stan
+
+            -   name: Run tests
+                run: vendor/bin/codecept run
+
+            -   name: Run Security check
+                run: vendor/bin/console security:check
