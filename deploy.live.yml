@@ -4,8 +4,8 @@ imports:
     # see config/deploy-templates
     deploy.live.template.yml:
         parameters:
-            namespace: 'app-stripe'
-            environment: 'stripe.spryker.local'
+            namespace: 'my-app'
+            environment: 'my-app.spryker.local'
 
             database.name: 'my-app-docker'
             database.user: 'spryker'

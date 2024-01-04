@@ -4,8 +4,8 @@ imports:
     # see config/deploy-templates
     deploy.dev.template.yml:
         parameters:
-            namespace: 'app-stripe'
-            environment: 'stripe.spryker.local'
+            namespace: 'my-app'
+            environment: 'my-app.spryker.local'
 
             database.name: 'my-app-docker'
             database.user: 'spryker'
@@ -13,4 +13,4 @@ imports:
             database.root_password: 'secret'
 
             hosts.glue: 'my-app.spryker.local'
-
+            hosts.scheduler: 'scheduler.my-app.spryker.local'

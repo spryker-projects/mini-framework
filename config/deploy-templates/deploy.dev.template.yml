@@ -9,6 +9,8 @@ environment: docker.dev
 
 image:
     php:
+        enabled-extensions:
+            - blackfire
         ini:
             "opcache.enable_cli": 0
             "opcache.enable": 0

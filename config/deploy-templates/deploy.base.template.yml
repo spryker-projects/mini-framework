@@ -35,3 +35,9 @@ services:
         endpoints:
             localhost:3306:
                 protocol: tcp
+
+    scheduler:
+        engine: jenkins
+        version: '2.324'
+        endpoints:
+            '%hosts.scheduler%':
