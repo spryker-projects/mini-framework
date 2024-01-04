@@ -16,6 +16,9 @@ jobs:
                 php-version: [
                     '8.2'
                 ]
+        env:
+            APPLICATION_ENV: docker.dev
+            APPLICATION_STORE: GLOBAL
         steps:
             -   name: Checkout
                 uses: actions/checkout@v3
