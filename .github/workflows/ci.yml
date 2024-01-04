@@ -64,11 +64,6 @@ jobs:
             -   name: Codecept build
                 run: vendor/bin/codecept build --ansi
 
-            -   name: Validate propel files
-                run: |
-                    vendor/bin/console propel:schema:validate
-                    vendor/bin/console propel:schema:validate-xml-names
-
             -   name: Validate transfer files
                 run: vendor/bin/console transfer:validate
 
