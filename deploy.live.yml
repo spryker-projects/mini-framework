@@ -13,3 +13,4 @@ imports:
             database.root_password: 'secret'
 
             hosts.glue: 'my-app.spryker.local'
+            hosts.scheduler: 'scheduler.my-app.spryker.local'

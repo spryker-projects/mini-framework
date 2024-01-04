@@ -64,9 +64,6 @@ jobs:
             -   name: Codecept build
                 run: vendor/bin/codecept build --ansi
 
-            -   name: Generate autocompletion files
-                run: vendor/bin/console dev:ide-auto-completion:generate
-
             -   name: Validate propel files
                 run: |
                     vendor/bin/console propel:schema:validate
