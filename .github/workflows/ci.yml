@@ -64,6 +64,9 @@ jobs:
             -   name: Codecept build
                 run: vendor/bin/codecept build --ansi
 
+            -   name: Composer validate
+                run: vendor/bin/console
+
             -   name: Generate autocompletion files
                 run: vendor/bin/console dev:ide-auto-completion:generate
 
