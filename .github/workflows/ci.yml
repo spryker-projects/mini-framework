@@ -56,6 +56,9 @@ jobs:
             -   name: Generate transfer objects
                 run: vendor/bin/console transfer:generate
 
+            -   name: Generate transfer databuilder objects
+                run: vendor/bin/console transfer:databuilder:generate
+
             -   name: Propel install
                 run: |
                     vendor/bin/console propel:schema:copy
@@ -65,14 +68,19 @@ jobs:
             -   name: Codecept build
                 run: vendor/bin/codecept build --ansi
 
-            -   name: Composer validate
-                run: vendor/bin/console
-
             -   name: Generate autocompletion files
                 run: vendor/bin/console dev:ide-auto-completion:generate
 
             -   name: Check PHP for syntax errors
                 run: find ./src -path src -prune -o -type f -name '*.php' -print0 | xargs -0 -n1 -P4 php -l -n | (! grep -v "No syntax errors detected" )
+
+            -   name: Validate propel files
+                run: |
+                    vendor/bin/console propel:schema:validate
+                    vendor/bin/console propel:schema:validate-xml-names
+
+            -   name: Validate transfer files
+                run: vendor/bin/console transfer:validate
 
             -   name: CodeStyle Checks
                 run: composer cs-check
@@ -82,3 +90,6 @@ jobs:
 
             -   name: Run tests
                 run: vendor/bin/codecept run
+
+            -   name: Run Security check
+                run: vendor/bin/console security:check
