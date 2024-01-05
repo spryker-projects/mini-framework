@@ -19,6 +19,7 @@ jobs:
         env:
             APPLICATION_ENV: docker.dev
             APPLICATION_STORE: GLOBAL
+            DEVELOPMENT_CONSOLE_COMMANDS: true
         steps:
             -   name: Checkout
                 uses: actions/checkout@v3
