@@ -34,7 +34,8 @@
         "spryker/testify": "^3.49.0",
         "spryker-sdk/phpstan-spryker": "^0.4.0",
         "galbar/jsonpath": "^3.0",
-        "spryker-sdk/security-checker": "^0.2.0"
+        "spryker-sdk/security-checker": "^0.2.0",
+        "rector/rector": "^0.18.0"
     },
     "autoload": {
         "psr-4": {
@@ -66,7 +67,9 @@
         "psalm-update-report": "psalm.phar --report=psalm-report.xml",
         "test": "codecept build && codecept run",
         "test-cover": "codecept build && codecept run --coverage-xml",
-        "local-ci": "composer cs-fix && composer cs-check && composer stan && composer test"
+        "local-ci": "composer cs-fix && composer cs-check && composer stan && composer test",
+        "rector": "vendor/bin/rector process src/Pyz/ --ansi -a vendor/autoload.php",
+        "rector-ci": "vendor/bin/rector process src/Pyz/ --ansi --dry-run -a vendor/autoload.php"
     },
     "extra": {
         "branch-alias": {

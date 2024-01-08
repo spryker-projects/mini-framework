@@ -82,6 +82,12 @@ jobs:
             -   name: Validate transfer files
                 run: vendor/bin/console transfer:validate
 
+            -   name: Run Security check
+                run: vendor/bin/console security:check
+
+            -   name: Run Rector checks
+                run: composer rector-ci
+
             -   name: CodeStyle Checks
                 run: composer cs-check
 
@@ -90,6 +96,3 @@ jobs:
 
             -   name: Run tests
                 run: vendor/bin/codecept run
-
-            -   name: Run Security check
-                run: vendor/bin/console security:check
