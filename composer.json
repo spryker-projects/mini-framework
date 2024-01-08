@@ -67,9 +67,7 @@
         "psalm-update-report": "psalm.phar --report=psalm-report.xml",
         "test": "codecept build && codecept run",
         "test-cover": "codecept build && codecept run --coverage-xml",
-        "local-ci": "composer cs-fix && composer cs-check && composer stan && composer test",
-        "rector": "vendor/bin/rector process src/Pyz/ --ansi -a vendor/autoload.php",
-        "rector-ci": "vendor/bin/rector process src/Pyz/ --ansi --dry-run -a vendor/autoload.php"
+        "local-ci": "composer cs-fix && composer cs-check && composer stan && composer test"
     },
     "extra": {
         "branch-alias": {

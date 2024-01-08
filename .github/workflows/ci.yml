@@ -85,9 +85,6 @@ jobs:
             -   name: Run Security check
                 run: vendor/bin/console security:check
 
-            -   name: Run Rector checks
-                run: composer rector-ci
-
             -   name: CodeStyle Checks
                 run: composer cs-check
 
