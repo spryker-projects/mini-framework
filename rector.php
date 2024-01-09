@@ -26,7 +26,7 @@ return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->import(SetList::DEAD_CODE);
     $rectorConfig->import(SetList::STRICT_BOOLEANS);
     $rectorConfig->import(SetList::NAMING);
-    $rectorConfig->import(SetList::PHP_82);
+    $rectorConfig->import(SetList::PHP_81);
     $rectorConfig->import(SetList::TYPE_DECLARATION);
     $rectorConfig->import(SetList::EARLY_RETURN);
     $rectorConfig->import(SetList::INSTANCEOF);
