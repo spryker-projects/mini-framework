@@ -7,8 +7,8 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
-use Spryker\Glue\AppKernel\Plugin\RouteProvider\AppRouteProviderPlugin;
 use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
+use Spryker\Glue\AppKernel\Plugin\RouteProvider\AppRouteProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\RequestCorsValidatorPlugin;
