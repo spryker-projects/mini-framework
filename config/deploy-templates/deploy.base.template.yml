@@ -28,7 +28,7 @@ groups:
 services:
     database:
         engine: mysql
-        version: mariadb-10.5
+        version: mariadb-10.4
         root:
             username: "root"
             password: "%database.root_password%"
