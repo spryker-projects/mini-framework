@@ -1,5 +1,6 @@
 <?php
 
+use Generated\Shared\Transfer\TestMessageTransfer;
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
@@ -11,6 +12,8 @@ use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueJsonApiConvention\GlueJsonApiConventionConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
+use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
@@ -19,6 +22,7 @@ use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
+use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Spryker\Zed\Propel\PropelConfig;
 
 // ############################################################################
@@ -152,3 +156,26 @@ $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
 ];
 
 $config[SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH] = getenv('SPRYKER_JENKINS_TEMPLATE_PATH') ?: null;
+
+// ----------------------------------------------------------------------------
+// ------------------------------ Message Broker ------------------------------
+// ----------------------------------------------------------------------------
+$config[MessageBrokerConstants::LOGGING_ENABLED] = true;
+$config[MessageBrokerConstants::IS_ENABLED] = true;
+
+$config[MessageBrokerAwsConstants::HTTP_CHANNEL_SENDER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_SENDER_BASE_URL') ?: '';
+$config[MessageBrokerAwsConstants::HTTP_CHANNEL_RECEIVER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_RECEIVER_BASE_URL') ?: '';
+
+$config[MessageBrokerAwsConstants::HTTP_SENDER_CONFIG] = [];
+
+$config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] = [
+    TestMessageTransfer::class => 'test-channel',
+];
+
+$config[MessageBrokerAwsConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
+    'test-channel' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+];
+
+$config[MessageBrokerAwsConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
+    'test-channel' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+];
