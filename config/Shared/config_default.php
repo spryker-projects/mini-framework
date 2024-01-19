@@ -1,5 +1,6 @@
 <?php
 
+use Generated\Shared\Transfer\TestMessageTransfer;
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
@@ -12,6 +13,8 @@ use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueJsonApiConvention\GlueJsonApiConventionConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
+use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
@@ -20,6 +23,7 @@ use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConfig;
 use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
+use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Spryker\Zed\Propel\PropelConfig;
 
 // ############################################################################
@@ -69,19 +73,6 @@ $config[MonitoringConstants::IGNORABLE_TRANSACTIONS] = [
 $config[ZedRequestConstants::ZED_API_SSL_ENABLED] = (bool)getenv('SPRYKER_ZED_SSL_ENABLED');
 $config[KernelConstants::DOMAIN_WHITELIST] = array_filter(explode(',', getenv('SPRYKER_TRUSTED_HOSTS') ?: ''));
 $config[KernelConstants::STRICT_DOMAIN_REDIRECT] = true;
-
-//$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
-//    = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
-//    = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED]
-//    = true;
-//$config[HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG]
-//    = $config[HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG]
-//    = $config[HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG]
-//    = [
-//    'max_age' => 31536000,
-//    'include_sub_domains' => true,
-//    'preload' => true,
-//];
 
 $config[LogConstants::LOG_SANITIZE_FIELDS] = [
     'password',
@@ -168,3 +159,26 @@ $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
 ];
 
 $config[SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH] = getenv('SPRYKER_JENKINS_TEMPLATE_PATH') ?: null;
+
+// ----------------------------------------------------------------------------
+// ------------------------------ Message Broker ------------------------------
+// ----------------------------------------------------------------------------
+$config[MessageBrokerConstants::LOGGING_ENABLED] = true;
+$config[MessageBrokerConstants::IS_ENABLED] = true;
+
+$config[MessageBrokerAwsConstants::HTTP_CHANNEL_SENDER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_SENDER_BASE_URL') ?: '';
+$config[MessageBrokerAwsConstants::HTTP_CHANNEL_RECEIVER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_RECEIVER_BASE_URL') ?: '';
+
+$config[MessageBrokerAwsConstants::HTTP_SENDER_CONFIG] = [];
+
+$config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] = [
+    TestMessageTransfer::class => 'test-channel',
+];
+
+$config[MessageBrokerAwsConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
+    'test-channel' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+];
+
+$config[MessageBrokerAwsConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
+    'test-channel' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+];
