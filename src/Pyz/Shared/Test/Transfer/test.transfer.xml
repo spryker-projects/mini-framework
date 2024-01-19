@@ -79,4 +79,13 @@
         <property name="attributes" type="array" singular="attribute"/>
     </transfer>
 
+    <transfer name="TestMessage">
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="tenantIdentifier" type="string"/>
+        <property name="actorId" type="string"/>
+    </transfer>
+
 </transfers>
