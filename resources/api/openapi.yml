@@ -1,0 +1,71 @@
+openapi: 3.0.0
+info:
+    title: Greeting API
+    description: An API to post user data and get personalized greetings
+    version: 1.0.0
+
+paths:
+    /users:
+        x-spryker:
+            module: HelloWorldBackendApi
+            controller: UsersController
+        post:
+            summary: Create a new user
+            description: Creates a new user with provided UUID and name.
+
+            requestBody:
+                description: User data object
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UserData'
+            responses:
+                '201':
+                    description: Created
+
+    /greet/{uuid}:
+        x-spryker:
+            module: HelloWorldBackendApi
+            controller: GreetController
+            use: User
+        get:
+            summary: Get a personalized greeting
+            description: Returns a personalized greeting for the provided UUID.
+
+            parameters:
+                - name: uuid
+                  in: path
+                  description: The UUID of the user to greet
+                  required: true
+                  schema:
+                      type: string
+            responses:
+                '200':
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Greeting'
+
+components:
+    schemas:
+        UserData:
+            type: object
+            properties:
+                uuid:
+                    type: string
+                    format: uuid
+                username:
+                    type: string
+            example:
+                uuid: "1234-5678-9012-3456"
+                username: "John Doe"
+
+        Greeting:
+            type: object
+            properties:
+                greet:
+                    type: string
+            example:
+                greet: "Hello John Doe, nice to meet you!"

@@ -17,7 +17,8 @@
         "spryker/scheduler-jenkins": "^1.2",
         "spryker/uuid-behavior": "^1.3",
         "spryker/message-broker": "^1.10",
-        "spryker/message-broker-aws": "^1.6"
+        "spryker/message-broker-aws": "^1.6",
+        "spryker/app-kernel": "^0.1.1"
 
     },
     "require-dev": {

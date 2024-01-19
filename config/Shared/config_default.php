@@ -5,6 +5,7 @@ use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
+use Spryker\Shared\AppKernel\AppKernelConstants;
 use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
@@ -33,6 +34,8 @@ use Spryker\Zed\Propel\PropelConfig;
 // ------------------------------ CODEBASE: TO REMOVE -------------------------
 // ----------------------------------------------------------------------------
 
+
+$config[AppKernelConstants::APP_IDENTIFIER] = getenv('APP_IDENTIFIER') ?: 'hello-world';
 
 $config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = true;
 $config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = true;
