@@ -7,6 +7,7 @@
 
 namespace Pyz\Zed\Console;
 
+use SecurityChecker\Command\SecurityCheckerCommand;
 use Spryker\Zed\Cache\Communication\Console\EmptyAllCachesConsole;
 use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
 use Spryker\Zed\Development\Communication\Console\CodeStyleSnifferConsole;
@@ -106,6 +107,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
             $commands[] = new RemoveClientIdeAutoCompletionConsole();
             $commands[] = new GenerateServiceIdeAutoCompletionConsole();
             $commands[] = new RemoveServiceIdeAutoCompletionConsole();
+            $commands[] = new SecurityCheckerCommand();
         }
 
         return $commands;

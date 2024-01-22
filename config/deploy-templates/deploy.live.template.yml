@@ -1,0 +1,32 @@
+imports:
+    deploy.base.template.yml:
+
+tag: '1.0'
+
+image:
+    php:
+        ini:
+            opcache.interned_strings_buffer: 32
+        enabled-extensions:
+            - newrelic
+
+composer:
+    mode: --no-dev
+    autoload: --classmap-authoritative
+
+assets:
+    mode: production
+    compression:
+        gzip:
+            static: true
+            level: 5
+
+docker:
+    ssl:
+        enabled: true
+    testing:
+        store: GLOBAL
+    debug:
+        enabled: false
+    mount:
+        baked:

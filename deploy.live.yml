@@ -2,7 +2,7 @@ version: "1.0"
 
 imports:
     # see config/deploy-templates
-    deploy.dev.template.yml:
+    deploy.live.template.yml:
         parameters:
             namespace: 'my-app'
             environment: 'my-app.spryker.local'
