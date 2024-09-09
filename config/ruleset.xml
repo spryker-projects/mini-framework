@@ -27,8 +27,8 @@
 
     <rule ref="Spryker.Internal.SprykerDisallowFunctions">
         <properties>
-            <!-- We want to prevent 8.0+ functions to break 7.4 compatibility -->
-            <property name="phpVersion" value="7.4"/>
+            <!-- We want to prevent 8.3+ functions to break 8.2 compatibility -->
+            <property name="phpVersion" value="8.2"/>
         </properties>
     </rule>
 
