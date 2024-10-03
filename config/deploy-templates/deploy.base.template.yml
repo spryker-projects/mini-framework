@@ -2,7 +2,7 @@ namespace: "%namespace%"
 environment: '%environment%'
 
 image:
-    tag: spryker/php:${PHP_VERSION:-8.2}
+    tag: spryker/php:${PHP_VERSION:-8.3}
 
 regions:
     GLOBAL:
