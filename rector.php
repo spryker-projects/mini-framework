@@ -10,7 +10,6 @@ use Rector\CodeQuality\Rector\If_\ConsecutiveNullCompareReturnsToNullCoalesceQue
 use Rector\Config\RectorConfig;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 use Rector\Set\ValueObject\SetList;
-use Rector\Strict\Rector\Ternary\BooleanInTernaryOperatorRuleFixerRector;
 
 return static function (RectorConfig $rectorConfig): void {
     $rectorConfig->paths([
@@ -45,11 +44,6 @@ return static function (RectorConfig $rectorConfig): void {
         ],
         ConsecutiveNullCompareReturnsToNullCoalesceQueueRector::class => [
             __DIR__ . '/src/Pyz/Zed/Payment/Business/MessageBroker/TenantIdentifier/TenantIdentifierExtractor.php',
-        ],
-        BooleanInTernaryOperatorRuleFixerRector::class => [
-            __DIR__ . '/src/Pyz/Zed/PaymentProvider/Business/PaymentProvider/AppDomainRegistrator.php',
-            __DIR__ . '/src/Pyz/Zed/PaymentProvider/Business/PaymentProvider/StripeCustomers.php',
-            __DIR__ . '/src/Pyz/Zed/PaymentProvider/Business/PaymentProvider/StripeIntents.php',
         ],
     ]);
 };

@@ -29,7 +29,7 @@ $config[PropelConstants::PROPEL_DEBUG] = (bool)getenv('SPRYKER_DEBUG_PROPEL_ENAB
 $config[KernelConstants::ENABLE_CONTAINER_OVERRIDING] = (bool)getenv('SPRYKER_TESTING_ENABLED');
 $config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = true;
 
-$sprykerBackendHost = getenv('SPRYKER_BE_HOST') ?: (getenv('SPRYKER_ZED_HOST') ?: 'stripe.spryker.local');
+$sprykerBackendHost = getenv('SPRYKER_BE_HOST') ?: (getenv('SPRYKER_ZED_HOST') ?: 'app.spryker.local');
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = getenv('SPRYKER_GLUE_BACKEND_HOST') ?: 'glue-backend.apps.spryker.local';
 
 // ----------------------------------------------------------------------------

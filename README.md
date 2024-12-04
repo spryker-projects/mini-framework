@@ -3,7 +3,7 @@
 
 ### Clone the repo and boot
 ```
-git clone --recurse-submodules git@github.com:spryker-project/app-stripe.git acp-app
+git clone --recurse-submodules git@github.com:spryker-projects/mini-framework.git acp-app
 cd acp-app
 docker/sdk boot deploy.dev.yml
 docker/sdk up

@@ -1,7 +1,7 @@
 {
-    "name": "spryker-projects/app-stripe",
-    "description": "Spryker Stripe ACP app",
-    "license": "proprietary",
+    "name": "spryker/mini-framework",
+    "description": "Spryker Mini-Framework",
+    "license": "MIT",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
