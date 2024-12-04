@@ -1,13 +1,32 @@
 <?php
 
-use Generated\Shared\Transfer\TestMessageTransfer;
+use Generated\Shared\Transfer\AddPaymentMethodTransfer;
+use Generated\Shared\Transfer\AppConfigUpdatedTransfer;
+use Generated\Shared\Transfer\CancelPaymentTransfer;
+use Generated\Shared\Transfer\CapturePaymentTransfer;
+use Generated\Shared\Transfer\DeletePaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentAuthorizationFailedTransfer;
+use Generated\Shared\Transfer\PaymentAuthorizedTransfer;
+use Generated\Shared\Transfer\PaymentCanceledTransfer;
+use Generated\Shared\Transfer\PaymentCancellationFailedTransfer;
+use Generated\Shared\Transfer\PaymentCapturedTransfer;
+use Generated\Shared\Transfer\PaymentCaptureFailedTransfer;
+use Generated\Shared\Transfer\PaymentCreatedTransfer;
+use Generated\Shared\Transfer\PaymentRefundedTransfer;
+use Generated\Shared\Transfer\PaymentRefundFailedTransfer;
+use Generated\Shared\Transfer\PaymentUpdatedTransfer;
+use Generated\Shared\Transfer\RefundPaymentTransfer;
+use Generated\Shared\Transfer\UpdatePaymentMethodTransfer;
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Pyz\Shared\Scheduler\SchedulerConfig;
 use Spryker\Glue\Log\Plugin\GlueLoggerConfigPlugin;
 use Spryker\Shared\AppKernel\AppKernelConstants;
-use Spryker\Shared\Application\Log\Config\SprykerLoggerConfig;
+use Spryker\Shared\AppPayment\AppPaymentConstants;
 use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiDebugErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer;
+use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
 use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\GlueJsonApiConvention\GlueJsonApiConventionConstants;
@@ -16,6 +35,8 @@ use Spryker\Shared\Log\LogConstants;
 use Spryker\Shared\MessageBroker\MessageBrokerConstants;
 use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
 use Spryker\Shared\Monitoring\MonitoringConstants;
+use Spryker\Shared\OauthAuth0\OauthAuth0Constants;
+use Spryker\Shared\OauthClient\OauthClientConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\Queue\QueueConstants;
 use Spryker\Shared\Scheduler\SchedulerConstants;
@@ -24,21 +45,16 @@ use Spryker\Shared\SchedulerJenkins\SchedulerJenkinsConstants;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Log\Communication\Plugin\ZedLoggerConfigPlugin;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
+use Spryker\Zed\OauthAuth0\OauthAuth0Config;
 use Spryker\Zed\Propel\PropelConfig;
 
 // ############################################################################
 // ############################## PRODUCTION CONFIGURATION ####################
 // ############################################################################
-
-// ----------------------------------------------------------------------------
-// ------------------------------ CODEBASE: TO REMOVE -------------------------
-// ----------------------------------------------------------------------------
-
-
-$config[AppKernelConstants::APP_IDENTIFIER] = getenv('APP_IDENTIFIER') ?: 'hello-world';
-
-$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = true;
-$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = true;
+// @todo Add App Identifier
+$config[AppKernelConstants::APP_IDENTIFIER]
+    = $config[AppPaymentConstants::APP_IDENTIFIER]
+    = '';
 
 $config[KernelConstants::PROJECT_NAMESPACE] = 'Pyz';
 $config[KernelConstants::PROJECT_NAMESPACES] =
@@ -57,7 +73,12 @@ $config[KernelConstants::CORE_NAMESPACES] = [
 $config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = (bool)getenv('DEVELOPMENT_CONSOLE_COMMANDS');
 
 // >>> ERROR HANDLING
-$config[ErrorHandlerConstants::ERROR_RENDERER] = WebHtmlErrorRenderer::class;
+$config[ErrorHandlerConstants::ERROR_RENDERER] = getenv('SPRYKER_DEBUG_ENABLED') ? WebExceptionErrorRenderer::class : WebHtmlErrorRenderer::class;
+$config[ErrorHandlerConstants::ZED_ERROR_PAGE] = APPLICATION_ROOT_DIR . '/public/Backoffice/errorpage/5xx.html';
+$config[ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED] = false;
+
+$config[ErrorHandlerConstants::API_ERROR_RENDERER] = getenv('SPRYKER_DEBUG_ENABLED') ? ApiDebugErrorRenderer::class : ApiErrorRenderer::class;
+$config[ErrorHandlerConstants::ERROR_LEVEL] = getenv('SPRYKER_DEBUG_DEPRECATIONS_ENABLED') ? E_ALL : E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED;
 
 // >>> MONITORING
 
@@ -100,9 +121,8 @@ $config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
 $config[ErrorHandlerConstants::ERROR_LEVEL] = E_ALL & ~E_DEPRECATED & ~E_USER_DEPRECATED;
 $config[ErrorHandlerConstants::ERROR_LEVEL_LOG_ONLY] = E_DEPRECATED | E_USER_DEPRECATED;
 
-$config[LogConstants::LOGGER_CONFIG] = SprykerLoggerConfig::class;
+$config[LogConstants::LOGGER_CONFIG] = GlueLoggerConfigPlugin::class; // GLUE_BACKEND application is not recognized by logger factory, so set it as default
 $config[LogConstants::LOGGER_CONFIG_ZED] = ZedLoggerConfigPlugin::class;
-$config[LogConstants::LOGGER_CONFIG_GLUE] = GlueLoggerConfigPlugin::class;
 
 $config[LogConstants::LOG_QUEUE_NAME] = 'log-queue';
 $config[LogConstants::LOG_ERROR_QUEUE_NAME] = 'error-log-queue';
@@ -121,23 +141,15 @@ $config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED]
 // ----------------------------------------------------------------------------
 // ------------------------------ Glue Backend API ----------------------------
 // ----------------------------------------------------------------------------
-$sprykerGlueBackendHost = getenv('SPRYKER_GLUE_BACKEND_HOST');
-$config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = $sprykerGlueBackendHost;
+$config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = getenv('SPRYKER_GLUE_BACKEND_HOST');
 $config[GlueBackendApiApplicationConstants::PROJECT_NAMESPACES] = [
     'Pyz',
 ];
 $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_CORS_ALLOW_ORIGIN] = getenv('SPRYKER_GLUE_APPLICATION_CORS_ALLOW_ORIGIN') ?: '*';
-
-// ----------------------------------------------------------------------------
-// ------------------------------ Glue Storefront API -------------------------
-// ----------------------------------------------------------------------------
-$sprykerGlueStorefrontHost = getenv('SPRYKER_GLUE_STOREFRONT_HOST');
-$gluePort = (int)(getenv('SPRYKER_API_PORT')) ?: 443;
-$protocol = $gluePort === 433 ? 'https' : 'http';
 $config[GlueJsonApiConventionConstants::GLUE_DOMAIN] = sprintf(
     '%s://%s',
-    $protocol,
-    $sprykerGlueStorefrontHost ?: $sprykerGlueBackendHost ?: 'localhost',
+    getenv('SPRYKER_SSL_ENABLE') ? 'https' : 'http',
+    $config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] ?: 'localhost',
 );
 
 // ----------------------------------------------------------------------------
@@ -158,27 +170,90 @@ $config[SchedulerJenkinsConstants::JENKINS_CONFIGURATION] = [
     ],
 ];
 
-$config[SchedulerJenkinsConstants::JENKINS_TEMPLATE_PATH] = getenv('SPRYKER_JENKINS_TEMPLATE_PATH') ?: null;
+// PaymentProvider keys are always provided by env variables, use config_local.php to set your development keys.
+// @todo Provide env variable for your PSP
+
+// ----------------------------------------------------------------------------
+// ------------------------------ OAuth ---------------------------------------
+// ----------------------------------------------------------------------------
+
+//// >>> OauthClient
+$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = OauthAuth0Config::PROVIDER_NAME;
+$config[OauthClientConstants::OAUTH_GRANT_TYPE_FOR_MESSAGE_BROKER] = OauthAuth0Config::GRANT_TYPE_CLIENT_CREDENTIALS;
+$config[OauthClientConstants::OAUTH_OPTION_AUDIENCE_FOR_MESSAGE_BROKER] = 'aop-event-platform';
+
+$aopAuthenticationConfiguration = json_decode(html_entity_decode((string)getenv('SPRYKER_AOP_AUTHENTICATION')), true);
+$config[OauthAuth0Constants::AUTH0_CUSTOM_DOMAIN] = $aopAuthenticationConfiguration['AUTH0_CUSTOM_DOMAIN'] ?? '';
+$config[OauthAuth0Constants::AUTH0_CLIENT_ID] = $aopAuthenticationConfiguration['AUTH0_CLIENT_ID'] ?? '';
+$config[OauthAuth0Constants::AUTH0_CLIENT_SECRET] = $aopAuthenticationConfiguration['AUTH0_CLIENT_SECRET'] ?? '';
 
 // ----------------------------------------------------------------------------
 // ------------------------------ Message Broker ------------------------------
 // ----------------------------------------------------------------------------
-$config[MessageBrokerConstants::LOGGING_ENABLED] = true;
-$config[MessageBrokerConstants::IS_ENABLED] = true;
 
-$config[MessageBrokerAwsConstants::HTTP_CHANNEL_SENDER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_SENDER_BASE_URL') ?: '';
-$config[MessageBrokerAwsConstants::HTTP_CHANNEL_RECEIVER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_RECEIVER_BASE_URL') ?: '';
+$config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] =
+$config[MessageBrokerAwsConstants::MESSAGE_TO_CHANNEL_MAP] = [
+    PaymentAuthorizedTransfer::class => 'payment-events',
+    PaymentAuthorizationFailedTransfer::class => 'payment-events',
+    PaymentCapturedTransfer::class => 'payment-events',
+    PaymentCaptureFailedTransfer::class => 'payment-events',
+    PaymentRefundedTransfer::class => 'payment-events',
+    PaymentRefundFailedTransfer::class => 'payment-events',
+    PaymentCanceledTransfer::class => 'payment-events',
+    PaymentCancellationFailedTransfer::class => 'payment-events',
+    CancelPaymentTransfer::class => 'payment-commands',
+    CapturePaymentTransfer::class => 'payment-commands',
+    RefundPaymentTransfer::class => 'payment-commands',
+    AddPaymentMethodTransfer::class => 'payment-method-commands',
+    UpdatePaymentMethodTransfer::class => 'payment-method-commands',
+    DeletePaymentMethodTransfer::class => 'payment-method-commands',
+    PaymentCreatedTransfer::class => 'payment-events',
+    PaymentUpdatedTransfer::class => 'payment-events',
+    // App event
+    AppConfigUpdatedTransfer::class => 'app-events',
+];
 
-$config[MessageBrokerAwsConstants::HTTP_SENDER_CONFIG] = [];
-
-$config[MessageBrokerConstants::MESSAGE_TO_CHANNEL_MAP] = [
-    TestMessageTransfer::class => 'test-channel',
+$config[MessageBrokerConstants::CHANNEL_TO_TRANSPORT_MAP] = [
+    'app-events' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
+    'merchant-app-events' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
+    'payment-events' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
+    'payment-method-commands' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
+    'payment-commands' => MessageBrokerAwsConfig::SQS_TRANSPORT,
 ];
 
 $config[MessageBrokerAwsConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
-    'test-channel' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+    'app-events' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
+    'merchant-app-events' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
+    'payment-events' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
+    'payment-method-commands' => MessageBrokerAwsConfig::HTTP_TRANSPORT,
 ];
 
 $config[MessageBrokerAwsConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
-    'test-channel' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+    'payment-commands' => MessageBrokerAwsConfig::SQS_TRANSPORT,
 ];
+
+$config[MessageBrokerConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = array_merge_recursive(
+    $config[MessageBrokerAwsConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP],
+    [
+        'app-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+        'merchant-app-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+        'payment-events' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+        'payment-method-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+    ],
+);
+
+$config[MessageBrokerConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = array_merge_recursive(
+    $config[MessageBrokerAwsConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP],
+    [
+        'payment-commands' => MessageBrokerAwsConfig::HTTP_CHANNEL_TRANSPORT,
+    ],
+);
+
+// MB2 setup
+$config[MessageBrokerAwsConstants::HTTP_CHANNEL_SENDER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_SENDER_BASE_URL') ?: '';
+$config[MessageBrokerAwsConstants::HTTP_CHANNEL_RECEIVER_BASE_URL] = getenv('SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_RECEIVER_BASE_URL') ?: '';
+
+// ----------------------------------------------------------------------------
+// ------------------------------ Payment -------------------------------------
+// ----------------------------------------------------------------------------
+$config[AppPaymentConstants::IS_TENANT_PAYMENTS_DELETION_AFTER_DISCONNECTION_ENABLED] = true;

@@ -4,13 +4,14 @@ imports:
     # see config/deploy-templates
     deploy.dev.template.yml:
         parameters:
-            namespace: 'my-app'
-            environment: 'my-app.spryker.local'
+            namespace: 'app-psp'
+            environment: 'psp.spryker.local'
+            database: 'psp-docker'
 
-            database.name: 'my-app-docker'
-            database.user: 'spryker'
-            database.password: 'secret'
-            database.root_password: 'secret'
+            hosts.backoffice: "psp.spryker.local"
+            hosts.glue: "api.psp.spryker.local"
+            hosts.scheduler: "scheduler.psp.spryker.local"
 
-            hosts.glue: 'my-app.spryker.local'
-            hosts.scheduler: 'scheduler.my-app.spryker.local'
+            # message bus 2.x
+            message_broker.http_sender.base_url: "http://mb2.spryker.local:8080/"
+            message_broker.http_receiver.base_url: "http://mb2.spryker.local:8080/"

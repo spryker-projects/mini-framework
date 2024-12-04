@@ -1,0 +1,19 @@
+version: "1.0"
+
+imports:
+    # see config/deploy-templates
+    deploy.live.template.yml:
+        parameters:
+            namespace: 'spryker-cloud'
+            environment: 'production'
+            database: 'acp_app_production'
+
+            hosts.backoffice: "app.acp.spryker.com"
+            hosts.glue: "api.app.acp.spryker.com"
+            hosts.scheduler: "scheduler.app.acp.spryker.com"
+
+            # message bus 2.x
+            message_broker.http_sender.base_url: "https://publish.mb.spryker.com/"
+            message_broker.http_receiver.base_url: "https://consume.mb.spryker.com/"
+
+            http_registry.base_url: "https://api.atrs.spryker.com"

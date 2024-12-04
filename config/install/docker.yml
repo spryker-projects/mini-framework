@@ -15,6 +15,12 @@ sections:
         generate-entity-transfer:
             command: 'vendor/bin/console transfer:entity:generate'
 
+        generate-cache:
+            command: 'vendor/bin/console translator:generate-cache'
+
+        generate-router-cache:
+            command: 'vendor/bin/glue api:router:cache:warm-up'
+
     build-production:
         excluded: true
         cache-class-resolver-build:
@@ -55,6 +61,10 @@ sections:
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete'
 
-    scheduler-start:
+    demodata:
+        import-data:
+            command: 'vendor/bin/console data:import'
+
+    scheduler-setup:
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'

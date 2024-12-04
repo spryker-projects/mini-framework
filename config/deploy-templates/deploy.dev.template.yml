@@ -9,18 +9,32 @@ environment: docker.dev
 
 image:
     php:
-        enabled-extensions:
-            - blackfire
         ini:
             "opcache.enable_cli": 0
             "opcache.enable": 0
+    environment:
+        SPRYKER_GLUE_BACKEND_HOST: '%hosts.glue%'
+        SPRYKER_BE_HOST: '%hosts.backoffice%'
+        SPRYKER_AOP_INFRASTRUCTURE: '{}'
 
+        AOP_APP_IDENTIFIER: "" # spryker/message-broker
+        AWS_DEFAULT_REGION: eu-central-1
+
+        SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_SENDER_BASE_URL: "%message_broker.http_sender.base_url%"
+        SPRYKER_MESSAGE_BROKER_HTTP_CHANNEL_RECEIVER_BASE_URL: "%message_broker.http_receiver.base_url%"
+        SPRYKER_REGISTRY_URL: "%http_registry.base_url%"
 composer:
     mode: ''
     autoload: ''
 
 assets:
     mode: development
+
+services:
+    dashboard:
+        engine: dashboard
+        endpoints:
+            spryker.local:
 
 docker:
     ssl:

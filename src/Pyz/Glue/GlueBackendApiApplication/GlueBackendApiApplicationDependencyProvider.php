@@ -7,14 +7,17 @@
 
 namespace Pyz\Glue\GlueBackendApiApplication;
 
-use Pyz\Glue\TestApi\Plugin\GlueApplication\TestResource;
-use Spryker\Glue\AppKernel\Plugin\RouteProvider\AppRouteProviderPlugin;
+use Pyz\Glue\GlueBackendApiApplication\Plugin\GlueApplication\LocaleRequestBuilderPlugin;
+use Spryker\Glue\AppKernel\Plugin\RouteProvider\AppKernelRouteProviderPlugin;
+use Spryker\Glue\AppPaymentBackendApi\Plugin\GlueApplication\AppPaymentBackendApiRouteProviderPlugin;
+use Spryker\Glue\AppWebhookBackendApi\Plugin\GlueApplication\AppWebhookBackendApiRouteProviderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider as SprykerGlueBackendApiApplicationDependencyProvider;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\RequestCorsValidatorPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ScopeRequestAfterRoutingValidatorPlugin;
 use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\SecurityHeaderResponseFormatterPlugin;
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Plugin\GlueBackendApiApplication\AuthorizationRequestAfterRoutingValidatorPlugin;
+use Spryker\Glue\Kernel\Backend\Container;
 use Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin;
 
 class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiApplicationDependencyProvider
@@ -26,16 +29,6 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     {
         return [
             new PropelApplicationPlugin(),
-        ];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
-     */
-    protected function getRouteProviderPlugins(): array
-    {
-        return [
-            new AppRouteProviderPlugin(),
         ];
     }
 
@@ -62,22 +55,25 @@ class GlueBackendApiApplicationDependencyProvider extends SprykerGlueBackendApiA
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface>
-     */
-    protected function getResourcePlugins(): array
-    {
-        return [
-            new TestResource(),
-        ];
-    }
-
-    /**
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
      */
     protected function getRequestBuilderPlugins(): array
     {
         return [
             new ApplicationIdentifierRequestBuilderPlugin(),
+            new LocaleRequestBuilderPlugin(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
+     */
+    protected function getRouteProviderPlugins(): array
+    {
+        return [
+            new AppKernelRouteProviderPlugin(),
+            new AppPaymentBackendApiRouteProviderPlugin(),
+            new AppWebhookBackendApiRouteProviderPlugin(),
         ];
     }
 }

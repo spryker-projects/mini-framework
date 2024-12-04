@@ -16,7 +16,8 @@ define('APPLICATION_STORE', '');
 define('APPLICATION_CODE_BUCKET', '');
 
 require_once(__DIR__ . '/src/Generated/Client/Ide/AutoCompletion.php');
-require_once(__DIR__ . '/src/Generated/Service/Ide/AutoCompletion.php');
+require_once(__DIR__ . '/src/Generated/Glue/Ide/AutoCompletion.php');
+require_once(__DIR__ . '/src/Generated/GlueBackend/Ide/AutoCompletion.php');
 require_once(__DIR__ . '/src/Generated/Zed/Ide/AutoCompletion.php');
 
 $codeceptionShimFilePath = __DIR__ . '/vendor/codeception/codeception/shim.php';

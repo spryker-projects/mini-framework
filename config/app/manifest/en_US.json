@@ -1,42 +1,108 @@
 {
-    "name": "Hello World App",
-    "provider": "Example, Inc.",
-    "description": "Simple Hello World App for showcasing.",
-    "descriptionShort": "Hello World App.",
-    "url": "https://www.example.com",
+    "name": "",
+    "provider": "",
+    "descriptionShort": "",
+    "description": "",
+    "url": "",
     "isAvailable": true,
-    "categories": [
-        "PLAYGROUND"
-    ],
-    "assets": [
-        {
-            "type": "icon",
-            "url": "/assets/img/hello-world/logo.png"
-        },
-        {
-            "type": "image",
-            "url": "/assets/img/hello-world/gallery/image.png"
-        }
-    ],
-    "resources": [
-        {
-            "title": "User Guide",
-            "url": "https://docs.spryker.com/docs/acp/user/intro-to-acp/acp-overview.html",
-            "type": "internal-documentation",
-            "fileType": "spryker-docs"
-        }
-    ],
-    "pages": {
-        "Overview": []
-    },
-    "labels": [],
     "businessModels": [
         "B2C",
         "B2B",
         "B2C_MARKETPLACE",
         "B2B_MARKETPLACE"
     ],
-    "dependencies": [],
-    "dialogs": {},
-    "developedBy": "Spryker Systems GmbH"
+    "categories": [
+        "PAYMENT"
+    ],
+    "pages": {
+        "Overview": [
+            {
+                "title": "Features",
+                "type": "list",
+                "data": [
+                ]
+            }
+        ]
+    },
+    "developedBy": "Spryker Systems GmbH",
+    "assets": [
+        {
+            "type": "icon",
+            "url": "/assets/app-catalog/logo.png"
+        },
+        {
+            "type": "image",
+            "url": "/assets/app-catalog/gallery/checkout.png"
+        },
+        {
+            "type": "image",
+            "url": "/assets/app-catalog/gallery/dashboard_home.png"
+        },
+        {
+            "type": "image",
+            "url": "/assets/app-catalog/gallery/payments_overview_local_payments.png"
+        },
+        {
+            "type": "image",
+            "url": "/assets/app-catalog/gallery/payments_overview_header.png"
+        },
+        {
+            "type": "internal-asset",
+            "url": "/assets/app-catalog/configuration/payment-page-hint.png"
+        }
+    ],
+    "labels": [],
+    "resources": [
+        {
+            "title": "Homepage",
+            "url": "",
+            "type": "homepage"
+        }
+    ],
+    "dependencies": [
+        {
+            "name": "spryker/message-broker",
+            "version": "^1.11.0"
+        },
+        {
+            "name": "spryker/message-broker-aws",
+            "version": "^1.6.0"
+        },
+        {
+            "name": "spryker/oms",
+            "version": "^11.21.0"
+        },
+        {
+            "name": "spryker/oauth-client",
+            "version": "^1.5.0"
+        },
+        {
+            "name": "spryker/payment",
+            "version": "^5.25.0"
+        },
+        {
+            "name": "spryker/refund",
+            "version": "^5.9.0"
+        },
+        {
+            "name": "spryker/sales",
+            "version": "^11.45.0"
+        },
+        {
+            "name": "spryker/sales-payment",
+            "version": "^1.10.2"
+        },
+        {
+            "name": "spryker/sales-return",
+            "version": "^1.4.0"
+        },
+        {
+            "name": "spryker-shop/checkout-page",
+            "version": "^3.21.0"
+        },
+        {
+            "name": "spryker-shop/payment-page",
+            "version": "^1.4.0,"
+        },
+    ]
 }

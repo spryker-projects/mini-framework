@@ -1,4 +1,5 @@
 namespace: PyzTest
+
 actor: Tester
 
 include:
@@ -19,9 +20,7 @@ settings:
 
 coverage:
     enabled: true
-    remote: true
-    c3_url: 'http://backoffice.de.suite.local'
-    whitelist: { include: ['src/Pyz/*.php'] }
+    show_uncovered: true
 
 params:
     - tests/default.yml

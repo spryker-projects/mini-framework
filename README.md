@@ -1,24 +1,27 @@
-[![codecov](https://codecov.io/gh/spryker-projects/mini-api-framework/branch/master/graph/badge.svg?token=AIC5DCCH5P)](https://codecov.io/gh/spryker-projects/mini-api-framework)
+# Spryker ACP App
+## Quickstart
 
-# Spryker Mini Framework
-
-## Message Broker
-
-### How to send messages
-
-```php
-$message = new TestMessageTransfer();
-
-$message->setMessageAttributes((new MessageAttributesTransfer())
-    ->setActorId('app-3f2980ec-675d-4086-8828-202200815826')
-    ->setTenantIdentifier('tenant-4c8d78fa-42d1-4ddb-8f1f-1d6e4d23964a')
-);
-
-/** $messageBrokerFacade \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface  */
-$messageBrokerFacade->sendMessage($message);
+### Clone the repo and boot
+```
+git clone --recurse-submodules git@github.com:spryker-projects/mini-framework.git acp-app
+cd acp-app
+docker/sdk boot deploy.dev.yml
+docker/sdk up
 ```
 
-### How to consume messages
+### Configuring PaymentProvider Keys
 
-To consume messages need to define handler plugins in `MessageBrokerDependencyProvider`.
-An example you can find in  `\Pyz\Zed\MessageBroker\MessageBrokerDependencyProvider::getMessageHandlerPlugins`
+Copy the `config_local.dist.php` to `config_local.php` and add your PaymentProvider keys to `config_local.php`.
+
+```
+cp config/Shared/config_local.dist.php config/Shared/config_local.php
+```
+
+## App configuration form
+
+The config form is described in `config/app/configuration.json`.
+
+- [Widget types](https://github.com/spryker/spryker-docs/blob/master/_drafts/acp-apps-development/develop-an-app/app-configuration.md)
+- [Default widgets](https://github.com/guillotinaweb/ngx-schema-form?tab=readme-ov-file#widgets)
+- [Conditional fields](https://github.com/guillotinaweb/ngx-schema-form?tab=readme-ov-file#conditional-fields) (`visibleIf`)
+- Complex expressions for `visibleIf` uses [Jexl](https://github.com/TomFrost/Jexl) (Javascript Expression Language)

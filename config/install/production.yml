@@ -4,31 +4,49 @@ env:
 command-timeout: 1200
 
 stores:
-    - DE
+    - GLOBAL
 
 sections:
     diff:
         propel-migration-delete:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
             stores:
-                - DE
+                - GLOBAL
 
         propel-diff:
             command: 'vendor/bin/console propel:diff -vvv --no-ansi'
             stores:
-                - DE
+                - GLOBAL
 
         show_migrations:
             command: 'ls -al ./src/Orm/Propel/Migration_*/*.php 2>/dev/null || true'
             stores:
-                - DE
+                - GLOBAL
 
         propel-migrate:
             command: 'vendor/bin/console propel:migrate -vvv --no-ansi'
             stores:
-                - DE
+                - GLOBAL
 
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
             stores:
-                - DE
+                - GLOBAL
+
+    data-import:
+        import-data:
+            command: 'vendor/bin/console data:import'
+
+    translation:
+        generate-cache:
+            command: 'vendor/bin/console translator:generate-cache'
+
+    router:
+        generate-cache:
+            command: 'vendor/bin/glue api:router:cache:warm-up'
+
+    scheduler-setup:
+        scheduler-setup:
+            command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
+            stores:
+                - GLOBAL

@@ -16,10 +16,9 @@ parameters:
 
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
-        - '#Call to an undefined method .+DataSetStepBrokerAwareInterface::setDataSetWriter\(\).#'
-        - '#Call to an undefined method .+DataSetStepBrokerAwareInterface::addAfterImportHook\(\).#'
-        - '#Parameter \#1 \$rawCatalogSearchResultFormatterPlugin of class .+CurrencyAwareSuggestionByTypeResultFormatter constructor expects .+ResultFormatterPluginInterface, .+SuggestionByTypeResultFormatterPlugin given.#'
-        - '#Method .+CheckoutPageDependencyProvider::.+\(\) return type has no value type specified in iterable type .+FormInterface.#'
+        - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::getTenantIdentifier\(\)\.#'
+        - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::getMessageAttributesOrFail\(\)\.#'
+        - '#PHPDoc tag @var with type array<DOMElement> is not subtype of native type Symfony\\Component\\DomCrawler\\Crawler.#'
 
     reportUnmatchedIgnoredErrors: false
 

@@ -4,25 +4,34 @@ on:
     pull_request:
     push:
         branches:
-            - master
+            - main
+            - develop
     workflow_dispatch:
 
 jobs:
     validation:
-        runs-on: ubuntu-20.04
+        name: "CS, PHPStan, Security, App validation"
+        runs-on: ubuntu-latest
         strategy:
             fail-fast: false
             matrix:
-                php-version: [
-                    '8.3'
-                ]
+                php-version:
+                    - '8.3'
+
         env:
             APPLICATION_ENV: docker.dev
             APPLICATION_STORE: GLOBAL
 
         steps:
             -   name: Checkout
-                uses: actions/checkout@v3
+                uses: actions/checkout@v4
+
+            -   name: Configure sysctl limits
+                run: |
+                    sudo swapoff -a
+                    sudo sysctl -w vm.swappiness=1
+                    sudo sysctl -w fs.file-max=262144
+                    sudo sysctl -w vm.max_map_count=262144
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -30,10 +39,7 @@ jobs:
                     php-version: ${{ matrix.php-version }}
                     extensions: mbstring, intl, pdo_mysql
 
-            -   name: Validate composer.json and composer.lock
-                run: composer validate
-
-            -   name: Get Composer Cache Directory
+            -   name: Composer get cache directory
                 id: composer-cache
                 run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
@@ -42,7 +48,8 @@ jobs:
                 with:
                     path: ${{ steps.composer-cache.outputs.dir }}
                     key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-                    restore-keys: ${{ runner.os }}-composer-
+                    restore-keys: |
+                        ${{ runner.os }}-composer-
 
             -   name: Composer validate
                 run: composer validate
@@ -82,14 +89,59 @@ jobs:
             -   name: Validate transfer files
                 run: vendor/bin/console transfer:validate
 
+            -   name: Run Rector checks
+                run: composer rector-ci
+
+            -   name: Run CodeStyle checks
+                run: vendor/bin/phpcs -p
+
+            -   name: Run PHPStan
+                run: vendor/bin/phpstan analyze
+
             -   name: Run Security check
                 run: vendor/bin/console security:check
 
-            -   name: CodeStyle Checks
-                run: composer cs-check
+            -   name: Validate App
+                run: vendor/bin/acp app:validate
 
-            -   name: PHPStan Checks
-                run: composer stan
+    mariadb-alpine:
+        name: "MariaDB / Alpine / Tests / Mutation Tests"
+        strategy:
+            matrix:
+                php-version:
+                    - '8.2'
 
-            -   name: Run tests
-                run: vendor/bin/codecept run
+        runs-on: ubuntu-latest
+        env:
+            PROGRESS_TYPE: plain
+            PHP_VERSION: ${{ matrix.php-version }}
+
+        steps:
+            -   uses: actions/checkout@v4
+
+            -   name: Install apt-packages
+                run: |
+                    sudo apt install -y libxml2-utils
+
+            -   name: Install docker-compose
+                run: |
+                    sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                    sudo chmod +x /usr/local/bin/docker-compose
+
+            -   name: Run project in Docker
+                run: |
+                    git clone https://github.com/spryker/docker-sdk.git ./docker
+                    docker/sdk boot deploy.dev.yml -v
+                    docker/sdk up -t -v --data --build
+
+            -   name: Run tests with coverage
+                if: success()
+                run: |
+                    docker/sdk testing composer test-cover
+                    docker/sdk testing composer test-strict-ci
+
+            -   name: Check installed commands
+                run: |
+                    which xmllint || echo "xmllint not found"
+                    which grep || echo "grep not found"
+                    which awk || echo "awk not found"

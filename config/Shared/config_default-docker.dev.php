@@ -3,15 +3,17 @@
 use Monolog\Logger;
 use Pyz\Shared\Console\ConsoleConstants;
 use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
-use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiDebugErrorRenderer;
-use Spryker\Shared\ErrorHandler\ErrorRenderer\ApiErrorRenderer;
-use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
-use Spryker\Shared\ErrorHandler\ErrorRenderer\WebHtmlErrorRenderer;
+use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
+use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
+use Spryker\Shared\OauthClient\OauthClientConstants;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Shared\PropelOrm\PropelOrmConstants;
+use Spryker\Shared\Router\RouterConstants;
+use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
+use Spryker\Zed\OauthDummy\OauthDummyConfig;
 
 // ############################################################################
 // ############################## DEVELOPMENT CONFIGURATION ###################
@@ -21,30 +23,46 @@ use Spryker\Shared\PropelOrm\PropelOrmConstants;
 // ------------------------------ CODEBASE ------------------------------------
 // ----------------------------------------------------------------------------
 
-// >>> Debug
-
-$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = false;
-$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = false;
-
-$config[ApplicationConstants::ENABLE_APPLICATION_DEBUG]
-    = (bool)getenv('SPRYKER_DEBUG_ENABLED');
-
+$config[ApplicationConstants::ENABLE_APPLICATION_DEBUG] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
 $config[PropelConstants::PROPEL_DEBUG] = (bool)getenv('SPRYKER_DEBUG_PROPEL_ENABLED');
 
 $config[KernelConstants::ENABLE_CONTAINER_OVERRIDING] = (bool)getenv('SPRYKER_TESTING_ENABLED');
 $config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = true;
 
-// >>> Error handler
+$sprykerBackendHost = getenv('SPRYKER_BE_HOST') ?: (getenv('SPRYKER_ZED_HOST') ?: 'app.spryker.local');
+$config[GlueBackendApiApplicationConstants::GLUE_BACKEND_API_HOST] = getenv('SPRYKER_GLUE_BACKEND_HOST') ?: 'glue-backend.apps.spryker.local';
 
-$config[ErrorHandlerConstants::DISPLAY_ERRORS] = true;
-$config[ErrorHandlerConstants::ERROR_RENDERER] = getenv('SPRYKER_DEBUG_ENABLED') ? WebExceptionErrorRenderer::class : WebHtmlErrorRenderer::class;
-$config[ErrorHandlerConstants::API_ERROR_RENDERER] = getenv('SPRYKER_DEBUG_ENABLED') ? ApiDebugErrorRenderer::class : ApiErrorRenderer::class;
-$config[ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED] = (bool)getenv('SPRYKER_DEBUG_ENABLED');
-$config[ErrorHandlerConstants::ERROR_LEVEL] = getenv('SPRYKER_DEBUG_DEPRECATIONS_ENABLED') ? E_ALL : $config[ErrorHandlerConstants::ERROR_LEVEL];
+// ----------------------------------------------------------------------------
+// ------------------------------ BACKOFFICE ----------------------------------
+// ----------------------------------------------------------------------------
+$config[ApplicationConstants::BASE_URL_ZED] = sprintf(
+    'http://%s',
+    $sprykerBackendHost,
+);
+
+$config[RouterConstants::ZED_IS_SSL_ENABLED] = false;
 
 // ----------------------------------------------------------------------------
 // ------------------------------ SERVICES ------------------------------------
 // ----------------------------------------------------------------------------
 
 $config[PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION] = true;
-$config[LogConstants::LOG_LEVEL] = getenv('SPRYKER_DEBUG_ENABLED') ? Logger::INFO : Logger::DEBUG;
+$config[LogConstants::LOG_LEVEL] = getenv('SPRYKER_DEBUG_ENABLED') ? Logger::DEBUG : Logger::INFO;
+
+$config[MessageBrokerConstants::CHANNEL_TO_TRANSPORT_MAP] = [
+    'payment-events' => MessageBrokerAwsConfig::SNS_TRANSPORT,
+    'payment-method-commands' => MessageBrokerAwsConfig::SNS_TRANSPORT,
+    'payment-commands' => MessageBrokerAwsConfig::SQS_TRANSPORT,
+];
+
+$config[MessageBrokerAwsConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
+    'payment-events' => MessageBrokerAwsConfig::SNS_TRANSPORT,
+    'payment-method-commands' => MessageBrokerAwsConfig::SNS_TRANSPORT,
+];
+
+$config[MessageBrokerAwsConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
+    'payment-commands' => MessageBrokerAwsConfig::SQS_TRANSPORT,
+];
+
+//// >>> OauthClient
+$config[OauthClientConstants::OAUTH_PROVIDER_NAME_FOR_MESSAGE_BROKER] = OauthDummyConfig::PROVIDER_NAME;

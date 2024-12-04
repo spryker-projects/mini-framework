@@ -4,7 +4,7 @@ env:
 command-timeout: 7200
 
 stores:
-    - DE
+    - GLOBAL
 
 sections:
     init-storages-per-region:
@@ -20,7 +20,7 @@ sections:
         propel-tables-drop:
             command: 'vendor/bin/console propel:tables:drop -vvv --no-ansi'
             stores:
-                - DE
+                - GLOBAL
 
         propel-diff:
             command: 'vendor/bin/console propel:diff -vvv --no-ansi'
@@ -28,11 +28,15 @@ sections:
         propel-migrate:
             command: 'vendor/bin/console propel:migrate -vvv --no-ansi'
             stores:
-                - DE
+                - GLOBAL
 
         propel-migration-cleanup:
             command: 'vendor/bin/console propel:migration:delete -vvv --no-ansi'
 
-    scheduler-start:
+    data-import:
+        import-data:
+            command: 'vendor/bin/console data:import'
+
+    scheduler-setup:
         scheduler-setup:
             command: 'vendor/bin/console scheduler:setup -vvv --no-ansi'
