@@ -1,0 +1,9 @@
+version: 0
+
+actions:
+    # needed for locale supports (LocaleRequestBuilderPlugin)
+    - data_entity: store
+    - data_entity: locale
+      source: data/import/common/locale.csv
+    - data_entity: currency
+      source: data/import/common/currency.csv

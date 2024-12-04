@@ -1,0 +1,11 @@
+env:
+    NEW_RELIC_ENABLED: 0
+
+sections:
+    app-registration:
+        composer-install:
+            command: 'composer install'
+        transfer-generate:
+            command: 'vendor/bin/console transfer:generate'
+        register-app:
+            command: 'php -d opcache.enable_cli=0 vendor/bin/acp app:register --appIdentifier= --baseUrl=https://$SPRYKER_BE_HOST --apiBaseUrl=https://$SPRYKER_GLUE_BACKEND_HOST --registryUrl=$SPRYKER_REGISTRY_URL --authorizationToken=$PIPLINE_TOKEN'

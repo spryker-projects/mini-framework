@@ -1,0 +1,19 @@
+version: "1.0"
+
+imports:
+    # see config/deploy-templates
+    deploy.live.template.yml:
+        parameters:
+            namespace: 'spryker-cloud'
+            environment: 'staging'
+            database: 'acp_app_staging'
+
+            hosts.backoffice: "app-staging.acp.demo-spryker.com"
+            hosts.glue: "api.app-staging.acp.demo-spryker.com"
+            hosts.scheduler: "scheduler.app-staging.acp.demo-spryker.com"
+
+            # message bus 2.x
+            message_broker.http_sender.base_url: "https://publish.mb-staging.acp.demo-spryker.com/"
+            message_broker.http_receiver.base_url: "https://consume.mb-staging.acp.demo-spryker.com/"
+
+            http_registry.base_url: "https://api.atrs-staging.demo-spryker.com"

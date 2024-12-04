@@ -7,9 +7,9 @@
 
 namespace Pyz\Glue\Log;
 
+use Pyz\Glue\Log\Plugin\Handler\NewRelicHandlerPlugin;
 use Spryker\Glue\Kernel\Container;
 use Spryker\Glue\Log\LogDependencyProvider as SprykerLogDependencyProvider;
-use Spryker\Glue\Log\Plugin\Handler\ExceptionStreamHandlerPlugin;
 use Spryker\Glue\Log\Plugin\Handler\StreamHandlerPlugin;
 use Spryker\Glue\Log\Plugin\Processor\EnvironmentProcessorPlugin;
 use Spryker\Glue\Log\Plugin\Processor\GuzzleBodyProcessorPlugin;
@@ -20,31 +20,24 @@ use Spryker\Glue\Log\Plugin\Processor\ServerProcessorPlugin;
 
 class LogDependencyProvider extends SprykerLogDependencyProvider
 {
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addLogHandlers(Container $container): Container
     {
-        $container->set(static::LOG_HANDLERS, function () {
-            return [
-                new StreamHandlerPlugin(),
-                new ExceptionStreamHandlerPlugin(),
-            ];
+        $container->set(static::LOG_HANDLERS, static function (): array {
+            $logHandlers = [new StreamHandlerPlugin()];
+
+            if (extension_loaded('newrelic')) {
+                $logHandlers[] = new NewRelicHandlerPlugin();
+            }
+
+            return $logHandlers;
         });
 
         return $container;
     }
 
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
     protected function addProcessors(Container $container): Container
     {
-        $container->set(static::LOG_PROCESSORS, function () {
+        $container->set(static::LOG_PROCESSORS, static function (): array {
             return [
                 new PsrLogMessageProcessorPlugin(),
                 new EnvironmentProcessorPlugin(),

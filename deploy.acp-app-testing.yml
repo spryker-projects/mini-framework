@@ -1,0 +1,23 @@
+version: "1.0"
+
+imports:
+    # see config/deploy-templates
+    deploy.live.template.yml:
+        parameters:
+            namespace: 'spryker-cloud'
+            environment: 'testing'
+            database: 'acp_app_testing'
+
+            hosts.backoffice: "app-testing.acp.demo-spryker.com"
+            hosts.glue: "api.app-testing.acp.demo-spryker.com"
+            hosts.scheduler: "scheduler.app-testing.acp.demo-spryker.com"
+
+            # message bus 2.x
+            message_broker.http_sender.base_url: "https://publish.mb-testing.acp.demo-spryker.com/"
+            message_broker.http_receiver.base_url: "https://consume.mb-testing.acp.demo-spryker.com/"
+
+            http_registry.base_url: "https://api.atrs-testing.demo-spryker.com"
+
+docker:
+    debug:
+        enabled: true

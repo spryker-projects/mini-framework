@@ -7,7 +7,7 @@
 
 namespace Pyz\Zed\Log;
 
-use Spryker\Zed\Log\Communication\Plugin\Handler\ExceptionStreamHandlerPlugin;
+use Pyz\Zed\Log\Communication\Plugin\Handler\NewRelicHandlerPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Handler\StreamHandlerPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Processor\EnvironmentProcessorPlugin;
 use Spryker\Zed\Log\Communication\Plugin\Processor\GuzzleBodyProcessorPlugin;
@@ -25,10 +25,13 @@ class LogDependencyProvider extends SprykerLogDependencyProvider
      */
     protected function getLogHandlers(): array
     {
-        return [
-            new StreamHandlerPlugin(),
-            new ExceptionStreamHandlerPlugin(),
-        ];
+        $logHandlers = [new StreamHandlerPlugin()];
+
+        if (extension_loaded('newrelic')) {
+            $logHandlers[] = new NewRelicHandlerPlugin();
+        }
+
+        return $logHandlers;
     }
 
     /**

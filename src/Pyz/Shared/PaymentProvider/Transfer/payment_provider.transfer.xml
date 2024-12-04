@@ -1,0 +1,241 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="AppConfig" strict="true">
+        <property name="locale" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethod" strict="true">
+        <property name="name" type="string"/>
+        <property name="providerName" type="string"/>
+        <property name="paymentMethodAppConfiguration" type="PaymentMethodAppConfiguration"/>
+    </transfer>
+
+    <transfer name="PaymentMethodAppConfiguration" strict="true">
+        <property name="checkoutConfiguration" type="CheckoutConfiguration"/>
+    </transfer>
+
+    <transfer name="CheckoutConfiguration" strict="true">
+        <property name="strategy" type="string"/>
+        <property name="scripts" type="array" singular="script"/>
+    </transfer>
+
+    <transfer name="InitializePaymentRequest" strict="true">
+        <property name="appConfig" type="AppConfig"/>
+        <property name="orderData" type="Quote"/>
+        <property name="payment" type="Payment" description="This value is set when we have a pre-order payment case and the payment was already created. Used to prevent duplicate payments being created when e.g. reloading."/>
+        <property name="preOrderPaymentData" type="array" singular="preOrderPaymentDatum"/>
+    </transfer>
+
+    <transfer name="InitializePaymentResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="preOrderPaymentData" type="array" singular="preOrderPaymentDatum"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="CancelPreOrderPaymentRequest" strict="true">
+        <property name="appConfig" type="AppConfig"/>
+        <property name="transactionId" type="string"/>
+        <property name="payment" type="Payment" description="This value is set when we have a pre-order payment case and the payment was already created. Used to prevent duplicate payments being created when e.g. reloading."/>
+    </transfer>
+
+    <transfer name="CancelPreOrderPaymentResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderIntentRequest" strict="true">
+        <property name="payment" type="Payment"/>
+        <property name="quote" type="Quote"/>
+        <property name="paymentProviderConfig" type="PaymentProviderConfig"/>
+        <property name="transactionId" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderIntentResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="transactionId" type="string"/>
+        <property name="grandTotal" type="int"/>
+        <property name="currencyCode" type="string"/>
+        <property name="clientSecret" type="string"/>
+        <property name="latestChargeId" type="string"/>
+        <property name="message" type="string"/>
+        <property name="redirectSuccessUrl" type="string"/>
+        <property name="redirectCancelUrl" type="string"/>
+        <property name="checkoutSummaryPageUrl" type="string"/>
+        <property name="status" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderCustomerRequest" strict="true">
+        <property name="quote" type="Quote"/>
+        <property name="paymentProviderConfig" type="PaymentProviderConfig"/>
+    </transfer>
+
+    <transfer name="PaymentProviderCustomerResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="customerId" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderAccountRequest" strict="true">
+        <property name="accountConfig" type="array"/>
+        <property name="paymentProviderConfig" type="PaymentProviderConfig"/>
+    </transfer>
+
+    <transfer name="PaymentProviderAccountResponse" strict="true">
+        <property name="paymentProviderAccount" type="PaymentProviderAccount"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderAccountLinksRequest" strict="true">
+        <property name="accountLinksConfig" type="array"/>
+        <property name="paymentProviderAccount" type="PaymentProviderAccount"/>
+        <property name="paymentProviderConfig" type="PaymentProviderConfig"/>
+    </transfer>
+
+    <transfer name="PaymentProviderAccountLinksResponse" strict="true">
+        <property name="url" type="string" description="The URL that is used for the onboarding. This one is returned to the currently onboarding merchant"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderAccount" strict="true">
+        <property name="accountId" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderConfig" strict="true">
+        <property name="mode" type="string"/>
+        <property name="businessModel" type="string"/>
+        <property name="accountId" type="string"/>
+        <property name="publishableKey" type="string"/>
+        <property name="secretKey" type="string"/>
+        <property name="webhookSecretConnectedAccount" type="string"/>
+        <property name="paymentPageLabel" type="string"/>
+        <property name="brandFavicon" type="string"/>
+        <property name="payButtonColor" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderWebhookEndpoint" strict="true">
+        <property name="id" type="string"/>
+        <property name="url" type="string"/>
+        <property name="secret" type="string"/>
+        <property name="isLive" type="bool"/>
+        <property name="isConnect" type="bool"/>
+        <property name="tenantIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderWebhookEndpointCriteria" strict="true">
+        <property name="tenantIdentifier" type="string"/>
+        <property name="ids" type="string[]" singular="id"/>
+    </transfer>
+
+    <transfer name="PaymentProviderIntentCaptureRequest" strict="true">
+        <property name="transactionId" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="payment" type="Payment"/>
+        <property name="paymentProviderConfig" type="PaymentProviderConfig"/>
+    </transfer>
+
+    <transfer name="PaymentProviderIntentCaptureResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="transactionId" type="string"/>
+        <property name="status" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderRefundRequest" strict="true">
+        <property name="transactionId" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="orderItemSkus" type="string[]" singular="orderItemSku"/>
+        <property name="payment" type="Payment"/>
+        <property name="paymentProviderConfig" type="PaymentProviderConfig"/>
+    </transfer>
+
+    <transfer name="PaymentProviderRefundResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="refundId" type="string"/>
+        <property name="status" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="WebhookRequest" strict="true">
+        <property name="signatureHeader" type="string"/>
+        <property name="tenantIdentifier" type="string"/>
+        <property name="refund" type="PaymentRefund"/>
+        <property name="account" type="Account"/>
+    </transfer>
+
+    <transfer name="WebhookResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="isHandled" type="bool"/>
+        <property name="identifier" type="string"/>
+        <property name="message" type="string"/>
+        <property name="paymentStatus" type="string"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="error" type="string"/>
+    </transfer>
+
+    <transfer name="Refund" strict="true">
+        <property name="refundId" type="string"/>
+    </transfer>
+
+    <transfer name="Account" strict="true">
+        <property name="accountId" type="string"/>
+    </transfer>
+
+    <transfer name="DashboardUrlResponse" strict="true">
+        <property name="url" type="string"/>
+        <property name="error" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProviderTransmissionRequest" strict="true">
+        <property name="payment" type="Payment"/>
+        <property name="transferId" type="string"/>
+        <property name="sourceTransaction" type="string"/>
+        <property name="transferGroup" type="string"/>
+        <property name="destination" type="string"/>
+        <property name="description" type="string"/>
+        <property name="amount" type="string"/>
+        <property name="metadata" type="array" associative="true" singular="metadatum"/>
+        <property name="currency" type="Currency"/>
+        <property name="paymentProviderConfig" type="PaymentProviderConfig"/>
+    </transfer>
+
+    <transfer name="PaymentProviderTransmissionResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="transferId" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Payment" strict="true">
+        <property name="quote" type="Quote"/>
+        <property name="additionalPaymentData" type="array" associative="true" singular="additionalPaymentDatum"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="payment" type="Payment"/>
+    </transfer>
+
+    <transfer name="PaymentTransmissionsRequest" strict="true">
+        <property name="paymentTransmissions" type="PaymentTransmission[]" singular="paymentTransmission"/>
+    </transfer>
+
+    <transfer name="PaymentTransmissionsResponse" strict="true">
+        <property name="paymentTransmissions" type="PaymentTransmission[]" singular="paymentTransmission"/>
+    </transfer>
+
+    <transfer name="PaymentTransmission" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+        <property name="previousPaymentTransmission" type="PaymentTransmission" description="When there was already a transfer made for the given data we pass this value to be able to reverse a transfer."/>
+        <property name="payment" type="Payment"/>
+        <property name="transferId" type="string"/>
+    </transfer>
+
+</transfers>

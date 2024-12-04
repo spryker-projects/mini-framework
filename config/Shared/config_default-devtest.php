@@ -1,64 +1,42 @@
 <?php
 
+/**
+ * This configuration file is used when running tests locally
+ */
+
 use Monolog\Logger;
-use Pyz\Shared\Console\ConsoleConstants;
-use Spryker\Shared\ErrorHandler\ErrorHandlerConstants;
-use Spryker\Shared\ErrorHandler\ErrorRenderer\WebExceptionErrorRenderer;
-use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Log\LogConstants;
+use Spryker\Shared\MessageBroker\MessageBrokerConstants;
+use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
 use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Shared\Queue\QueueConstants;
 
-// ############################################################################
-// ############################## TESTING IN DEVVM ############################
-// ############################################################################
+$aopInfrastructureConfiguration = json_decode(html_entity_decode((string)getenv('SPRYKER_AOP_INFRASTRUCTURE')), true);
+$config[MessageBrokerAwsConstants::SQS_AWS_REGION] = (string)getenv('AWS_DEFAULT_REGION');
+$config[MessageBrokerAwsConstants::HTTP_SENDER_CONFIG] = $aopInfrastructureConfiguration['SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG'] ?? [];
 
-$domain = getenv('VM_PROJECT') ?: 'suite-nonsplit';
-$storeLowerCase = strtolower(APPLICATION_STORE);
-$stores = array_combine(Store::getInstance()->getAllowedStores(), Store::getInstance()->getAllowedStores());
-$glueHost = sprintf('glue-test.de.%s.local', $domain);
-
-// ----------------------------------------------------------------------------
-// ------------------------------ CODEBASE ------------------------------------
-// ----------------------------------------------------------------------------
-
-$config[KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED] = false;
-$config[KernelConstants::RESOLVED_INSTANCE_CACHE_ENABLED] = false;
-
-// >>> Dev tools
-$config[KernelConstants::ENABLE_CONTAINER_OVERRIDING] = true;
-$config[ConsoleConstants::ENABLE_DEVELOPMENT_CONSOLE_COMMANDS] = true;
-
-// >>> ErrorHandler
-$config[ErrorHandlerConstants::DISPLAY_ERRORS] = true;
-$config[ErrorHandlerConstants::ERROR_RENDERER] = WebExceptionErrorRenderer::class;
-$config[ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED] = true;
-
-// ----------------------------------------------------------------------------
-// ------------------------------ SECURITY ------------------------------------
-// ----------------------------------------------------------------------------
-
-$trustedHosts
-    = [
-    $glueHost,
-    'localhost',
+$config[MessageBrokerConstants::CHANNEL_TO_TRANSPORT_MAP] = [
+    'payment-events' => 'sns',
+    'payment-method-commands' => 'sns',
+    'payment-commands' => 'sqs',
 ];
 
-$config[KernelConstants::DOMAIN_WHITELIST] = array_merge($trustedHosts, $config[KernelConstants::DOMAIN_WHITELIST]);
+$config[MessageBrokerAwsConstants::CHANNEL_TO_SENDER_TRANSPORT_MAP] = [
+    'payment-events' => 'sns',
+    'payment-method-commands' => 'sns',
+];
 
-// ----------------------------------------------------------------------------
-// ------------------------------ SERVICES ------------------------------------
-// ----------------------------------------------------------------------------
+$config[MessageBrokerAwsConstants::CHANNEL_TO_RECEIVER_TRANSPORT_MAP] = [
+    'payment-commands' => 'sqs',
+];
 
-require 'common/config_services-devvm.php';
-require 'common/config_logs-files.php';
-require 'common/config_logs-ci-errors.php';
-
-// >>> DATABASE
-$config[PropelConstants::ZED_DB_USERNAME] = 'devtest';
-$config[PropelConstants::ZED_DB_PASSWORD] = 'mate20mg';
-$config[PropelConstants::ZED_DB_DATABASE] = sprintf('%s_devtest_zed', APPLICATION_CODE_BUCKET);
-
-// ---------- LOGGER
-
-$config[LogConstants::LOG_LEVEL] = Logger::CRITICAL;
+$config[LogConstants::LOG_LEVEL] = Logger::INFO;
+$config[PropelConstants::LOG_FILE_PATH]
+    = $config[LogConstants::LOG_FILE_PATH]
+    = $config[LogConstants::LOG_FILE_PATH_ZED]
+    = $config[LogConstants::LOG_FILE_PATH_GLUE]
+    = $config[QueueConstants::QUEUE_WORKER_OUTPUT_FILE_NAME]
+    = __DIR__ . '/../../data/logs/development/ZED/zed.log';
+$config[LogConstants::EXCEPTION_LOG_FILE_PATH_ZED]
+    = $config[LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE]
+    = __DIR__ . '/../../data/logs/development/ZED/zed.log';
